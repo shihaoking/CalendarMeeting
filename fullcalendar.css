@@ -30,14 +30,13 @@ html .fc,
 
 /* Header
 ------------------------------------------------------------------------*/
-
 .fc-header td {
 	white-space: nowrap;
 	}
 
 .fc-header-left {
 	width: 25%;
-	text-align: left;
+	text-align: right;
 	}
 	
 .fc-header-center {
@@ -46,7 +45,7 @@ html .fc,
 	
 .fc-header-right {
 	width: 25%;
-	text-align: right;
+	text-align: left;
 	}
 	
 .fc-header-title {
@@ -57,6 +56,7 @@ html .fc,
 	
 .fc-header-title h2 {
 	margin-top: 0;
+	margin-bottom:0;
 	white-space: nowrap;
 	font-weight: 600;
 	font-size: 21px;
@@ -68,7 +68,6 @@ html .fc,
 	}
 	
 .fc-header .fc-button {
-	margin-bottom: 1em;
 	vertical-align: top;
 	}
 	
@@ -109,13 +108,22 @@ html .fc,
 	z-index: 1; /* scopes all other z-index's to be inside this container */
 	clear: both;
 	zoom: 1; /* for IE7, gives accurate coordinates for [un]freezeContentHeight */
+	border-top:1px solid #E5ACA9;
+	margin-top:15px;
 	}
 	
 .fc-view {
 	position: relative;
-	width: 100%;
+	width: 98%;
 	overflow: hidden;
+	margin:10px auto 0 auto;
 	}
+.fc-agendaDay{
+	width:50%;
+	margin-left:auto;
+	margin-right:10px;
+	float:right;
+}
 	
 	
 
