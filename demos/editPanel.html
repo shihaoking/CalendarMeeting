@@ -1,0 +1,74 @@
+﻿<html>
+	<head>
+		<meta charset="utf-8">
+		<script src='../lib/jquery.min.js'></script>
+		<script src="../datepicker.js"></script>
+		<script src="../datepicker.zh-CN.js"></script>
+		<link href='../datepicker.css' rel='stylesheet' />
+		
+		<style>
+			#editPanel{ width:350px; position: absolute; padding:15px; border:1px solid #E5E5E5; z-index:100; background:white; border-radius:5px}
+			.ep-dt{ padding:5px 0}
+			.ep-input{ border:1px solid #D9D9D9; height:25px; line-height:21px; padding:2px 3px 2px 5px; border-radius:2px;}
+			.ep-input.ep-title{ height:30px; line-height:26px; width:100%; font-size:20px;color:#34AADC}
+			.ep-tip{display:inline-block; width:70px; text-align:right; padding-right:3px; font-size:11px; color:#BBBBBB}
+			.ep-input.ep-date{ width:90px}
+			.ep-input.ep-time{ width:60px}
+			
+			.ep-action{float:right;color:#167EFB; cursor:pointer}
+			.ep-action.ep-action-del{float:left; color:#FF3B30}
+			.ep-action.ep-action-sp{margin:0 15px; color:#DAD9D4}
+			
+			.clear{clear:both}
+		</style>
+	</head>
+	<body>
+		<div id="editPanel">
+			<div class="ep-content">
+				<div class="ep-dt ep-title">
+					<input type="text" id="eveTitle" class="ep-input ep-title" value="会议主题" />
+				</div>
+				<div class="ep-dt ep-position">
+					<span class="ep-tip">地点</span>
+					<select id="evePostion">
+						<option id="0">会议室1</option>
+						<option id="1">会议室2</option>
+						<option id="2">会议室3</option>
+					</select>
+				</div>
+				<div class="ep-dt ep-start">
+					<span class="ep-tip">从</span><input type="text" id="eveStartDate" class="datepicker ep-input ep-date ep-date-start"/>
+					<select class="ep-time-sp" >
+						<option id="0">上午</option>
+						<option id="1">下午</option>
+					</select>
+					<input type="text" id="eveStartTime" class="ep-input ep-time"/>
+				</div>
+				<div class="ep-dt ep-end">
+					<span class="ep-tip">到</span><input type="text" id="eveEndTime" class="datepicker ep-input ep-date ep-date-start"/>
+					<select class="ep-time-sp" >
+						<option id="0">上午</option>
+						<option id="1">下午</option>
+					</select>
+					<input type="text" id="eveEndTime" class="ep-input ep-time"/>
+				</div>
+				<div class="ep-dt ep-people">
+					<span class="ep-tip">人员</span><input type="text" id="evePeople" class="ep-input ep-people"/>
+				</div>
+				<div class="ep-dt ep-memo">
+					<span class="ep-tip">备注</span><input type="text" id="eveMemo" class="ep-input ep-memo" />
+				</div>
+			</div>
+			<div class="ep-dt">
+				<span id="eveDelete" class="ep-action ep-action-del">删除</span>
+				<span id="eveSubmit" class="ep-action ep-action-sub">提交</span>
+				<span class="ep-action ep-action-sp">|</span>
+				<span id="eveClose" class="ep-action ep-action-clo">取消</span>
+				<div class="clear">
+			</div>
+		</div>
+		<script>
+			$(".datepicker").datepicker();
+		</script>
+	</body>
+</html>

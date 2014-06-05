@@ -80,38 +80,44 @@
 				},
 				events: [
 					{
+						id: 1,
 						title: 'All Day Event',
 						start: '2014-06-01'
 					},
 					{
+						id: 2,
 						title: 'Long Event',
 						start: '2014-06-07',
 						end: '2014-06-10'
 					},
 					{
-						id: 999,
+						id: 3,
 						title: 'Repeating Event',
 						start: '2014-06-09T16:00:00'
 					},
 					{
-						id: 999,
+						id: 4,
 						title: 'Repeating Event',
 						start: '2014-06-16T16:00:00'
 					},
 					{
+						id: 5,
 						title: 'Meeting',
 						start: '2014-06-12T10:30:00',
 						end: '2014-06-12T12:30:00'
 					},
 					{
+						id: 6,
 						title: 'Lunch',
 						start: '2014-06-12T12:00:00'
 					},
 					{
+						id: 7,
 						title: 'Birthday Party',
 						start: '2014-06-13T07:00:00'
 					},
 					{
+						id: 8,
 						title: 'Click for Google',
 						url: 'http://google.com/',
 						start: '2014-06-28'
@@ -154,8 +160,11 @@
 		$('.smallCanlendar').fullCalendar('select', currentSelDate, currentSelDate);
 	}
 	
-	function EventEditPanel(){
-		
+	function EventEditPanel(curEvent){
+		var eventId = curEvent.id;
+		var eventTitle = curEvent.title;
+		var eventStartTime = curEvent.start;
+		var eventEndTime = curEvent.end;
 	}
 	
 </script>
