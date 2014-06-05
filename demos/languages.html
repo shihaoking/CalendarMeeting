@@ -10,10 +10,11 @@
 <script src='../fullcalendar.min.js'></script>
 <script src='../zh-cn.js'></script>
 <script>
-
+	var currentLangCode = 'zh-cn';
+	var currentDate = new Date();
+		
 	$(document).ready(function() {
-		var currentLangCode = 'zh-cn';
-		var currentDate = new Date();
+
 		// build the language selector's options
 		$.each($.fullCalendar.langs, function(langCode) {
 			$('#lang-selector').append(
@@ -51,6 +52,7 @@
 					//alert(date.format("YYYY-MM-DD HH:mm:ss"));
 				},
 				eventClick: function(calEvent, jsEvent, view){
+					
 					//alert('Event: ' + calEvent.title + calEvent.start.format("YYYY-MM-DD HH:mm:ss"));
 				},
 				viewRender: function(view, element){
@@ -65,32 +67,13 @@
 						$('.fc-button.fc-button-prev').text('上周');
 						$('.fc-button.fc-button-next').text('下周');
 					}else if(view.name == 'agendaDay'){
-						if($('#calendarList').length == 0){
-							$('.fc-view').addClass('fc-agendaDay');
-							var calendarLsit = $('.calendarList').clone();
-							var currentSelDate = $('#calendar').fullCalendar('getDate');
-							
-							calendarLsit.attr('id','calendarList')
-							.append('<div class="calendar-list-header">'
-							+'<div class="currentDayDetail"><div class="cdt-day">'+currentSelDate.format('D')+'</div>'
-							+'<div class="cdt-date">'+currentSelDate.format('YYYY年 M月 D日 星期dd')+'</div></div>'
-							+'<div class="smallCanlendar"></div><div class="clear"></div></div>')
-							.append('<div class="calendar-list-content"></div>');
-							
-							calendarLsit.insertBefore('.fc-view');
-							$('.smallCanlendar').fullCalendar({
-								lang: currentLangCode,
-								weekNumbers: false,
-								firstDay: 1,
-								header: false,
-								dayClick: function(date, jsEvent, view){
-									$('#calendar').fullCalendar('gotoDate',date);
-									$('.smallCanlendar').fullCalendar('select',date);
-								}
-							});
-						}
+						var currentSelDate = $('#calendar').fullCalendar('getDate');
 						
-						$('.smallCanlendar').fullCalendar('select',currentSelDate,currentSelDate);
+						if($('#calendarList').length == 0){
+							ShowSmallCanlendar(currentSelDate);
+						}
+
+						SetSmallCanlendarValue(currentSelDate);
 						$('.fc-button.fc-button-prev').text('昨天');
 						$('.fc-button.fc-button-next').text('明天');
 					}
@@ -141,6 +124,39 @@
 		
 	});
 
+	function ShowSmallCanlendar(defaultData){
+		$('.fc-view').addClass('fc-agendaDay');
+		var calendarLsit = $('.calendarList').clone();
+		
+		calendarLsit.attr('id','calendarList')
+		.append('<div class="calendar-list-header">'
+		+'<div class="currentDayDetail"><div class="cdt-day"></div>'
+		+'<div class="cdt-date"></div></div>'
+		+'<div class="smallCanlendar"></div><div class="clear"></div></div>')
+		.append('<div class="calendar-list-content"></div>');
+		
+		calendarLsit.insertBefore('.fc-view');
+		$('.smallCanlendar').fullCalendar({
+			lang: currentLangCode,
+			weekNumbers: false,
+			firstDay: 1,
+			header: false,
+			dayClick: function(date, jsEvent, view){
+				$('#calendar').fullCalendar('gotoDate',date);
+				$('.smallCanlendar').fullCalendar('select', date);
+			}
+		});
+	}
+	
+	function SetSmallCanlendarValue(currentSelDate){
+		$('#calendarList').find('.cdt-day').text(currentSelDate.format('D'));
+		$('#calendarList').find('.cdt-date').text(currentSelDate.format('YYYY年M月D日 星期dd'));
+		$('.smallCanlendar').fullCalendar('select', currentSelDate, currentSelDate);
+	}
+	
+	function EventEditPanel(){
+		
+	}
 	
 </script>
 <style>
