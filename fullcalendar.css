@@ -3,8 +3,6 @@
  * Docs & License: http://arshaw.com/fullcalendar/
  * (c) 2013 Adam Shaw
  */
-@font-face{font-family:'Helvetica Neue';src:local("Helvetica Neue Light"),local("HelveticaNeue-Light"),url("/fonts/HelveticaNeue-Light.ttf") format("truetype"),url("/fonts/HelveticaNeue-Light.woff") format("woff");font-weight:300}
-
 .fc {
 	direction: ltr;
 	text-align: left;

@@ -1,209 +1,207 @@
 <html>
 <head>
-<meta charset='utf-8' />
-<link rel='stylesheet' href='../lib/cupertino/jquery-ui.min.css' />
-<link href='../fullcalendar.css' rel='stylesheet' />
-<link href='../fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src='../lib/moment.min.js'></script>
-<script src='../lib/jquery.min.js'></script>
-<script src='../lib/jquery-ui.custom.min.js'></script>
-<script src='../fullcalendar.min.js'></script>
-<script src='../zh-cn.js'></script>
-<script>
-	var currentLangCode = 'zh-cn';
-	var currentDate = new Date();
-		
-	$(document).ready(function() {
+	<meta charset='utf-8' />
+	<link href='../main.css' rel='stylesheet' />
+	<link rel='stylesheet' href='../lib/cupertino/jquery-ui.min.css' />
+	<link href='../fullcalendar.css' rel='stylesheet' />
+	<link href='../fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link href='../chosen.css' rel='stylesheet' />
+	<link href='../datepicker.css' rel='stylesheet' />
+	<script src='../lib/moment.min.js'></script>
+	<script src='../lib/jquery.min.js'></script>
+	<script src='../lib/jquery-ui.custom.min.js'></script>
+	<script src='../fullcalendar.min.js'></script>
+	<script src='../zh-cn.js'></script>
 
-		// build the language selector's options
-		$.each($.fullCalendar.langs, function(langCode) {
-			$('#lang-selector').append(
-				$('<option/>')
-					.attr('value', langCode)
-					.prop('selected', langCode == currentLangCode)
-					.text(langCode)
-			);
-		});
+	<script>
+		var currentLangCode = 'zh-cn';
+		var currentDate = new Date();
+			
+		$(document).ready(function() {
 
-		// rerender the calendar when the selected option changes
-		$('#lang-selector').on('change', function() {
-			if (this.value) {
-				currentLangCode = this.value;
-				$('#calendar').fullCalendar('destroy');
-				renderCalendar();
-			}
-		});
+			// build the language selector's options
+			$.each($.fullCalendar.langs, function(langCode) {
+				$('#lang-selector').append(
+					$('<option/>')
+						.attr('value', langCode)
+						.prop('selected', langCode == currentLangCode)
+						.text(langCode)
+				);
+			});
 
-		function renderCalendar() {
-			$('#calendar').fullCalendar({
-				header: {
-					left: 'today',
-					center: 'prev title next',
-					right: 'month,agendaWeek,agendaDay'
-				},
-				lang: currentLangCode,
-				isRTL: false,
-				selectable: true,
-				selectHelper: true,
-				weekNumbers: false,
-				editable: true,
-				firstDay: 1,
-				dayClick: function(date, jsEvent, view){
-					//alert(date.format("YYYY-MM-DD HH:mm:ss"));
-				},
-				eventClick: function(calEvent, jsEvent, view){
-					
-					//alert('Event: ' + calEvent.title + calEvent.start.format("YYYY-MM-DD HH:mm:ss"));
-				},
-				viewRender: function(view, element){
-					if(view.name == "month"){
-						$('#calendarList').remove();
-						$('.fc-view').removeClass('fc-agendaDay');
-						$('.fc-button.fc-button-prev').text('上月');
-						$('.fc-button.fc-button-next').text('下月');
-					}else if(view.name == 'agendaWeek'){
-						$('#calendarList').remove();
-						$('.fc-view').removeClass('fc-agendaDay');
-						$('.fc-button.fc-button-prev').text('上周');
-						$('.fc-button.fc-button-next').text('下周');
-					}else if(view.name == 'agendaDay'){
-						var currentSelDate = $('#calendar').fullCalendar('getDate');
-						
-						if($('#calendarList').length == 0){
-							ShowSmallCanlendar(currentSelDate);
+			// rerender the calendar when the selected option changes
+			$('#lang-selector').on('change', function() {
+				if (this.value) {
+					currentLangCode = this.value;
+					$('#calendar').fullCalendar('destroy');
+					renderCalendar();
+				}
+			});
+
+			function renderCalendar() {
+				$('#calendar').fullCalendar({
+					header: {
+						left: 'today',
+						center: 'prev title next',
+						right: 'month,agendaWeek,agendaDay'
+					},
+					lang: currentLangCode,
+					isRTL: false,
+					selectable: true,
+					selectHelper: true,
+					weekNumbers: false,
+					editable: true,
+					firstDay: 1,
+					dayClick: function(date, jsEvent, view){
+						//alert(date.format("YYYY-MM-DD HH:mm:ss"));
+					},
+					eventClick: function(calEvent, jsEvent, view){
+						EventEditPanel(calEvent, jsEvent);
+						//alert('Event: ' + calEvent.title + calEvent.start.format("YYYY-MM-DD HH:mm:ss"));
+					},
+					viewRender: function(view, element){
+						if(view.name == "month"){
+							$('#calendarList').remove();
+							$('.fc-view').removeClass('fc-agendaDay');
+							$('.fc-button.fc-button-prev').text('上月');
+							$('.fc-button.fc-button-next').text('下月');
+						}else if(view.name == 'agendaWeek'){
+							$('#calendarList').remove();
+							$('.fc-view').removeClass('fc-agendaDay');
+							$('.fc-button.fc-button-prev').text('上周');
+							$('.fc-button.fc-button-next').text('下周');
+						}else if(view.name == 'agendaDay'){
+							var currentSelDate = $('#calendar').fullCalendar('getDate');
+							
+							if($('#calendarList').length == 0){
+								ShowSmallCanlendar(currentSelDate);
+							}
+
+							SetSmallCanlendarValue(currentSelDate);
+							$('.fc-button.fc-button-prev').text('昨天');
+							$('.fc-button.fc-button-next').text('明天');
 						}
+					},
+					events: [
+						{
+							id: 1,
+							title: 'All Day Event',
+							start: '2014-06-01'
+						},
+						{
+							id: 2,
+							title: 'Long Event',
+							start: '2014-06-07',
+							end: '2014-06-10'
+						},
+						{
+							id: 3,
+							title: 'Repeating Event',
+							start: '2014-06-09T16:00:00',
+							end: '2014-06-09T17:30:00'
+						},
+						{
+							id: 4,
+							title: 'Repeating Event',
+							start: '2014-06-16T16:00:00'
+						},
+						{
+							id: 5,
+							title: 'Meeting',
+							start: '2014-06-12T10:30:00',
+							end: '2014-06-12T12:30:00'
+						},
+						{
+							id: 6,
+							title: 'Lunch',
+							start: '2014-06-12T12:00:00'
+						},
+						{
+							id: 7,
+							title: 'Birthday Party',
+							start: '2014-06-13T07:00:00'
+						},
+						{
+							id: 8,
+							title: 'Click for Google',
+							url: 'http://google.com/',
+							start: '2014-06-28'
+						}
+					]
+				});
+			}
 
-						SetSmallCanlendarValue(currentSelDate);
-						$('.fc-button.fc-button-prev').text('昨天');
-						$('.fc-button.fc-button-next').text('明天');
-					}
-				},
-				events: [
-					{
-						id: 1,
-						title: 'All Day Event',
-						start: '2014-06-01'
-					},
-					{
-						id: 2,
-						title: 'Long Event',
-						start: '2014-06-07',
-						end: '2014-06-10'
-					},
-					{
-						id: 3,
-						title: 'Repeating Event',
-						start: '2014-06-09T16:00:00'
-					},
-					{
-						id: 4,
-						title: 'Repeating Event',
-						start: '2014-06-16T16:00:00'
-					},
-					{
-						id: 5,
-						title: 'Meeting',
-						start: '2014-06-12T10:30:00',
-						end: '2014-06-12T12:30:00'
-					},
-					{
-						id: 6,
-						title: 'Lunch',
-						start: '2014-06-12T12:00:00'
-					},
-					{
-						id: 7,
-						title: 'Birthday Party',
-						start: '2014-06-13T07:00:00'
-					},
-					{
-						id: 8,
-						title: 'Click for Google',
-						url: 'http://google.com/',
-						start: '2014-06-28'
-					}
-				]
+			renderCalendar();
+			
+		});
+
+		function ShowSmallCanlendar(defaultData){
+			$('.fc-view').addClass('fc-agendaDay');
+			var calendarLsit = $('.calendarList').clone();
+			
+			calendarLsit.attr('id','calendarList')
+			.append('<div class="calendar-list-header">'
+			+'<div class="currentDayDetail"><div class="cdt-day"></div>'
+			+'<div class="cdt-date"></div></div>'
+			+'<div class="smallCanlendar"></div><div class="clear"></div></div>')
+			.append('<div class="calendar-list-content"></div>');
+			
+			calendarLsit.insertBefore('.fc-view');
+			$('.smallCanlendar').fullCalendar({
+				lang: currentLangCode,
+				weekNumbers: false,
+				firstDay: 1,
+				header: false,
+				dayClick: function(date, jsEvent, view){
+					$('#calendar').fullCalendar('gotoDate',date);
+					$('.smallCanlendar').fullCalendar('select', date);
+				}
 			});
 		}
-
-		renderCalendar();
 		
-	});
-
-	function ShowSmallCanlendar(defaultData){
-		$('.fc-view').addClass('fc-agendaDay');
-		var calendarLsit = $('.calendarList').clone();
+		function SetSmallCanlendarValue(currentSelDate){
+			$('#calendarList').find('.cdt-day').text(currentSelDate.format('D'));
+			$('#calendarList').find('.cdt-date').text(currentSelDate.format('YYYY年M月D日 星期dd'));
+			$('.smallCanlendar').fullCalendar('select', currentSelDate, currentSelDate);
+		}
 		
-		calendarLsit.attr('id','calendarList')
-		.append('<div class="calendar-list-header">'
-		+'<div class="currentDayDetail"><div class="cdt-day"></div>'
-		+'<div class="cdt-date"></div></div>'
-		+'<div class="smallCanlendar"></div><div class="clear"></div></div>')
-		.append('<div class="calendar-list-content"></div>');
+		function EventEditPanel(curEvent, jsEvent){
+			var eventId = curEvent.id;
+			var eventTitle = curEvent.title;
+			var eventStartTime = curEvent.start ? curEvent.start.clone() : new Date();
+			var eventEndTime = curEvent.end ? curEvent.end.clone() : eventStartTime.clone().add('hours', 1);
+			
+			$.get('editPanel.html',{},function(data){
+				var editPanel = $(data);
+				editPanel.find('#eveTitle').val(eventTitle);
+
+				$('body').append(editPanel);
+				
+				if(eventStartTime.hours() > 12){
+					$('#eveStartTime').val(eventStartTime.clone().add('hours',-12).format('HH:mm'));
+					$('#eveStartSp').val(1);
+				}else{
+					$('#eveStartTime').val(eventStartTime.format('HH:mm'));
+					$('#eveStartSp').val(0);
+				}
+				$("#eveStartSp").trigger("chosen:updated");
+				
+				if(eventEndTime.hours() > 12){
+					$('#eveEndTime').val(eventEndTime.clone().add('hours',-12).format('HH:mm'));
+					$('#eveEndSp').val(1);
+				}else{
+					$('#eveEndTime').val(eventEndTime.format('HH:mm'));
+					$('#eveEndSp').val(0);
+				}
+				$("#eveEndSp").trigger("chosen:updated");
+				
+				$('#eveStartDate').val(eventStartTime.format('YYYY-MM-DD'));
+				$('#eveEndDate').val(eventEndTime.format('YYYY-MM-DD'));
+
+			});
+		}
 		
-		calendarLsit.insertBefore('.fc-view');
-		$('.smallCanlendar').fullCalendar({
-			lang: currentLangCode,
-			weekNumbers: false,
-			firstDay: 1,
-			header: false,
-			dayClick: function(date, jsEvent, view){
-				$('#calendar').fullCalendar('gotoDate',date);
-				$('.smallCanlendar').fullCalendar('select', date);
-			}
-		});
-	}
-	
-	function SetSmallCanlendarValue(currentSelDate){
-		$('#calendarList').find('.cdt-day').text(currentSelDate.format('D'));
-		$('#calendarList').find('.cdt-date').text(currentSelDate.format('YYYY年M月D日 星期dd'));
-		$('.smallCanlendar').fullCalendar('select', currentSelDate, currentSelDate);
-	}
-	
-	function EventEditPanel(curEvent){
-		var eventId = curEvent.id;
-		var eventTitle = curEvent.title;
-		var eventStartTime = curEvent.start;
-		var eventEndTime = curEvent.end;
-	}
-	
-</script>
-<style>
-
-	body {
-		margin: 0;
-		padding: 0;
-		font-family: "Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		font-size: 14px;
-	}
-
-	#top {
-		background: #eee;
-		border-bottom: 1px solid #ddd;
-		padding: 0 10px;
-		line-height: 40px;
-		font-size: 12px;
-	}
-	
-	.clear{ clear:both}
-
-	#calendar {
-		margin: 15px auto;
-	}
-	
-	#calendarList{ float:left; width:45%; margin-left:20px; position:relative;min-width:450px}
-	#calendarList .currentDayDetail{ position:absolute; bottom:5px}
-	.smallCanlendar{ width:220px; margin-left:10px; float:right;}
-	.calendar-list-header{ border-bottom:3px solid #E5E5E5; padding-bottom:5px}
-	.calendar-list-header .cdt-day{ font-size:130px}
-	.calendar-list-header .cdt-date{ font-size:19px}
-	.smallCanlendar .fc-content{border-top:none; margin-top:0}
-	.smallCanlendar .fc-border-separate tr th{font-size:11px;}
-	.smallCanlendar .fc-border-separate tr td{ padding:3px; text-align:center; cursor:pointer; }
-	.smallCanlendar .fc-grid .fc-day-number{padding:0; float:none;font-size:15px; font-weight:500;}
-	.smallCanlendar .fc-border-separate tr td:hover{ background-color:#EBF8FB}
-	.smallCanlendar .fc-state-highlight{border-top-color:#ddd;border-top-width:1px!important; color:#F72F37; background:none;}
-</style>
+	</script>
 </head>
 <body>
 	<div id='calendar'></div>

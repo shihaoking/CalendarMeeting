@@ -1,6 +1,5 @@
 .datepicker-container {
     font-size: 12px;
-    font-family: Arial, Helvetica, sans-serif;
     line-height: 30px;
     float: left;
     position: absolute;
@@ -14,7 +13,7 @@
     width: 0;
 }
 .datepicker-container .datepicker-arrow {
-    border-bottom-color: #9CF;
+    border-bottom-color: #CCC;
     margin: 0 10px;
     position: relative;
 }
@@ -27,7 +26,6 @@
 }
 .datepicker-container .datepicker-content {
     border: 1px solid #CCC;
-    border-top-color: #9CF;
     box-shadow: 0 0 3px #CCC;
     width: 210px;
     -webkit-box-sizing: content-box;
@@ -37,6 +35,7 @@
 .datepicker-container .datepicker-prev,
 .datepicker-container .datepicker-next {
     font-size: 18px;
+	font-family:'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif
 }
 .datepicker-container ul:before,
 .datepicker-container ul:after {
@@ -49,7 +48,7 @@
 .datepicker-container ul {
     margin: 0;
     padding: 0;
-    width: 102%;
+    width: 100%;
     *zoom: 1;
 }
 .datepicker-container li {
@@ -62,6 +61,11 @@
     padding: 0;
     text-align: center;
     width: 30px;
+}
+
+.datepicker-container .datepicker-days li{
+	font-size:13px;
+	font-weight: 500;
 }
 .datepicker-container .col-1 {
     width: 30px;
@@ -98,6 +102,9 @@
     height: 52.5px;
     line-height: 52.5px;
     width: 52.5px;
+}
+.datepicker-container .datepicker-week{
+	border-bottom:1px solid #DDDDDD;
 }
 .datepicker-container .datepicker-week li,
 .datepicker-container .datepicker-week li:hover {
