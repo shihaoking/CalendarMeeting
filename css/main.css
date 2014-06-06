@@ -1,4 +1,4 @@
-@font-face{font-family:'Helvetica Neue';src:local("Helvetica Neue Light"),local("HelveticaNeue-Light"),url("/fonts/HelveticaNeue-Light.ttf") format("truetype"),url("/fonts/HelveticaNeue-Light.woff") format("woff");font-weight:300}@font-face{font-family:'Helvetica Neue';src:local("Helvetica Neue Medium"),local("HelveticaNeue-Medium"),url("/fonts/HelveticaNeue-Medium.ttf") format("truetype"),url("/fonts/HelveticaNeue-Medium.woff") format("woff");font-weight:500}@font-face{font-family:'Helvetica Neue XP';src:url("/fonts/HelveticaNeue-Light.svg#HelveticaNeue-Light") format("svg"),url("/fonts/HelveticaNeue-Light.woff") format("woff");font-weight:300}@font-face{font-family:'Helvetica Neue XP';src:url("/fonts/HelveticaNeue-Medium.svg#HelveticaNeue-Medium") format("svg"),url("/fonts/HelveticaNeue-Medium.woff") format("woff");font-weight:500}html{-ms-content-zooming:none}
+@font-face{font-family:'Helvetica Neue';src:local("Helvetica Neue Light"),local("HelveticaNeue-Light"),url("../fonts/HelveticaNeue-Light.ttf") format("truetype"),url("../fonts/HelveticaNeue-Light.woff") format("woff");font-weight:300}@font-face{font-family:'Helvetica Neue';src:local("Helvetica Neue Medium"),local("HelveticaNeue-Medium"),url("../fonts/HelveticaNeue-Medium.ttf") format("truetype"),url("../fonts/HelveticaNeue-Medium.woff") format("woff");font-weight:500}@font-face{font-family:'Helvetica Neue XP';src:url("../fonts/HelveticaNeue-Light.svg#HelveticaNeue-Light") format("svg"),url("../fonts/HelveticaNeue-Light.woff") format("woff");font-weight:300}@font-face{font-family:'Helvetica Neue XP';src:url("../fonts/HelveticaNeue-Medium.svg#HelveticaNeue-Medium") format("svg"),url("../fonts/HelveticaNeue-Medium.woff") format("woff");font-weight:500}html{-ms-content-zooming:none}
 
 body {
 	margin: 0;
@@ -39,10 +39,10 @@ input{
 
 #editPanel{ width:350px; position: absolute; padding:15px; border:1px solid #E5E5E5; z-index:100; background:white; border-radius:5px; left:50px;top:50px}
 .ep-dt{ padding:5px 0}
-.ep-input{ border:1px solid #D9D9D9; height:25px; line-height:21px; padding:2px 3px 2px 5px; border-radius:2px; color:#1A1A1A;box-shadow: 0px 1px 1px #FAFAFA; font-size:14px}
-.ep-input.ep-title{ height:30px; line-height:26px; width:100%; font-size:20px;color:#34AADC}
-.ep-tip{display:inline-block; width:70px; text-align:right; padding-right:3px; font-size:11px; color:#BBBBBB}
-.ep-input.ep-date{ width:90px}
+.ep-input{ border:1px solid #D9D9D9; height:25px; line-height:21px; padding:2px 3px 2px 5px; border-radius:2px; color:#1A1A1A;box-shadow: 0px 1px 1px #FAFAFA; font-size:15px; font-weight:300; width:290px;}
+.ep-input.ep-title{ height:30px; line-height:26px; width:100%; font-size:21px;color:#34AADC}
+.ep-tip{display:inline-block; width:50px; text-align:right; padding-right:3px; font-size:11px; color:#9E9E9E}
+.ep-input.ep-date{ width:100px}
 .ep-input.ep-time{ width:60px}
 .ep-select{height:25px;border:1px solid #D9D9D9;}
 .ep-select.ep-select-pos{width:150px}
@@ -50,5 +50,4 @@ input{
 .ep-action{float:right;color:#167EFB; cursor:pointer}
 .ep-action.ep-action-del{float:left; color:#FF3B30}
 .ep-action.ep-action-sp{margin:0 15px; color:#DAD9D4}
-
 .clear{clear:both}

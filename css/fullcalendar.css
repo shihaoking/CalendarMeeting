@@ -28,6 +28,9 @@ html .fc,
 
 /* Header
 ------------------------------------------------------------------------*/
+.fc-header{
+	width:100%;
+}
 .fc-header td {
 	white-space: nowrap;
 	}

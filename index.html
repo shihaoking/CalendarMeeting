@@ -1,18 +1,20 @@
 <html>
 <head>
 	<meta charset='utf-8' />
-	<link href='../main.css' rel='stylesheet' />
-	<link rel='stylesheet' href='../lib/cupertino/jquery-ui.min.css' />
-	<link href='../fullcalendar.css' rel='stylesheet' />
-	<link href='../fullcalendar.print.css' rel='stylesheet' media='print' />
-	<link href='../chosen.css' rel='stylesheet' />
-	<link href='../datepicker.css' rel='stylesheet' />
-	<script src='../lib/moment.min.js'></script>
-	<script src='../lib/jquery.min.js'></script>
-	<script src='../lib/jquery-ui.custom.min.js'></script>
-	<script src='../fullcalendar.min.js'></script>
-	<script src='../zh-cn.js'></script>
-
+	<link href='/css/main.css' rel='stylesheet' />
+	<link href='/css/fullcalendar.css' rel='stylesheet' />
+	<link href='/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link href='/css/chosen.css' rel='stylesheet' />
+	<link href='/css/datepicker.css' rel='stylesheet' />
+	<script src='/lib/moment.min.js'></script>
+	<script src='/lib/jquery.min.js'></script>
+	<script src='/lib/jquery-ui.custom.min.js'></script>
+	<script src='/js/fullcalendar.js'></script>
+	<script src='/js/zh-cn.js'></script>
+	<script src="/js/datepicker.js"></script>
+	<script src="/js/datepicker.zh-CN.js"></script>
+	<script src="/js/chzn-chosen.js"></script>
+	<script src="/js/editPanel.js"></script>
 	<script>
 		var currentLangCode = 'zh-cn';
 		var currentDate = new Date();
@@ -53,11 +55,10 @@
 					editable: true,
 					firstDay: 1,
 					dayClick: function(date, jsEvent, view){
-						//alert(date.format("YYYY-MM-DD HH:mm:ss"));
+						EventEditPanel({start: date}, jsEvent);
 					},
 					eventClick: function(calEvent, jsEvent, view){
 						EventEditPanel(calEvent, jsEvent);
-						//alert('Event: ' + calEvent.title + calEvent.start.format("YYYY-MM-DD HH:mm:ss"));
 					},
 					viewRender: function(view, element){
 						if(view.name == "month"){
@@ -86,44 +87,60 @@
 						{
 							id: 1,
 							title: 'All Day Event',
+							people: 'Simon, Jingwen',
+							position: 0,
 							start: '2014-06-01'
 						},
 						{
 							id: 2,
 							title: 'Long Event',
+							people: 'Simon, Cici',
+							position: 0,
 							start: '2014-06-07',
 							end: '2014-06-10'
 						},
 						{
 							id: 3,
 							title: 'Repeating Event',
+							people: 'Simon, Julian',
+							position: 1,
 							start: '2014-06-09T16:00:00',
 							end: '2014-06-09T17:30:00'
 						},
 						{
 							id: 4,
 							title: 'Repeating Event',
+							people: 'Julian, Cici, Android',
+							position: 1,
 							start: '2014-06-16T16:00:00'
 						},
 						{
 							id: 5,
 							title: 'Meeting',
+							people: 'Victory, Android, Nacy, Bob',
+							position: 1,
 							start: '2014-06-12T10:30:00',
 							end: '2014-06-12T12:30:00'
 						},
 						{
 							id: 6,
 							title: 'Lunch',
+							people: 'Clear, Android, Chun, Juanjo, Stephen',
+							position: 2,
 							start: '2014-06-12T12:00:00'
 						},
 						{
 							id: 7,
 							title: 'Birthday Party',
+							people: 'Breanty, Nacy, Juanjo',
+							position: 2,
 							start: '2014-06-13T07:00:00'
 						},
 						{
 							id: 8,
 							title: 'Click for Google',
+							people: 'Bill Gates, Nacy, Mark',
+							position: 2,
 							url: 'http://google.com/',
 							start: '2014-06-28'
 						}
@@ -166,38 +183,21 @@
 		}
 		
 		function EventEditPanel(curEvent, jsEvent){
-			var eventId = curEvent.id;
-			var eventTitle = curEvent.title;
-			var eventStartTime = curEvent.start ? curEvent.start.clone() : new Date();
-			var eventEndTime = curEvent.end ? curEvent.end.clone() : eventStartTime.clone().add('hours', 1);
+			$('body').editPanel('destroy');
 			
-			$.get('editPanel.html',{},function(data){
-				var editPanel = $(data);
-				editPanel.find('#eveTitle').val(eventTitle);
-
-				$('body').append(editPanel);
-				
-				if(eventStartTime.hours() > 12){
-					$('#eveStartTime').val(eventStartTime.clone().add('hours',-12).format('HH:mm'));
-					$('#eveStartSp').val(1);
-				}else{
-					$('#eveStartTime').val(eventStartTime.format('HH:mm'));
-					$('#eveStartSp').val(0);
+			var eventStartTime = curEvent.start ? curEvent.start.clone() : new Date();
+			
+			$('body').editPanel({
+				id: curEvent.id,
+				title: curEvent.title,
+				position: curEvent.position,
+				people: curEvent.people,
+				start: eventStartTime,
+				end: curEvent.end ? curEvent.end.clone() : eventStartTime.clone().add('hours', 1),
+				jsEvent: jsEvent,
+				submit: function(){
+					
 				}
-				$("#eveStartSp").trigger("chosen:updated");
-				
-				if(eventEndTime.hours() > 12){
-					$('#eveEndTime').val(eventEndTime.clone().add('hours',-12).format('HH:mm'));
-					$('#eveEndSp').val(1);
-				}else{
-					$('#eveEndTime').val(eventEndTime.format('HH:mm'));
-					$('#eveEndSp').val(0);
-				}
-				$("#eveEndSp").trigger("chosen:updated");
-				
-				$('#eveStartDate').val(eventStartTime.format('YYYY-MM-DD'));
-				$('#eveEndDate').val(eventEndTime.format('YYYY-MM-DD'));
-
 			});
 		}
 		
