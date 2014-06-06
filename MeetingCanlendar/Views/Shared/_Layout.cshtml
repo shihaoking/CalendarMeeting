@@ -1,0 +1,25 @@
+﻿<!DOCTYPE xhtml>
+<html>
+<head>
+    <meta content="" charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery") 
+    @Scripts.Render("~/bundles/jqueryui") 
+    <link href="@Url.Content("~/Content/css/fullcalendar.print.css")" media="print" rel='stylesheet' />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/moment.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/datepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/datepicker.zh-CN.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fullcalendar.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fullcalendar-zh-cn.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/chzn-chosen.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/editPanel.js")"></script>
+</head>
+<body>
+    @RenderBody()
+
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>
