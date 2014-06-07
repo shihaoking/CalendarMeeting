@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MCDBModelStoreContainer">
+          <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
+        </EntityContainer>
+        <EntityType Name="meeting_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="m_title" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="m_position" Type="int" Nullable="false" />
+          <Property Name="m_people" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="m_start_time" Type="datetime" Nullable="false" />
+          <Property Name="m_end_time" Type="datetime" Nullable="false" />
+          <Property Name="m_level" Type="int" Nullable="false" />
+          <Property Name="m_creator" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="m_create_time" Type="datetime" Nullable="false" />
+          <Property Name="m_memo" Type="varchar" MaxLength="300" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MCDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="mc_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="meeting_info" EntityType="MCDBModel.meeting_info" />
+        </EntityContainer>
+        <EntityType Name="meeting_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="m_title" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="m_position" Type="Int32" Nullable="false" />
+          <Property Name="m_people" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="m_start_time" Type="DateTime" Nullable="false" />
+          <Property Name="m_end_time" Type="DateTime" Nullable="false" />
+          <Property Name="m_level" Type="Int32" Nullable="false" />
+          <Property Name="m_creator" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="m_create_time" Type="DateTime" Nullable="false" />
+          <Property Name="m_memo" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MCDBModelStoreContainer" CdmEntityContainer="mc_dbEntities">
+          <EntitySetMapping Name="meeting_info">
+            <EntityTypeMapping TypeName="MCDBModel.meeting_info">
+              <MappingFragment StoreEntitySet="meeting_info">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="m_title" ColumnName="m_title" />
+                <ScalarProperty Name="m_position" ColumnName="m_position" />
+                <ScalarProperty Name="m_people" ColumnName="m_people" />
+                <ScalarProperty Name="m_start_time" ColumnName="m_start_time" />
+                <ScalarProperty Name="m_end_time" ColumnName="m_end_time" />
+                <ScalarProperty Name="m_level" ColumnName="m_level" />
+                <ScalarProperty Name="m_creator" ColumnName="m_creator" />
+                <ScalarProperty Name="m_create_time" ColumnName="m_create_time" />
+                <ScalarProperty Name="m_memo" ColumnName="m_memo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MySqlDB">
+        <EntityTypeShape EntityType="MCDBModel.meeting_info" Width="1.5" PointX="0.75" PointY="0.75" Height="2.9251310221354165" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
