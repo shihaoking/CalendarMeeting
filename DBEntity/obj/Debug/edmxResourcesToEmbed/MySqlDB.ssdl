@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="MCDBModelStoreContainer">
+    <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
+    <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" />
+    <EntitySet Name="user_info" EntityType="MCDBModel.Store.user_info" store:Type="Tables" Schema="mc_db" />
+    <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.Store.meeting_info_ibfk_1">
+      <End Role="meeting_position" EntitySet="meeting_position" />
+      <End Role="meeting_info" EntitySet="meeting_info" />
+    </AssociationSet>
+    <AssociationSet Name="meeting_info_ibfk_2" Association="MCDBModel.Store.meeting_info_ibfk_2">
+      <End Role="user_info" EntitySet="user_info" />
+      <End Role="meeting_info" EntitySet="meeting_info" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="meeting_info">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="m_title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="m_position" Type="smallint" Nullable="false" />
+    <Property Name="m_people" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="m_start_time" Type="datetime" Nullable="false" />
+    <Property Name="m_end_time" Type="datetime" Nullable="false" />
+    <Property Name="m_level" Type="int" Nullable="false" />
+    <Property Name="m_creator" Type="smallint" Nullable="false" />
+    <Property Name="m_create_time" Type="datetime" Nullable="false" />
+    <Property Name="m_memo" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="meeting_position">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="p_name" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="p_size" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="user_info">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="u_name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="u_password" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="u_level" Type="tinyint" Nullable="false" />
+    <Property Name="u_email" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="u_status" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="u_create_time" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="meeting_info_ibfk_1">
+    <End Role="meeting_position" Type="MCDBModel.Store.meeting_position" Multiplicity="1" />
+    <End Role="meeting_info" Type="MCDBModel.Store.meeting_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="meeting_position">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="meeting_info">
+        <PropertyRef Name="m_position" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="meeting_info_ibfk_2">
+    <End Role="user_info" Type="MCDBModel.Store.user_info" Multiplicity="1" />
+    <End Role="meeting_info" Type="MCDBModel.Store.meeting_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_info">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="meeting_info">
+        <PropertyRef Name="m_creator" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

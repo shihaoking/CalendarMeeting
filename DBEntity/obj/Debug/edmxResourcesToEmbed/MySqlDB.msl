@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MCDBModelStoreContainer" CdmEntityContainer="mc_dbEntities">
+    <EntitySetMapping Name="meeting_info">
+      <EntityTypeMapping TypeName="MCDBModel.meeting_info">
+        <MappingFragment StoreEntitySet="meeting_info">
+          <ScalarProperty Name="m_memo" ColumnName="m_memo" />
+          <ScalarProperty Name="m_create_time" ColumnName="m_create_time" />
+          <ScalarProperty Name="m_creator" ColumnName="m_creator" />
+          <ScalarProperty Name="m_level" ColumnName="m_level" />
+          <ScalarProperty Name="m_end_time" ColumnName="m_end_time" />
+          <ScalarProperty Name="m_start_time" ColumnName="m_start_time" />
+          <ScalarProperty Name="m_people" ColumnName="m_people" />
+          <ScalarProperty Name="m_position" ColumnName="m_position" />
+          <ScalarProperty Name="m_title" ColumnName="m_title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="meeting_position">
+      <EntityTypeMapping TypeName="MCDBModel.meeting_position">
+        <MappingFragment StoreEntitySet="meeting_position">
+          <ScalarProperty Name="p_size" ColumnName="p_size" />
+          <ScalarProperty Name="p_name" ColumnName="p_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_info">
+      <EntityTypeMapping TypeName="MCDBModel.user_info">
+        <MappingFragment StoreEntitySet="user_info">
+          <ScalarProperty Name="u_create_time" ColumnName="u_create_time" />
+          <ScalarProperty Name="u_status" ColumnName="u_status" />
+          <ScalarProperty Name="u_email" ColumnName="u_email" />
+          <ScalarProperty Name="u_level" ColumnName="u_level" />
+          <ScalarProperty Name="u_password" ColumnName="u_password" />
+          <ScalarProperty Name="u_name" ColumnName="u_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

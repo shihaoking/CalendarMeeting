@@ -45,3 +45,6 @@ E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\zh-Hans\System.Web.WebPages.Ra
 E:\Projects\MeetingCanlendar\MeetingCanlendar\obj\Debug\MeetingCanlendar.csprojResolveAssemblyReference.cache
 E:\Projects\MeetingCanlendar\MeetingCanlendar\obj\Debug\MeetingCanlendar.dll
 E:\Projects\MeetingCanlendar\MeetingCanlendar\obj\Debug\MeetingCanlendar.pdb
+E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\DBEntity.dll
+E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Owin.dll
+E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\DBEntity.pdb

@@ -4,9 +4,19 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="MCDBModelStoreContainer">
           <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
+          <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" />
+          <EntitySet Name="user_info" EntityType="MCDBModel.Store.user_info" store:Type="Tables" Schema="mc_db" />
+          <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.Store.meeting_info_ibfk_1">
+            <End Role="meeting_position" EntitySet="meeting_position" />
+            <End Role="meeting_info" EntitySet="meeting_info" />
+          </AssociationSet>
+          <AssociationSet Name="meeting_info_ibfk_2" Association="MCDBModel.Store.meeting_info_ibfk_2">
+            <End Role="user_info" EntitySet="user_info" />
+            <End Role="meeting_info" EntitySet="meeting_info" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="meeting_info">
           <Key>
@@ -14,39 +24,140 @@
           </Key>
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="m_title" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="m_position" Type="int" Nullable="false" />
+          <Property Name="m_position" Type="smallint" Nullable="false" />
           <Property Name="m_people" Type="varchar" Nullable="false" MaxLength="200" />
           <Property Name="m_start_time" Type="datetime" Nullable="false" />
           <Property Name="m_end_time" Type="datetime" Nullable="false" />
           <Property Name="m_level" Type="int" Nullable="false" />
-          <Property Name="m_creator" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="m_creator" Type="smallint" Nullable="false" />
           <Property Name="m_create_time" Type="datetime" Nullable="false" />
           <Property Name="m_memo" Type="varchar" MaxLength="300" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <EntityType Name="meeting_position">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="p_name" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="p_size" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="u_name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="u_password" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="u_level" Type="tinyint" Nullable="false" />
+          <Property Name="u_email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="u_status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="u_create_time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="meeting_info_ibfk_1">
+          <End Role="meeting_position" Type="MCDBModel.Store.meeting_position" Multiplicity="1" />
+          <End Role="meeting_info" Type="MCDBModel.Store.meeting_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="meeting_position">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="meeting_info">
+              <PropertyRef Name="m_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="meeting_info_ibfk_2">
+          <End Role="user_info" Type="MCDBModel.Store.user_info" Multiplicity="1" />
+          <End Role="meeting_info" Type="MCDBModel.Store.meeting_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_info">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="meeting_info">
+              <PropertyRef Name="m_creator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MCDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="mc_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="meeting_info" EntityType="MCDBModel.meeting_info" />
+          <EntitySet Name="meeting_position" EntityType="MCDBModel.meeting_position" />
+          <EntitySet Name="user_info" EntityType="MCDBModel.user_info" />
+          <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.meeting_info_ibfk_1">
+            <End Role="meeting_position" EntitySet="meeting_position" />
+            <End Role="meeting_info" EntitySet="meeting_info" />
+          </AssociationSet>
+          <AssociationSet Name="meeting_info_ibfk_2" Association="MCDBModel.meeting_info_ibfk_2">
+            <End Role="user_info" EntitySet="user_info" />
+            <End Role="meeting_info" EntitySet="meeting_info" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="meeting_info">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="m_title" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="m_position" Type="Int32" Nullable="false" />
-          <Property Name="m_people" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-          <Property Name="m_start_time" Type="DateTime" Nullable="false" />
-          <Property Name="m_end_time" Type="DateTime" Nullable="false" />
-          <Property Name="m_level" Type="Int32" Nullable="false" />
-          <Property Name="m_creator" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="m_create_time" Type="DateTime" Nullable="false" />
-          <Property Name="m_memo" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="m_title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="m_position" Nullable="false" />
+          <Property Type="String" Name="m_people" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="m_start_time" Nullable="false" />
+          <Property Type="DateTime" Name="m_end_time" Nullable="false" />
+          <Property Type="Int32" Name="m_level" Nullable="false" />
+          <Property Type="Int16" Name="m_creator" Nullable="false" />
+          <Property Type="DateTime" Name="m_create_time" Nullable="false" />
+          <Property Type="String" Name="m_memo" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="meeting_position" Relationship="MCDBModel.meeting_info_ibfk_1" FromRole="meeting_info" ToRole="meeting_position" />
+          <NavigationProperty Name="user_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="meeting_info" ToRole="user_info" />
         </EntityType>
-      </Schema>
+        <EntityType Name="meeting_position">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="p_name" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="p_size" Nullable="false" />
+          <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_1" FromRole="meeting_position" ToRole="meeting_info" />
+        </EntityType>
+        <EntityType Name="user_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="u_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="u_password" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="u_level" Nullable="false" />
+          <Property Type="String" Name="u_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="u_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="u_create_time" Nullable="false" />
+          <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="user_info" ToRole="meeting_info" />
+        </EntityType>
+        <Association Name="meeting_info_ibfk_1">
+          <End Type="MCDBModel.meeting_position" Role="meeting_position" Multiplicity="1" />
+          <End Type="MCDBModel.meeting_info" Role="meeting_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="meeting_position">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="meeting_info">
+              <PropertyRef Name="m_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="meeting_info_ibfk_2">
+          <End Type="MCDBModel.user_info" Role="user_info" Multiplicity="1" />
+          <End Type="MCDBModel.meeting_info" Role="meeting_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_info">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="meeting_info">
+              <PropertyRef Name="m_creator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -55,16 +166,38 @@
           <EntitySetMapping Name="meeting_info">
             <EntityTypeMapping TypeName="MCDBModel.meeting_info">
               <MappingFragment StoreEntitySet="meeting_info">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="m_title" ColumnName="m_title" />
-                <ScalarProperty Name="m_position" ColumnName="m_position" />
-                <ScalarProperty Name="m_people" ColumnName="m_people" />
-                <ScalarProperty Name="m_start_time" ColumnName="m_start_time" />
-                <ScalarProperty Name="m_end_time" ColumnName="m_end_time" />
-                <ScalarProperty Name="m_level" ColumnName="m_level" />
-                <ScalarProperty Name="m_creator" ColumnName="m_creator" />
-                <ScalarProperty Name="m_create_time" ColumnName="m_create_time" />
                 <ScalarProperty Name="m_memo" ColumnName="m_memo" />
+                <ScalarProperty Name="m_create_time" ColumnName="m_create_time" />
+                <ScalarProperty Name="m_creator" ColumnName="m_creator" />
+                <ScalarProperty Name="m_level" ColumnName="m_level" />
+                <ScalarProperty Name="m_end_time" ColumnName="m_end_time" />
+                <ScalarProperty Name="m_start_time" ColumnName="m_start_time" />
+                <ScalarProperty Name="m_people" ColumnName="m_people" />
+                <ScalarProperty Name="m_position" ColumnName="m_position" />
+                <ScalarProperty Name="m_title" ColumnName="m_title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="meeting_position">
+            <EntityTypeMapping TypeName="MCDBModel.meeting_position">
+              <MappingFragment StoreEntitySet="meeting_position">
+                <ScalarProperty Name="p_size" ColumnName="p_size" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_info">
+            <EntityTypeMapping TypeName="MCDBModel.user_info">
+              <MappingFragment StoreEntitySet="user_info">
+                <ScalarProperty Name="u_create_time" ColumnName="u_create_time" />
+                <ScalarProperty Name="u_status" ColumnName="u_status" />
+                <ScalarProperty Name="u_email" ColumnName="u_email" />
+                <ScalarProperty Name="u_level" ColumnName="u_level" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -89,7 +222,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="MySqlDB">
-        <EntityTypeShape EntityType="MCDBModel.meeting_info" Width="1.5" PointX="0.75" PointY="0.75" Height="2.9251310221354165" IsExpanded="true" />
+        <EntityTypeShape EntityType="MCDBModel.meeting_info" Width="1.5" PointX="3" PointY="1" Height="3.3071704101562496" />
+        <EntityTypeShape EntityType="MCDBModel.meeting_position" Width="1.5" PointX="0.75" PointY="1.75" Height="1.7790128580729165" />
+        <EntityTypeShape EntityType="MCDBModel.user_info" Width="1.5" PointX="0.75" PointY="5.375" Height="2.5430916341145817" />
+        <AssociationConnector Association="MCDBModel.meeting_info_ibfk_1" >
+          <ConnectorPoint PointX="2.25" PointY="2.6395064290364583" />
+          <ConnectorPoint PointX="3" PointY="2.6395064290364583" />
+        </AssociationConnector>
+        <AssociationConnector Association="MCDBModel.meeting_info_ibfk_2" >
+          <ConnectorPoint PointX="2.25" PointY="6.6465458170572909" />
+          <ConnectorPoint PointX="3.75" PointY="6.6465458170572909" />
+          <ConnectorPoint PointX="3.75" PointY="4.30717041015625" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

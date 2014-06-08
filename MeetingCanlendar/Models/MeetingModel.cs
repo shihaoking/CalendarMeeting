@@ -23,10 +23,23 @@ namespace MeetingCanlendar.Models
             return db.meeting_info.Where(r => r.m_start_time >= fromTime && r.m_start_time <= toTime);
         }
 
+        public IQueryable<meeting_position> GetMeetingPositions()
+        {
+            return db.meeting_position;
+        }
+
         public void AddMeeting(meeting_info mi)
         {
             db.meeting_info.AddObject(mi);
             SaveChange();
         }
+    }
+
+    public class MeetingEvent
+    {
+        public int id { get; set; }
+        public string title { get; set; }
+        public int position { get; set; }
+        public DateTime start { get; set; }
     }
 }
