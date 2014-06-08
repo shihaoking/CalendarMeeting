@@ -38,24 +38,40 @@ namespace MeetingCanlendar.Controllers
 
             List<meeting_info> source = metModel.GetMeetings(startTime, endTime).ToList();
 
-            var result = source.Select(r => new { id = r.id, title = r.m_title, 
+            var result = source.Select(r => new { 
+                id = r.id, 
+                title = r.m_title, 
                 start = r.m_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                 end = r.m_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
-                people = r.m_people, memo = r.m_memo, 
+                people = r.m_people, 
+                memo = r.m_memo, 
                 position = r.m_position,
-                creator = r.user_infoReference.Value.u_name, createTime = r.m_create_time});
+                creator = r.user_infoReference.Value.u_name, 
+                level = r.m_level,
+                createTime = r.m_create_time});
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult AddMeeting(string source)
+        public ActionResult EditMeeting(string source)
         {
+            MeetingModel metModel = new MeetingModel();
             JavaScriptSerializer jser = new JavaScriptSerializer();
             meeting_info metData = jser.Deserialize<meeting_info>(source);
 
-            meeting_info metInfo = new meeting_info();
-            metInfo.m_create_time = DateTime.Now;
-            metInfo.m_creator = 1;
+
+            meeting_info metInfo;
+            if(metData.id == -1)
+            {
+                metInfo = new meeting_info();
+                metInfo.m_create_time = DateTime.Now;
+                metInfo.m_creator = 1;
+            }
+            else
+            {
+                metInfo = metModel.GetMeeting(metData.id);
+            }
+
             metInfo.m_start_time = metData.m_start_time;
             metInfo.m_end_time = metData.m_end_time;
             metInfo.m_level = metData.m_level;
@@ -66,8 +82,14 @@ namespace MeetingCanlendar.Controllers
 
             try
             {
-                MeetingModel metModel = new MeetingModel();
-                metModel.AddMeeting(metInfo);
+                if(metData.id == -1)
+                {
+                    metModel.AddMeeting(metInfo);
+                }
+                else
+                {
+                    metModel.SaveChange();
+                }
             }
             catch(Exception ex)
             {

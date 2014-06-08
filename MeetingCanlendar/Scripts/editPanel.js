@@ -1,10 +1,10 @@
 ﻿(function ($) {
 
     var defaults = {
-        id: 0,
         title: '会议主题',
-        potision: 0,
+        potision: 1,
         people: '',
+        level: 0,
         start: new Date(),
         end: (new Date()).setHours(1),
         memo: '',
@@ -71,7 +71,6 @@
 
         var options = mergeOptions({}, defaults, instanceOptions);
 
-        var eventId = options.id;
         var eventTitle = options.title;
         var eventPosition = options.position;
         var eventStartTime = options.start;
@@ -80,11 +79,13 @@
         var eventMemo = options.memo;
         var jsEvent = options.jsEvent;
         var positions = options.positions;
+        var level = options.level;
+        var eventMemo = options.memo;
 
         var editPanel = $(
             '<div id="editPanel"><div class="ep-content">'
                 + '<div class="ep-dt ep-title"><input type="text" id="eveTitle" class="ep-input ep-title" value="会议主题" /></div>'
-                + '<div class="ep-dt ep-position"><span class="ep-tip">地点</span><select id="evePostion" class="ep-select ep-select-pos chosen-select"></select></div>'
+                + '<div class="ep-dt ep-position"><span class="ep-tip">地点</span><select id="evePosition" class="ep-select ep-select-pos chosen-select"></select></div>'
                 + '<div class="ep-dt ep-start"><span class="ep-tip">从</span><input type="text" id="eveStartDate" class="datepicker ep-input ep-date ep-date-start"/><select id="eveStartSp" class="ep-select ep-select-time chosen-select" ><option value="0">上午</option><option value="1">下午</option></select><input type="text" id="eveStartTime" class="ep-input ep-time"/></div>'
                 + '<div class="ep-dt ep-end"><span class="ep-tip">到</span><input type="text" id="eveEndDate" class="datepicker ep-input ep-date ep-date-start"/><select id="eveEndSp" class="ep-select ep-select-time chosen-select" ><option value="0">上午</option><option value="1">下午</option></select><input type="text" id="eveEndTime" class="ep-input ep-time"/></div>'
                 + '<div class="ep-dt ep-people"><span class="ep-tip">人员</span><input type="text" id="evePeople" class="ep-input ep-people"/></div>'
@@ -94,12 +95,12 @@
 
         $.each(positions, function (index, data) {
             if (data) {
-                editPanel.find('#evePostion')
+                editPanel.find('#evePosition')
                 .append('<option value=' + data.value + '>' + data.text + '</option>');
             }
         });
 
-        editPanel.find('#evePostion').val(eventPosition);
+        editPanel.find('#evePosition').val(eventPosition);
 
         if (eventStartTime.hours() > 12) {
             editPanel.find('#eveStartTime').val(eventStartTime.clone().add('hours', -12).format('HH:mm'));
@@ -120,6 +121,7 @@
         editPanel.find('#eveStartDate').val(eventStartTime.format('YYYY-MM-DD'));
         editPanel.find('#eveEndDate').val(eventEndTime.format('YYYY-MM-DD'));
         editPanel.find('#evePeople').val(eventPeople);
+        editPanel.find('#eveMemo').val(eventMemo);
 
         element.append(editPanel);
 
@@ -144,12 +146,25 @@
         editPanel.css({ 'left': panelX, 'top': panelY });
 
         editPanel.find('#eveDelete').click(function () {
-            options.remove();
+            options.remove(this);
             destroy();
         });
 
         editPanel.find('#eveClose').click(function () {
-            options.close();
+            options.close(this);
+            destroy();
+        });
+
+        editPanel.find('#eveSubmit').click(function () {
+            options.submit(editPanel, {
+                title: $('#eveTitle').val(),
+                position: $('#evePosition').val(),
+                start: new Date($('#eveStartDate').val() + ' ' + $('#eveStartTime').val()),
+                end: new Date($('#eveEndDate').val() + ' ' + $('#eveEndTime').val()),
+                people: $('#evePeople').val(),
+                memo: $('#eveMemo').val(),
+                level: options.level
+            });
             destroy();
         });
 

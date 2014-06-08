@@ -133,16 +133,39 @@
             });
 
             $('body').editPanel({
-                id: curEvent.id,
                 title: curEvent.title,
                 position: curEvent.position,
                 people: curEvent.people,
                 start: eventStartTime,
+                level: curEvent.level,
+                memo: curEvent.memo,
                 end: curEvent.end ? curEvent.end.clone() : eventStartTime.clone().add('hours', 1),
                 jsEvent: jsEvent,
                 positions: positionsJSON,
-                submit: function () {
-
+                submit: function (e, data) {
+                    var source = {
+                        id: curEvent.id ? curEvent.id : -1,
+                        m_title: data.title,
+                        m_position: data.position,
+                        m_start_time: data.start,
+                        m_end_time: data.end,
+                        m_level: data.level,
+                        m_people: data.people,
+                        m_memo: data.memo
+                    };
+                    $.post('meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
+                        if (result.type == 1) {
+                            curEvent.title = data.title;
+                            curEvent.start = moment(data.start);
+                            curEvent.end = moment(data.end);
+                            curEvent.position = data.position;
+                            curEvent.memo = data.memo;
+                            curEvent.level = data.level;
+                            curEvent.people = data.people;
+                            alert(curEvent.start);
+                            $('#calendar').fullCalendar('updateEvent', curEvent);
+                        }
+                    });
                 }
             });          
         } 
