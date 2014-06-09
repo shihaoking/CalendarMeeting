@@ -49,7 +49,7 @@
                         $('#loading').toggle(bool);
                     },
                     dayClick: function (date, jsEvent, view) {
-                        EventEditPanel({ start: moment() }, jsEvent);
+                        EventEditPanel({ start: date.add('hour', 7) }, jsEvent);
                     },
                     eventClick: function (calEvent, jsEvent, view) {
                         EventEditPanel(calEvent, jsEvent);
