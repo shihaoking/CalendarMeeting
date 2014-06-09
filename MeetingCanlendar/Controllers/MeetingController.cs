@@ -96,7 +96,19 @@ namespace MeetingCanlendar.Controllers
                 return Json(new { type = 0, msg = "添加失败，请联系管理员。\n错误信息：" + ex.Message }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { type = 1, msg = "添加成功" }, JsonRequestBehavior.AllowGet);
+            return Json(new { type = 1, msg = "添加成功", 
+                data = new {
+                    id = metInfo.id,
+                    title = metInfo.m_title,
+                    start = metInfo.m_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    end = metInfo.m_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    people = metInfo.m_people,
+                    memo = metInfo.m_memo,
+                    position = metInfo.m_position,
+                    creator = metInfo.user_infoReference.Value.u_name,
+                    level = metInfo.m_level,
+                    createTime = metInfo.m_create_time
+                } }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

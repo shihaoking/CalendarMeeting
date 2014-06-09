@@ -49,7 +49,7 @@
                         $('#loading').toggle(bool);
                     },
                     dayClick: function (date, jsEvent, view) {
-                        EventEditPanel({ start: date }, jsEvent);
+                        EventEditPanel({ start: moment() }, jsEvent);
                     },
                     eventClick: function (calEvent, jsEvent, view) {
                         EventEditPanel(calEvent, jsEvent);
@@ -120,7 +120,7 @@
         function EventEditPanel(curEvent, jsEvent) {
             $('body').editPanel('destroy');
 
-            var eventStartTime = curEvent.start ? curEvent.start.clone() : new Date();
+            var eventStartTime = curEvent.start ? curEvent.start.clone() : moment();
             var positionsJSON = [];
 
             $.ajax({
@@ -147,25 +147,34 @@
                         id: curEvent.id ? curEvent.id : -1,
                         m_title: data.title,
                         m_position: data.position,
-                        m_start_time: data.start,
-                        m_end_time: data.end,
+                        m_start_time: data.start.format('YYYY-MM-DD HH:mm'),
+                        m_end_time: data.end.format('YYYY-MM-DD HH:mm'),
                         m_level: data.level,
                         m_people: data.people,
                         m_memo: data.memo
                     };
+
                     $.post('meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
                         if (result.type == 1) {
-                            curEvent.title = data.title;
-                            curEvent.start = moment(data.start);
-                            curEvent.end = moment(data.end);
-                            curEvent.position = data.position;
-                            curEvent.memo = data.memo;
-                            curEvent.level = data.level;
-                            curEvent.people = data.people;
-                            alert(curEvent.start);
-                            $('#calendar').fullCalendar('updateEvent', curEvent);
+
+                            if (source.id == -1) {
+                                $('#calendar').fullCalendar('renderEvent', result.data, true);
+                            } else {
+                                curEvent.title = result.data.title;
+                                curEvent.start = result.data.start;
+                                curEvent.end = result.data.end;
+                                curEvent.position = result.data.position;
+                                curEvent.memo = result.data.memo;
+                                curEvent.level = result.data.level;
+                                curEvent.people = result.data.people;
+
+                                $('#calendar').fullCalendar('updateEvent', curEvent);
+                            }
                         }
                     });
+                },
+                remove: function (e, data) {
+                    
                 }
             });          
         } 

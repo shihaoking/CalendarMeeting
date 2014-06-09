@@ -103,20 +103,19 @@
         editPanel.find('#evePosition').val(eventPosition);
 
         if (eventStartTime.hours() > 12) {
-            editPanel.find('#eveStartTime').val(eventStartTime.clone().add('hours', -12).format('HH:mm'));
             editPanel.find('#eveStartSp').val(1);
         } else {
-            editPanel.find('#eveStartTime').val(eventStartTime.format('HH:mm'));
             editPanel.find('#eveStartSp').val(0);
         }
+        editPanel.find('#eveStartTime').val(eventStartTime.format('h:mm'));
 
         if (eventEndTime.hours() > 12) {
-            editPanel.find('#eveEndTime').val(eventEndTime.clone().add('hours', -12).format('HH:mm'));
-            $('#eveEndSp').val(1);
+            editPanel.find('#eveEndSp').val(1);
         } else {
-            editPanel.find('#eveEndTime').val(eventEndTime.format('HH:mm'));
+
             editPanel.find('#eveEndSp').val(0);
         }
+        editPanel.find('#eveEndTime').val(eventEndTime.format('h:mm'));
 
         editPanel.find('#eveStartDate').val(eventStartTime.format('YYYY-MM-DD'));
         editPanel.find('#eveEndDate').val(eventEndTime.format('YYYY-MM-DD'));
@@ -156,11 +155,14 @@
         });
 
         editPanel.find('#eveSubmit').click(function () {
+            var start = moment($('#eveStartDate').val() + ' ' + $('#eveStartTime').val());
+            var end = moment($('#eveEndDate').val() + ' ' + $('#eveEndTime').val());
+
             options.submit(editPanel, {
                 title: $('#eveTitle').val(),
                 position: $('#evePosition').val(),
-                start: new Date($('#eveStartDate').val() + ' ' + $('#eveStartTime').val()),
-                end: new Date($('#eveEndDate').val() + ' ' + $('#eveEndTime').val()),
+                start: $('#eveStartSp').val() == 0 ? start : start.add('hour', 12),
+                end: $('#eveEndSp').val() == 0 ? end : end.add('hour', 12),
                 people: $('#evePeople').val(),
                 memo: $('#eveMemo').val(),
                 level: options.level
@@ -169,8 +171,32 @@
         });
 
         element.find(".datepicker").datepicker();
-        element.find("#eveStartDate").focus(function () {
 
+        element.find(".ep-time").change(function () {
+            var val = $(this).val();
+            var reg = /(\d{1,2}):(\d{1,2})/;
+
+            if (reg.test(val) == false) {
+                val = moment().format('H:mm');
+            }
+
+            var hour = val.split(':')[0];
+            var minute = val.split(':')[1];
+
+            if (hour > 12) {
+                $(this).parent().find('.ep-select-time').val(1).trigger("chosen:updated");
+                val = (hour - 12) + ':' + minute;
+            }
+
+            if ($(this).attr('id') == 'eveEndTime') {
+                var startTime = $('#eveStartTime').val();
+                if ($(this).parent().find('.ep-select-time').val() == 0
+                && startTime.split(':')[0] > hour) {
+                    $(this).parent().find('.ep-select-time').val(1).trigger("chosen:updated"); ;
+                }
+            }
+
+            $(this).val(val);
         });
 
         element.find(".datepicker").change(
@@ -193,6 +219,14 @@
         });
 
         element.find(".chosen-select").chosen({ disable_search_threshold: 6 });
+
+        $(".ep-select-time").chosen().change(function () {
+            var startHour = $('#eveStartTime').val().split(':')[0];
+            var endHour = $('#eveEndTime').val().split(':')[0];
+            if ($(this).val() == $('#eveEndSp').val() && startHour > endHour) {
+                
+            }
+        });
 
         function destroy() {
             editPanel.remove();

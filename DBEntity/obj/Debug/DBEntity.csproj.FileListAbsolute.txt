@@ -4,3 +4,9 @@ E:\Projects\MeetingCanlendar\DBEntity\bin\Debug\DBEntity.pdb
 E:\Projects\MeetingCanlendar\DBEntity\obj\Debug\DBEntity.csprojResolveAssemblyReference.cache
 E:\Projects\MeetingCanlendar\DBEntity\obj\Debug\DBEntity.dll
 E:\Projects\MeetingCanlendar\DBEntity\obj\Debug\DBEntity.pdb
+D:\Projects\CalendarMeeting\DBEntity\bin\Debug\DBEntity.dll.config
+D:\Projects\CalendarMeeting\DBEntity\bin\Debug\DBEntity.dll
+D:\Projects\CalendarMeeting\DBEntity\bin\Debug\DBEntity.pdb
+D:\Projects\CalendarMeeting\DBEntity\obj\Debug\ResolveAssemblyReference.cache
+D:\Projects\CalendarMeeting\DBEntity\obj\Debug\DBEntity.dll
+D:\Projects\CalendarMeeting\DBEntity\obj\Debug\DBEntity.pdb
