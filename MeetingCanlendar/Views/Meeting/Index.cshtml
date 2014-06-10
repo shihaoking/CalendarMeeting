@@ -45,14 +45,30 @@
                     weekNumbers: false,
                     editable: true,
                     firstDay: 1,
+                    unselectAuto: false,
+                    slotEventOverlap: false,
+                    slotDuration: '00:15:00',
                     loading: function (bool) {
                         $('#loading').toggle(bool);
                     },
+                    select: function (start, end, jsEvent, view) {
+                        EventEditPanel({ start: start, end: end }, jsEvent);
+                    },
                     dayClick: function (date, jsEvent, view) {
-                        EventEditPanel({ start: date.add('hour', 7) }, jsEvent);
+                        if (view.name == "month") {
+                            EventEditPanel({ start: date.add('hour', 7) }, jsEvent);
+                        } else {
+                            EventEditPanel({ start: date }, jsEvent);
+                        }
                     },
                     eventClick: function (calEvent, jsEvent, view) {
                         EventEditPanel(calEvent, jsEvent);
+                    },
+                    eventDrop: function (event, jsEvent, ui, view) {
+                        UpdateMeeting(event, ConvertEventToMeetingData(event));
+                    },
+                    eventResize: function (event, jsEvent, ui, view) {
+                        UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
                     viewRender: function (view, element) {
                         if (view.name == "month") {
@@ -133,6 +149,7 @@
             });
 
             $('body').editPanel({
+                id: curEvent.id,
                 title: curEvent.title,
                 position: curEvent.position,
                 people: curEvent.people,
@@ -143,40 +160,59 @@
                 jsEvent: jsEvent,
                 positions: positionsJSON,
                 submit: function (e, data) {
-                    var source = {
-                        id: curEvent.id ? curEvent.id : -1,
-                        m_title: data.title,
-                        m_position: data.position,
-                        m_start_time: data.start.format('YYYY-MM-DD HH:mm'),
-                        m_end_time: data.end.format('YYYY-MM-DD HH:mm'),
-                        m_level: data.level,
-                        m_people: data.people,
-                        m_memo: data.memo
-                    };
+                    var source = ConvertEventToMeetingData(data);
 
-                    $.post('meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
-                        if (result.type == 1) {
-
-                            if (source.id == -1) {
-                                $('#calendar').fullCalendar('renderEvent', result.data, true);
-                            } else {
-                                curEvent.title = result.data.title;
-                                curEvent.start = result.data.start;
-                                curEvent.end = result.data.end;
-                                curEvent.position = result.data.position;
-                                curEvent.memo = result.data.memo;
-                                curEvent.level = result.data.level;
-                                curEvent.people = result.data.people;
-
-                                $('#calendar').fullCalendar('updateEvent', curEvent);
-                            }
+                    UpdateMeeting(curEvent, source);
+                },
+                remove: function (e, data) {
+                    $.post('meeting/RemoveMeeting', { id: data.id }, function (reuslt) {
+                        if (result.type == 0) {
+                            alert(result.msg);
+                        } else if (reuslt.type == 1) {
+                            $('#calendar').fullCalendar('removeEvents', data.id);
                         }
                     });
                 },
-                remove: function (e, data) {
-                    
+                close: function () {
+                    $('#calendar').fullCalendar('unselect');
                 }
-            });          
-        } 
+            });
+        }
+
+        function UpdateMeeting(curEvent, source) {
+            $.post('meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
+                if (result.type == 0) {
+                    alert(result.msg);
+                } else if (result.type == 1) {
+                    if (source.id == -1) {
+                        $('#calendar').fullCalendar('renderEvent', result.data, true);
+                    } else {
+                        curEvent.title = result.data.title;
+                        curEvent.start = result.data.start;
+                        curEvent.end = result.data.end;
+                        curEvent.position = result.data.position;
+                        curEvent.memo = result.data.memo;
+                        curEvent.level = result.data.level;
+                        curEvent.people = result.data.people;
+
+                        $('#calendar').fullCalendar('updateEvent', curEvent);
+                    }
+                }
+            });
+        }
+
+        function ConvertEventToMeetingData(data) {
+            return {
+                id: data.id ? data.id : -1,
+                m_title: data.title,
+                m_position: data.position,
+                m_start_time: data.start.format('YYYY-MM-DD HH:mm'),
+                m_end_time: data.end.format('YYYY-MM-DD HH:mm'),
+                m_level: data.level,
+                m_people: data.people,
+                m_memo: data.memo
+            };
+        }
+
     </script>
 }

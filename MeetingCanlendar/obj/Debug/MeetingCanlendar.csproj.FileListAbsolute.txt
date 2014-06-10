@@ -46,7 +46,6 @@ E:\Projects\MeetingCanlendar\MeetingCanlendar\obj\Debug\MeetingCanlendar.csprojR
 E:\Projects\MeetingCanlendar\MeetingCanlendar\obj\Debug\MeetingCanlendar.dll
 E:\Projects\MeetingCanlendar\MeetingCanlendar\obj\Debug\MeetingCanlendar.pdb
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\DBEntity.dll
-E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Owin.dll
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\DBEntity.pdb
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\MeetingCanlendar.dll
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\MeetingCanlendar.pdb

@@ -1,6 +1,7 @@
 ﻿(function ($) {
 
     var defaults = {
+        id: 0,
         title: '会议主题',
         potision: 1,
         people: '',
@@ -71,6 +72,7 @@
 
         var options = mergeOptions({}, defaults, instanceOptions);
 
+        var eventId = options.id;
         var eventTitle = options.title;
         var eventPosition = options.position;
         var eventStartTime = options.start;
@@ -92,6 +94,10 @@
                 + '<div class="ep-dt ep-memo"><span class="ep-tip">备注</span><input type="text" id="eveMemo" class="ep-input ep-memo" /></div>'
             + '</div><div class="ep-action"><span id="eveDelete" class="epc-bt ep-action-del">删除</span><span id="eveSubmit" class="epc-bt ep-action-sub">提交</span><span class="epc-bt ep-action-sp">|</span><span id="eveClose" class="epc-bt ep-action-clo">取消</span><div class="clear"></div></div>');
         editPanel.find('#eveTitle').val(eventTitle);
+
+        if (!eventId || eventId == -1) {
+            editPanel.find('#eveDelete').remove();
+        }
 
         $.each(positions, function (index, data) {
             if (data) {
@@ -122,28 +128,6 @@
         editPanel.find('#evePeople').val(eventPeople);
         editPanel.find('#eveMemo').val(eventMemo);
 
-        element.append(editPanel);
-
-        var hiddenX = jsEvent.pageX - jsEvent.clientX;
-        var hiddenY = jsEvent.pageY - jsEvent.clientY;
-        var panelX = jsEvent.pageX + 10;
-        var panelY = jsEvent.pageY - editPanel.outerHeight() / 2;
-
-        if (document.body.clientWidth <= jsEvent.clientX + editPanel.outerWidth() + 20) {
-            panelX = jsEvent.pageX - editPanel.outerWidth() - 10;
-        }
-
-
-        if (window.innerHeight < jsEvent.clientY + editPanel.outerHeight() / 2) {
-            panelY = window.innerHeight + hiddenY - editPanel.outerHeight() - 10;
-        }
-
-        if (jsEvent.clientY < editPanel.outerHeight() / 2) {
-            panelY = 10 + hiddenY;
-        }
-
-        editPanel.css({ 'left': panelX, 'top': panelY });
-
         editPanel.find('#eveDelete').click(function () {
             options.remove(this);
             destroy();
@@ -159,6 +143,7 @@
             var end = moment($('#eveEndDate').val() + ' ' + $('#eveEndTime').val());
 
             options.submit(editPanel, {
+                id: options.id,
                 title: $('#eveTitle').val(),
                 position: $('#evePosition').val(),
                 start: $('#eveStartSp').val() == 0 ? start : start.add('hour', 12),
@@ -169,8 +154,6 @@
             });
             destroy();
         });
-
-        element.find(".datepicker").datepicker();
 
         element.find(".ep-time").change(function () {
             var val = $(this).val();
@@ -226,8 +209,6 @@
             }
         });
 
-        element.find(".chosen-select").chosen({ disable_search_threshold: 6 });
-
         $(".ep-select-time").chosen().change(function () {
             var startSp = $('#eveStartSp').val();
             var endSp = $('#eveEndSp').val();
@@ -248,6 +229,31 @@
                 $('.ep-select-time').trigger("chosen:updated");
             }
         });
+
+        element.append(editPanel);
+
+        editPanel.find(".datepicker").datepicker();
+        editPanel.find(".chosen-select").chosen({ disable_search_threshold: 6 });
+
+        var hiddenX = jsEvent.pageX - jsEvent.clientX;
+        var hiddenY = jsEvent.pageY - jsEvent.clientY;
+        var panelX = jsEvent.pageX + 10;
+        var panelY = jsEvent.pageY - editPanel.outerHeight() / 2;
+
+        if (document.body.clientWidth <= jsEvent.clientX + editPanel.outerWidth() + 20) {
+            panelX = jsEvent.pageX - editPanel.outerWidth() - 10;
+        }
+
+
+        if (window.innerHeight < jsEvent.clientY + editPanel.outerHeight() / 2) {
+            panelY = window.innerHeight + hiddenY - editPanel.outerHeight() - 10;
+        }
+
+        if (jsEvent.clientY < editPanel.outerHeight() / 2) {
+            panelY = 10 + hiddenY;
+        }
+
+        editPanel.css({ 'left': panelX, 'top': panelY });
 
         function destroy() {
             editPanel.remove();

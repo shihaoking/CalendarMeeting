@@ -59,6 +59,10 @@ namespace MeetingCanlendar.Controllers
             JavaScriptSerializer jser = new JavaScriptSerializer();
             meeting_info metData = jser.Deserialize<meeting_info>(source);
 
+            if(metModel.CheckMeetingAvailable(metData.id, metData.m_start_time, metData.m_end_time) == false)
+            {
+                return Json(new { type = 0, msg = "该时间段内已经有会议，请更改会议时间。" }, JsonRequestBehavior.AllowGet);
+            }
 
             meeting_info metInfo;
             if(metData.id == -1)

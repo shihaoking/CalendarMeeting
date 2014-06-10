@@ -10,6 +10,11 @@ input{
 	font-family: "Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 }
 
+select
+{
+    font-family: "Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+}
+
 #top {
 	background: #eee;
 	border-bottom: 1px solid #ddd;

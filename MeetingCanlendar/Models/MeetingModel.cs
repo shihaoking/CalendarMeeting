@@ -28,6 +28,13 @@ namespace MeetingCanlendar.Models
             return db.meeting_position;
         }
 
+        public bool CheckMeetingAvailable(int metId, DateTime startTime, DateTime endTime)
+        {
+            return !(db.meeting_info.Any(r => r.id != metId &&
+                (r.m_start_time <= startTime && startTime <= r.m_end_time ||
+                r.m_start_time <= endTime && endTime <= r.m_end_time)));
+        }
+
         public void AddMeeting(meeting_info mi)
         {
             db.meeting_info.AddObject(mi);
