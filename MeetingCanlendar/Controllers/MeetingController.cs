@@ -38,17 +38,19 @@ namespace MeetingCanlendar.Controllers
 
             List<meeting_info> source = metModel.GetMeetings(startTime, endTime).ToList();
 
-            var result = source.Select(r => new { 
-                id = r.id, 
-                title = r.m_title, 
+            var result = source.OrderBy(r => r.m_start_time).Select(r => new
+            {
+                id = r.id,
+                title = r.m_title,
                 start = r.m_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                 end = r.m_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
-                people = r.m_people, 
-                memo = r.m_memo, 
+                people = r.m_people,
+                memo = r.m_memo,
                 position = r.m_position,
-                creator = r.user_infoReference.Value.u_name, 
+                creator = r.user_infoReference.Value.u_name,
                 level = r.m_level,
-                createTime = r.m_create_time});
+                createTime = r.m_create_time
+            });
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

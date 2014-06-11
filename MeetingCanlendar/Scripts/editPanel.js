@@ -155,7 +155,33 @@
             destroy();
         });
 
-        element.find(".ep-time").change(function () {
+        element.append(editPanel);
+
+        editPanel.find(".datepicker").datepicker();
+        editPanel.find(".chosen-select").chosen({ disable_search_threshold: 6 });
+        
+        $(".ep-select-time").chosen().change(function () {
+            var startSp = $('#eveStartSp').val();
+            var endSp = $('#eveEndSp').val();
+            var startHour = parseInt($('#eveStartTime').val().split(':')[0]) + startSp * 12;
+            var endHour = parseInt($('#eveEndTime').val().split(':')[0]) + endSp * 12;
+
+            if (startHour > endHour) {
+                if ($(this).attr('id') == 'eveStartSp') {
+                    if (startSp == 1) {
+                        $(this).val(0);
+                    }
+                } else {
+                    if (endSp == 0) {
+                        $(this).val(1);
+                    }
+                }
+
+                $('.ep-select-time').trigger("chosen:updated");
+            }
+        });
+
+        editPanel.find(".ep-time").change(function () {
             var val = $(this).val();
             var reg = /(\d{1,2}):(\d{1,2})/;
 
@@ -190,7 +216,7 @@
             $(this).val(val);
         });
 
-        element.find(".datepicker").change(
+        editPanel.find(".datepicker").change(
         function (e) {
             var val = $(this).val();
             var curDate = new Date();
@@ -208,32 +234,6 @@
                 $('#eveEndDate').val(val);
             }
         });
-
-        $(".ep-select-time").chosen().change(function () {
-            var startSp = $('#eveStartSp').val();
-            var endSp = $('#eveEndSp').val();
-            var startHour = parseInt($('#eveStartTime').val().split(':')[0]) + startSp * 12;
-            var endHour = parseInt($('#eveEndTime').val().split(':')[0]) + endSp * 12;
-
-            if (startHour > endHour) {
-                if ($(this).attr('id') == 'eveStartSp') {
-                    if (startSp == 1) {
-                        $(this).val(0);
-                    }
-                } else {
-                    if (endSp == 0) {
-                        $(this).val(1);
-                    }
-                }
-
-                $('.ep-select-time').trigger("chosen:updated");
-            }
-        });
-
-        element.append(editPanel);
-
-        editPanel.find(".datepicker").datepicker();
-        editPanel.find(".chosen-select").chosen({ disable_search_threshold: 6 });
 
         var hiddenX = jsEvent.pageX - jsEvent.clientX;
         var hiddenY = jsEvent.pageY - jsEvent.clientY;

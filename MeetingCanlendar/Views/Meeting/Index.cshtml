@@ -11,6 +11,17 @@
         var currentDate = new Date();
         var initEvents = [];
         $(document).ready(function () {
+            document.onmousemove = function () {
+                if (document.selection) {//IE ,Opera  
+                    if (document.selection.empty)
+                        document.selection.empty(); //IE  
+                    else {//Opera  
+                        document.selection = null;
+                    }
+                } else if (window.getSelection) {//FF,Safari  
+                    window.getSelection().removeAllRanges();
+                }
+            }
 
             // build the language selector's options
             $.each($.fullCalendar.langs, function (langCode) {
@@ -78,18 +89,27 @@
                     eventResize: function (event, jsEvent, ui, view) {
                         UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
+                    eventAfterAllRender: function (view) {
+                        var meetingList = CreateMeetingList($('#calendar').fullCalendar('clientEvents'), view.name);
+                        if (view.name == "month") {
+                            meetingList.prependTo('.fc-content');
+                        } else if (view.name == 'agendaWeek') {
+                            meetingList.prependTo('.fc-content');
+                        } else {
+                            meetingList.prependTo('.calendar-list-content');
+                        }
+                    },
                     viewRender: function (view, element) {
-                        var meetingList = CreateMeetingList($('#calendar').fullCalendar('clientEvents'));
-                        
+
                         if (view.name == "month") {
                             $('#calendarList').remove();
-                            meetingList.prependTo('.fc-content');
+
                             $('.fc-view').removeClass('fc-agendaDay');
                             $('.fc-button.fc-button-prev').text('上月');
                             $('.fc-button.fc-button-next').text('下月');
                         } else if (view.name == 'agendaWeek') {
                             $('#calendarList').remove();
-                            meetingList.prependTo('.fc-content');
+
                             $('.fc-view').removeClass('fc-agendaDay');
                             $('.fc-button.fc-button-prev').text('上周');
                             $('.fc-button.fc-button-next').text('下周');
@@ -99,7 +119,7 @@
                             if ($('#calendarList').length == 0) {
                                 ShowSmallCanlendar(currentSelDate);
                             }
-                            meetingList.prependTo('.calendar-list-content');
+
                             SetSmallCanlendarValue(currentSelDate);
                             $('.fc-button.fc-button-prev').text('昨天');
                             $('.fc-button.fc-button-next').text('明天');
@@ -119,18 +139,44 @@
             renderCalendar(initEvents);
         });
 
-        function CreateMeetingList(events) {
+        function CreateMeetingList(events, viewType) {
             $('#meeting-list').remove();
+
             var eventList = $('<div id="meeting-list" />');
+            if (viewType == 'agendaDay') {
+                eventList.css('height', $($('.fc-view')[1]).outerHeight() - $('.calendar-list-header').outerHeight() - 21);
+            } else {
+                eventList.css('height', $('.fc-view').outerHeight() - 21);
+            }
+
             var eventListUl = $('<ul class="ml-ul" />');
             var tick = 1;
 
             $.each(events, function (index, event) {
-                var eveLi = $('<li class="ml-li ' + (tick % 2 == 0 ? 'li-even' : '') + '" id="ml-li-' + event.id + '" />').append('<span></span><span>' + event.title + '</span>');
+                var dateTime;
+                if (viewType == 'agendaDay') {
+                    dateTime = event.start.format('Ah:m') + ' 到 ' + event.end.format('Ah:m');
+                } else {
+                    if (event.start.format('YYYY-M-D') == event.end.format('YYYY-M-D')) {
+                        dateTime = event.start.format('D号') + ' ' + event.start.format('Ah:mm') + ' 到 ' + event.end.format('Ah:mm');
+                    } else {
+                        dateTime = event.start.format('D号 Ah:mm') + ' 到 ' + event.end.format('D号 Ah:mm');
+                    }
+                }
+
+                var eveLi = $('<li class="ml-li ' + (tick % 2 == 0 ? 'li-even' : '') + '" id="ml-li-' + event.id + '" />')
+                .append('<span class="ml-title">' + event.title + '</span><span class="ml-time">' + dateTime + '</span><div class="clear"/>');
+
                 eveLi.click(function () {
                     eventListUl.find('li').removeClass('clicked');
                     $(this).addClass('clicked');
+
+                    $('#calendar').find('.fc-event').removeClass('fc-event-selected');
+                    $('#calendar').find('#fc-event-' + event.id).addClass('fc-event-selected');
+                }).dblclick(function (jsEvent) {
+                    EventEditPanel(event, jsEvent);
                 });
+
                 eventListUl.append(eveLi);
                 tick++;
             });

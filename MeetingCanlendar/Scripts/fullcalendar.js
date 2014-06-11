@@ -698,6 +698,7 @@
 
             renderView();
             unfreezeContentHeight();
+
             content.append('<div style="clear:both" />');
             ignoreWindowResize--;
         }
@@ -770,11 +771,11 @@
                 suggestedViewHeight = options.height - (headerElement ? headerElement.height() : 0) - vsides(content);
             }
             else {
-				if(options.aspectRatio == 0){
-					suggestedViewHeight = window.innerHeight - headerElement.height() - 45;
-				} else {
-					suggestedViewHeight = Math.round(content.width() / Math.max(options.aspectRatio, .5));
-				}
+                if (options.aspectRatio == 0) {
+                    suggestedViewHeight = window.innerHeight - headerElement.height() - 45;
+                } else {
+                    suggestedViewHeight = Math.round(content.width() / Math.max(options.aspectRatio, .5));
+                }
             }
         }
 
@@ -788,7 +789,7 @@
             }
 
             ignoreWindowResize++;
-			
+
             currentView.setHeight(suggestedViewHeight);
             currentView.setWidth(currentView.element.width());
             ignoreWindowResize--;
@@ -4855,7 +4856,7 @@
 				skinCss +
 				"'" +
 			">" +
-			"<div class='fc-event-inner'>" +
+			"<div class='fc-event-inner' id='fc-event-" + event.id + "'>" +
 			"<div class='fc-event-time'>";
 
             if (event.end) {
@@ -6210,6 +6211,7 @@
                 html += "<div";
             }
             html +=
+            " id = 'fc-event-" + event.id + "'" +
 			" class='" + classNames.join(' ') + "'" +
 			" style=" +
 				"'" +
