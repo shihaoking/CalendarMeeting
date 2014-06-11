@@ -35,6 +35,16 @@ namespace MeetingCanlendar.Models
                 r.m_start_time <= endTime && endTime <= r.m_end_time)));
         }
 
+        public void DeleteMeeting(int id)
+        {
+            meeting_info mi = GetMeeting(id);
+            if (mi != null)
+            {
+                db.meeting_info.DeleteObject(mi);
+                SaveChange();
+            }
+        }
+
         public void AddMeeting(meeting_info mi)
         {
             db.meeting_info.AddObject(mi);

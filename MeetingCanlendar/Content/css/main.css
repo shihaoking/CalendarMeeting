@@ -26,13 +26,20 @@ select
 .clear{ clear:both}
 
 #calendar {
-	margin: 15px auto;
+	margin: 15px auto 0 auto;
 }
+
+#meeting-list{ float:left; width:25%; margin-left:20px;}
+#meeting-list ul{ margin:0; padding:0; background-color:#F2F2F2}
+#meeting-list li{ list-style:none; padding:10px 5px; cursor:pointer; border-left:3px solid #34AADC;margin-bottom:1px; background-color:White}
+#meeting-list li.clicked{background-color:#34AADC; color:white}
 
 #calendarList{ float:left; width:45%; margin-left:20px; position:relative;min-width:450px}
 #calendarList .currentDayDetail{ position:absolute; bottom:5px}
 .smallCanlendar{ width:220px; margin-left:10px; float:right;}
-.calendar-list-header{ border-bottom:3px solid #E5E5E5; padding-bottom:5px}
+.smallCanlendar .fc-view{min-width:0;width: 100%;}
+.calendar-list-content #meeting-list{ float:none;width:100%; margin-left:0;}
+.calendar-list-header{ border-bottom:3px solid #E5E5E5; padding-bottom:5px; position:relative}
 .calendar-list-header .cdt-day{ font-size:130px}
 .calendar-list-header .cdt-date{ font-size:19px}
 .smallCanlendar .fc-content{border-top:none; margin-top:0}

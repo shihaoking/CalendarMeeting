@@ -114,6 +114,22 @@ namespace MeetingCanlendar.Controllers
                     createTime = metInfo.m_create_time
                 } }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult DeleteMeeting(int id)
+        {
+            MeetingModel metModel = new MeetingModel();
+
+            try
+            {
+                metModel.DeleteMeeting(id);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { type = 0, msg = "删除失败：" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { type = 1, msg = "删除成功"}, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

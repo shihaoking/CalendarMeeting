@@ -54,7 +54,6 @@ D:\Projects\CalendarMeeting\MeetingCanlendar\bin\DBEntity.dll
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\EntityFramework.dll
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\Microsoft.Web.Infrastructure.dll
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\Newtonsoft.Json.dll
-D:\Projects\CalendarMeeting\MeetingCanlendar\bin\Owin.dll
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\System.Net.Http.dll
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\System.Net.Http.Formatting.dll
 D:\Projects\CalendarMeeting\MeetingCanlendar\bin\System.Net.Http.WebRequest.dll

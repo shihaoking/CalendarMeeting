@@ -129,7 +129,7 @@
         editPanel.find('#eveMemo').val(eventMemo);
 
         editPanel.find('#eveDelete').click(function () {
-            options.remove(this);
+            options.remove(this, options);
             destroy();
         });
 
