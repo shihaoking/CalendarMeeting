@@ -4742,7 +4742,7 @@
                 // make sure horizontal coordinates are in bounds
                 left = Math.max(left, columnLeft);
                 right = Math.min(right, columnRight);
-                width = right - left;
+                width = right - left + 3;
 
                 seg.top = top;
                 seg.left = left;
@@ -4806,7 +4806,7 @@
                     height = Math.max(0, seg.outerHeight - seg.vsides);
                     eventElement[0].style.height = height + 'px';
                     event = seg.event;
-                    if (seg.contentTop !== undefined && height - seg.contentTop < 10) {
+                    /*if (seg.contentTop !== undefined && height - seg.contentTop < 10) {
                         // not enough room for title, put it in the time (TODO: maybe make both display:inline instead)
                         eventElement.find('div.fc-event-time')
 						.text(
@@ -4814,7 +4814,7 @@
 						);
                         eventElement.find('div.fc-event-title')
 						.remove();
-                    }
+                    }*/
                     trigger('eventAfterRender', event, event, eventElement);
                 }
             }
@@ -4847,6 +4847,7 @@
             }
 
             html +=
+            " id='fc-event-" + event.id + "'" +
 			" class='" + classes.join(' ') + "'" +
 			" style=" +
 				"'" +
@@ -4856,7 +4857,7 @@
 				skinCss +
 				"'" +
 			">" +
-			"<div class='fc-event-inner' id='fc-event-" + event.id + "'>" +
+			"<div class='fc-event-inner'>" +
 			"<div class='fc-event-time'>";
 
             if (event.end) {

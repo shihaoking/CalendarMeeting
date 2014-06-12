@@ -11,17 +11,6 @@
         var currentDate = new Date();
         var initEvents = [];
         $(document).ready(function () {
-            document.onmousemove = function () {
-                if (document.selection) {//IE ,Opera  
-                    if (document.selection.empty)
-                        document.selection.empty(); //IE  
-                    else {//Opera  
-                        document.selection = null;
-                    }
-                } else if (window.getSelection) {//FF,Safari  
-                    window.getSelection().removeAllRanges();
-                }
-            }
 
             // build the language selector's options
             $.each($.fullCalendar.langs, function (langCode) {
