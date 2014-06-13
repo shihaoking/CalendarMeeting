@@ -79,7 +79,18 @@
                         UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
                     eventAfterAllRender: function (view) {
-                        var meetingList = CreateMeetingList($('#calendar').fullCalendar('clientEvents'), view.name);
+                        var events = $('#calendar').fullCalendar('clientEvents');
+                        var eventsToShow = new Array();
+                        var viewStartTime = view.intervalStart;
+                        var viewEndTime = view.intervalEnd;
+
+                        $.each(events, function (i, event) {
+                            if (event.start >= viewStartTime && event.start <= viewEndTime) {
+                                eventsToShow.push(event);
+                            }
+                        });
+
+                        var meetingList = CreateMeetingList(eventsToShow, view.name);
                         if (view.name == "month") {
                             meetingList.prependTo('.fc-content');
                         } else if (view.name == 'agendaWeek') {
@@ -139,26 +150,44 @@
             }
 
             var eventListUl = $('<ul class="ml-ul" />');
+            var dateSpUl = eventListUl;
             var tick = 1;
+            var lastDate = "";
 
             $.each(events, function (index, event) {
                 var dateTime;
-                if (viewType == 'agendaDay') {
-                    dateTime = event.start.format('Ah:m') + ' 到 ' + event.end.format('Ah:m');
-                } else {
-                    if (event.start.format('YYYY-M-D') == event.end.format('YYYY-M-D')) {
-                        dateTime = event.start.format('D号') + ' ' + event.start.format('Ah:mm') + ' 到 ' + event.end.format('Ah:mm');
-                    } else {
-                        dateTime = event.start.format('D号 Ah:mm') + ' 到 ' + event.end.format('D号 Ah:mm');
-                    }
+                var startTime = event.start.format('YYYY-M-D');
+
+                if (viewType != 'agendaDay' && startTime != lastDate) {
+                    lastDate = startTime;
+
+                    var spLi = $('<li class="ml-li-sp selected" type="show" />').append('<span>' + lastDate + '</span>');
+                    
+                    spLi.click(function () {
+                        if ($(this).attr('type') == 'hide') {
+                            $(this).attr('type', 'show').addClass('selected');
+                        }
+                        else {
+                            $(this).attr('type', 'hide').removeClass('selected');
+                        }
+
+                        $(this).next().toggle(200);
+                    });
+                    eventListUl.append(spLi);
+
+                    dateSpUl = $('<ul class="ml-ul-dt" />');
+                    var dtLi = $('<li class="ml-li-dt" />').append(dateSpUl);
+                    eventListUl.append(dtLi);
                 }
+
+                dateTime = event.start.format('Ah:m') + ' 到 ' + event.end.format('Ah:m');
 
                 var eveLi = $('<li class="ml-li ' + (tick % 2 == 0 ? 'li-even' : '') + '" id="ml-li-' + event.id + '" />')
                 .append('<span class="ml-title">' + event.title + '</span><span class="ml-time">' + dateTime + '</span><div class="clear"/>');
 
                 eveLi.click(function () {
-                    eventListUl.find('li').removeClass('clicked');
-                    $(this).addClass('clicked');
+                    eventListUl.find('li.ml-li').removeClass('selected');
+                    $(this).addClass('selected');
 
                     $('#calendar').find('.fc-event').removeClass('fc-event-selected');
                     $('#calendar').find('#fc-event-' + event.id).addClass('fc-event-selected');
@@ -166,7 +195,7 @@
                     EventEditPanel(event, jsEvent);
                 });
 
-                eventListUl.append(eveLi);
+                dateSpUl.append(eveLi);
                 tick++;
             });
 
