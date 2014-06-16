@@ -31,15 +31,15 @@ select
 	min-width:1350px;
 }
 
-#meeting-list{ float:left; width:27%; margin-left:20px; min-width:370px; margin-top:21px; overflow-y:auto;}
-#meeting-list ul{ margin:0; padding:0; background-color:#F2F2F2; font-size:0; }
-#meeting-list ul.ml-ul{ border:1px solid F2F2F2; border-left: none;}
-#meeting-list li.ml-li-sp{border-left:3px solid #2ecc71; color:Black}
+#meeting-list{ float:left; width:27%; margin-left:20px; min-width:370px; margin-top:21px; overflow-y:auto;border:1px solid #DDD; }
+#meeting-list ul{ margin:0; padding:0;font-size:0; }
+#meeting-list ul.ml-ul{ background-color:#F2F2F2; padding-bottom:1px;}
+#meeting-list li.ml-li-sp{border-left:3px solid #2ecc71; color:Black; }
 #meeting-list li.ml-li-sp.selected{ color:#2ecc71}
 #meeting-list li.ml-li{border-left:3px solid #34AADC;}
 #meeting-list li.ml-li-sp span{ font-size:13px;}
-#meeting-list li.ml-li-dt{ padding-left:15px;}
-#meeting-list li.ml-li-sp,#meeting-list li.ml-li{ list-style:none; padding:12px 5px; cursor:pointer; margin-bottom:1px; background-color:White;}
+#meeting-list li.ml-li-dt{ padding-left:15px; }
+#meeting-list li.ml-li-sp,#meeting-list li.ml-li{ list-style:none; padding:12px 5px; cursor:pointer; margin-top:1px; background-color:White;}
 #meeting-list li span.ml-title{ float:left; font-size:16px;}
 #meeting-list li span.ml-time{ float:right; color:#949494; font-size:12px; display:block; height:18px; line-height:18px;}
 #meeting-list li.ml-li.selected{background-color:#34AADC; color:white;}

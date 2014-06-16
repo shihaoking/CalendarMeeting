@@ -141,8 +141,6 @@
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.3.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.3.min.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\fullcalendar-zh-cn.js" />
     <Content Include="Scripts\_references.js" />

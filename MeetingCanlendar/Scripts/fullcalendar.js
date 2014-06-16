@@ -4715,7 +4715,7 @@
 
                 // shave off space on right near scrollbars (2.5%)
                 // TODO: move this to CSS somehow
-                columnRight -= columnWidth * .025;
+                //columnRight -= columnWidth * .025;
                 columnWidth = columnRight - columnLeft;
 
                 width = columnWidth * (seg.forwardCoord - seg.backwardCoord);
@@ -4742,7 +4742,7 @@
                 // make sure horizontal coordinates are in bounds
                 left = Math.max(left, columnLeft);
                 right = Math.min(right, columnRight);
-                width = right - left + 3;
+                width = right - left;
 
                 seg.top = top;
                 seg.left = left;
@@ -4806,14 +4806,15 @@
                     height = Math.max(0, seg.outerHeight - seg.vsides);
                     eventElement[0].style.height = height + 'px';
                     event = seg.event;
+
                     /*if (seg.contentTop !== undefined && height - seg.contentTop < 10) {
-                        // not enough room for title, put it in the time (TODO: maybe make both display:inline instead)
-                        eventElement.find('div.fc-event-time')
-						.text(
-							formatDate(event.start, opt('timeFormat')) + ' - ' + event.title
-						);
-                        eventElement.find('div.fc-event-title')
-						.remove();
+                    // not enough room for title, put it in the time (TODO: maybe make both display:inline instead)
+                    eventElement.find('div.fc-event-time')
+                    .text(
+                    formatDate(event.start, opt('timeFormat')) + ' - ' + event.title
+                    );
+                    eventElement.find('div.fc-event-title')
+                    .remove();
                     }*/
                     trigger('eventAfterRender', event, event, eventElement);
                 }
@@ -4857,7 +4858,9 @@
 				skinCss +
 				"'" +
 			">" +
-			"<div class='fc-event-inner'>" +
+			"<div class='fc-event-inner'>";
+
+            /* +
 			"<div class='fc-event-time'>";
 
             if (event.end) {
@@ -4865,9 +4868,11 @@
             } else {
                 html += htmlEscape(formatDate(event.start, opt('timeFormat')));
             }
+                        html +=
+			"</div>" +
+            */
 
             html +=
-			"</div>" +
 			"<div class='fc-event-title'>" +
 			htmlEscape(event.title || '') +
 			"</div>" +
@@ -6228,7 +6233,7 @@
 				htmlEscape(
 					formatDate(event.start, opt('timeFormat'))
 				) +
-				"</span>";
+				"</span>-";
             }
             html +=
 			"<span class='fc-event-title'>" +

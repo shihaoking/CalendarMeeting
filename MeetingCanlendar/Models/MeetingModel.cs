@@ -30,9 +30,13 @@ namespace MeetingCanlendar.Models
 
         public bool CheckMeetingAvailable(int metId, DateTime startTime, DateTime endTime)
         {
+            /*meeting_info d = db.meeting_info.FirstOrDefault(r => r.id != metId &&
+                (r.m_start_time < startTime && startTime < r.m_end_time ||
+                r.m_start_time < endTime && endTime < r.m_end_time));*/
+
             return !(db.meeting_info.Any(r => r.id != metId &&
-                (r.m_start_time <= startTime && startTime <= r.m_end_time ||
-                r.m_start_time <= endTime && endTime <= r.m_end_time)));
+                (r.m_start_time < startTime && startTime < r.m_end_time ||
+                r.m_start_time < endTime && endTime < r.m_end_time)));
         }
 
         public void DeleteMeeting(int id)

@@ -485,7 +485,7 @@ table.fc-border-separate {
 	
 .fc-agenda .fc-agenda-axis {
 	width: 50px;
-	padding: 0 4px;
+	padding:4px;
 	vertical-align: middle;
 	text-align: right;
 	font-weight: normal;
@@ -516,7 +516,7 @@ table.fc-border-separate {
 /* all-day area */
 	
 .fc-agenda-allday th {
-	border-width: 0 1px;
+	border-width: 0 1px 0 0;
 	}
 	
 .fc-agenda-allday .fc-day-content {
@@ -538,7 +538,7 @@ table.fc-border-separate {
 /* slot rows */
 	
 .fc-agenda-slots th {
-	border-width: 1px 1px 0;
+	border-width: 1px 1px 0 0;
 	}
 	
 .fc-agenda-slots td {
@@ -570,15 +570,15 @@ table.fc-border-separate {
 ------------------------------------------------------------------------*/
 
 .fc-event-vert {
-	border-width: 0 1px;
+	border-width: 0;
 	}
 
 .fc-event-vert.fc-event-start {
-	border-top-width: 1px;
+	border-top-width: 0;
 	}
 
 .fc-event-vert.fc-event-end {
-	border-bottom-width: 1px;
+	border-bottom-width: 0;
 	}
 	
 .fc-event-vert .fc-event-time {
