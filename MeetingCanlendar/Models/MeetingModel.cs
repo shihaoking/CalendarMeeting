@@ -20,7 +20,7 @@ namespace MeetingCanlendar.Models
 
         public IQueryable<meeting_info> GetMeetings(DateTime fromTime, DateTime toTime)
         {
-            return db.meeting_info.Where(r => r.m_start_time >= fromTime && r.m_start_time <= toTime);
+            return db.meeting_info.Where(r => r.mi_start_time >= fromTime && r.mi_start_time <= toTime);
         }
 
         public IQueryable<meeting_position> GetMeetingPositions()
@@ -31,12 +31,13 @@ namespace MeetingCanlendar.Models
         public bool CheckMeetingAvailable(int metId, DateTime startTime, DateTime endTime)
         {
             /*meeting_info d = db.meeting_info.FirstOrDefault(r => r.id != metId &&
-                (r.m_start_time < startTime && startTime < r.m_end_time ||
-                r.m_start_time < endTime && endTime < r.m_end_time));*/
+                (r.mi_start_time < startTime && startTime < r.mi_end_time ||
+                r.mi_start_time < endTime && endTime < r.mi_end_time));*/
 
             return !(db.meeting_info.Any(r => r.id != metId &&
-                (r.m_start_time < startTime && startTime < r.m_end_time ||
-                r.m_start_time < endTime && endTime < r.m_end_time)));
+                (r.mi_start_time < startTime && startTime < r.mi_end_time ||
+                r.mi_start_time < endTime && endTime < r.mi_end_time ||
+                r.mi_start_time == startTime && r.mi_end_time == endTime)));
         }
 
         public void DeleteMeeting(int id)

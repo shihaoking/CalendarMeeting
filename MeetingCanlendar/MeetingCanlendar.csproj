@@ -117,14 +117,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MeetingModel.cs" />
     <Compile Include="Models\MySqlDBModel.cs" />
+    <Compile Include="Models\UserAuthAttribute.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\ImageValidate.cs" />
+    <Compile Include="Tools\Paging.cs" />
+    <Compile Include="Tools\PhoneToImage.cs" />
+    <Compile Include="Tools\SendEmail.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\user_reg.css" />
     <Content Include="Content\images\chosen-sprite.png" />
     <Content Include="Content\css\chosen.css" />
     <Content Include="Content\css\datepicker.css" />
@@ -172,6 +180,15 @@
     <None Include="Content\fonts\HelveticaNeue-Light.woff" />
     <None Include="Content\fonts\HelveticaNeue-Medium.ttf" />
     <None Include="Content\fonts\HelveticaNeue-Medium.woff" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\User\FindPassword.cshtml" />
+    <Content Include="Views\User\FindPasswordStep2.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Shared\_NoHeaderLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBEntity\DBEntity.csproj">

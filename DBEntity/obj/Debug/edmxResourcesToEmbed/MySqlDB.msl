@@ -4,15 +4,15 @@
     <EntitySetMapping Name="meeting_info">
       <EntityTypeMapping TypeName="MCDBModel.meeting_info">
         <MappingFragment StoreEntitySet="meeting_info">
-          <ScalarProperty Name="m_memo" ColumnName="m_memo" />
-          <ScalarProperty Name="m_create_time" ColumnName="m_create_time" />
-          <ScalarProperty Name="m_creator" ColumnName="m_creator" />
-          <ScalarProperty Name="m_level" ColumnName="m_level" />
-          <ScalarProperty Name="m_end_time" ColumnName="m_end_time" />
-          <ScalarProperty Name="m_start_time" ColumnName="m_start_time" />
-          <ScalarProperty Name="m_people" ColumnName="m_people" />
-          <ScalarProperty Name="m_position" ColumnName="m_position" />
-          <ScalarProperty Name="m_title" ColumnName="m_title" />
+          <ScalarProperty Name="mi_memo" ColumnName="mi_memo" />
+          <ScalarProperty Name="mi_create_time" ColumnName="mi_create_time" />
+          <ScalarProperty Name="mi_creator" ColumnName="mi_creator" />
+          <ScalarProperty Name="mi_level" ColumnName="mi_level" />
+          <ScalarProperty Name="mi_end_time" ColumnName="mi_end_time" />
+          <ScalarProperty Name="mi_start_time" ColumnName="mi_start_time" />
+          <ScalarProperty Name="mi_people" ColumnName="mi_people" />
+          <ScalarProperty Name="mi_position" ColumnName="mi_position" />
+          <ScalarProperty Name="mi_title" ColumnName="mi_title" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -20,8 +20,17 @@
     <EntitySetMapping Name="meeting_position">
       <EntityTypeMapping TypeName="MCDBModel.meeting_position">
         <MappingFragment StoreEntitySet="meeting_position">
-          <ScalarProperty Name="p_size" ColumnName="p_size" />
-          <ScalarProperty Name="p_name" ColumnName="p_name" />
+          <ScalarProperty Name="mp_size" ColumnName="mp_size" />
+          <ScalarProperty Name="mp_name" ColumnName="mp_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_grade_catg">
+      <EntityTypeMapping TypeName="MCDBModel.user_grade_catg">
+        <MappingFragment StoreEntitySet="user_grade_catg">
+          <ScalarProperty Name="gc_name" ColumnName="gc_name" />
+          <ScalarProperty Name="gc_level" ColumnName="gc_level" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -29,12 +38,29 @@
     <EntitySetMapping Name="user_info">
       <EntityTypeMapping TypeName="MCDBModel.user_info">
         <MappingFragment StoreEntitySet="user_info">
-          <ScalarProperty Name="u_create_time" ColumnName="u_create_time" />
-          <ScalarProperty Name="u_status" ColumnName="u_status" />
-          <ScalarProperty Name="u_email" ColumnName="u_email" />
-          <ScalarProperty Name="u_level" ColumnName="u_level" />
-          <ScalarProperty Name="u_password" ColumnName="u_password" />
-          <ScalarProperty Name="u_name" ColumnName="u_name" />
+          <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />
+          <ScalarProperty Name="ui_status" ColumnName="ui_status" />
+          <ScalarProperty Name="ui_gender" ColumnName="ui_gender" />
+          <ScalarProperty Name="ui_grade_id" ColumnName="ui_grade_id" />
+          <ScalarProperty Name="ui_email" ColumnName="ui_email" />
+          <ScalarProperty Name="ui_password" ColumnName="ui_password" />
+          <ScalarProperty Name="ui_name" ColumnName="ui_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_info_detail">
+      <EntityTypeMapping TypeName="MCDBModel.user_info_detail">
+        <MappingFragment StoreEntitySet="user_info_detail">
+          <ScalarProperty Name="ui_grade_name" ColumnName="ui_grade_name" />
+          <ScalarProperty Name="ui_grade_level" ColumnName="ui_grade_level" />
+          <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />
+          <ScalarProperty Name="ui_status" ColumnName="ui_status" />
+          <ScalarProperty Name="ui_gender" ColumnName="ui_gender" />
+          <ScalarProperty Name="ui_grade_id" ColumnName="ui_grade_id" />
+          <ScalarProperty Name="ui_email" ColumnName="ui_email" />
+          <ScalarProperty Name="ui_password" ColumnName="ui_password" />
+          <ScalarProperty Name="ui_name" ColumnName="ui_name" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -10,26 +10,11 @@
         var currentLangCode = 'zh-cn';
         var currentDate = new Date();
         var initEvents = [];
+        var positionsJSON = [];
+        var prevClickEvent = null;
+        var showAll = true;
+
         $(document).ready(function () {
-
-            // build the language selector's options
-            $.each($.fullCalendar.langs, function (langCode) {
-                $('#lang-selector').append(
-					$('<option/>')
-						.attr('value', langCode)
-						.prop('selected', langCode == currentLangCode)
-						.text(langCode)
-				);
-            });
-
-            // rerender the calendar when the selected option changes
-            $('#lang-selector').on('change', function () {
-                if (this.value) {
-                    currentLangCode = this.value;
-                    $('#calendar').fullCalendar('destroy');
-                    renderCalendar();
-                }
-            });
 
             $.ajax({
                 url: 'meeting/GetMeetingsByMonth',
@@ -41,7 +26,17 @@
                 initEvents = reuslt;
             });
 
+            $.ajax({
+                url: 'meeting/GetMeetingPositions',
+                type: 'POST',
+                dateType: 'json',
+                async: false
+            }).done(function (result) {
+                positionsJSON = result;
+            });
+
             function renderCalendar(initEvents) {
+
                 $('#calendar').fullCalendar({
                     header: {
                         left: 'today',
@@ -71,6 +66,10 @@
                         }
                     },
                     eventClick: function (calEvent, jsEvent, view) {
+                        $('.ml-list .ml-li').removeClass('selected');
+                        $('.fc-event-container').find('.fc-event').removeClass('fc-event-selected');
+                        $('#fc-event-' + calEvent.id).addClass('fc-event-selected');
+                        $('#ml-li-' + calEvent.id).addClass('selected'); 
                         EventEditPanel(calEvent, jsEvent);
                     },
                     eventDrop: function (event, jsEvent, ui, view) {
@@ -79,6 +78,11 @@
                     eventResize: function (event, jsEvent, ui, view) {
                         UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
+                    eventRender: function (event, element, view) {
+                        if (!event.isMine && !showAll) {
+                            return false;
+                        }
+                    },
                     eventAfterAllRender: function (view) {
                         var events = $('#calendar').fullCalendar('clientEvents');
                         var eventsToShow = new Array();
@@ -86,14 +90,17 @@
                         var viewEndTime = view.intervalEnd;
 
                         $.each(events, function (i, event) {
-                            if (event.start >= viewStartTime && event.start <= viewEndTime) {
-                                eventsToShow.push(event);
+                            if (event.isMine || showAll) {
+                                if (event.start >= viewStartTime && event.start <= viewEndTime) {
+                                    eventsToShow.push(event);
+                                }
                             }
                         });
 
                         SortData(eventsToShow, "start");
 
                         var meetingList = CreateMeetingList(eventsToShow, view.name);
+
                         if (view.name == "month") {
                             meetingList.prependTo('.fc-content');
                         } else if (view.name == 'agendaWeek') {
@@ -129,29 +136,16 @@
                         }
                     },
                     events: initEvents
-                    /*dayClick: function (date, jsEvent, view) {
-                    if (view.name == "month") {
-                    EventEditPanel({ start: date.add('hour', 7) }, jsEvent);
-                    } else {
-                    EventEditPanel({ start: date }, jsEvent);
-                    }
-                    }*/
                 });
             }
 
-            renderCalendar(initEvents);
+            renderCalendar(initEvents, true);
         });
 
         function CreateMeetingList(events, viewType) {
             $('#meeting-list').remove();
 
             var eventList = $('<div id="meeting-list" />');
-            if (viewType == 'agendaDay') {
-                eventList.css('height', $($('.fc-view')[1]).outerHeight() - $('.calendar-list-header').outerHeight() - 21);
-            } else {
-                eventList.css('height', $('.fc-view').outerHeight() - 21);
-            }
-
             var eventListUl = $('<ul class="ml-ul" />');
             var dateSpUl = eventListUl;
             var tick = 1;
@@ -165,7 +159,7 @@
                     lastDate = startTime;
 
                     var spLi = $('<li class="ml-li-sp selected" type="show" />').append('<span>' + lastDate + '</span>');
-                    
+
                     spLi.click(function () {
                         if ($(this).attr('type') == 'hide') {
                             $(this).attr('type', 'show').addClass('selected');
@@ -185,10 +179,11 @@
 
                 dateTime = event.start.format('Ah:m') + ' 到 ' + event.end.format('Ah:m');
 
-                var eveLi = $('<li class="ml-li ' + (tick % 2 == 0 ? 'li-even' : '') + '" id="ml-li-' + event.id + '" />')
+                var eveLi = $('<li class="ml-li' + (event.isMine ? ' mine' : ' all') + (tick % 2 == 0 ? ' li-even' : '') + '" id="ml-li-' + event.id + '" />')
                 .append('<span class="ml-title">' + event.title + '</span><span class="ml-time">' + dateTime + '</span><div class="clear"/>');
 
                 eveLi.click(function () {
+                    $('#editPanel').remove();
                     eventListUl.find('li.ml-li').removeClass('selected');
                     $(this).addClass('selected');
 
@@ -201,8 +196,41 @@
                 dateSpUl.append(eveLi);
                 tick++;
             });
+
             eventListUl.find('.ml-li-sp:first-child').css('margin-top', 0);
-            eventList.append(eventListUl);
+            var eventListCnt = $('<div class="ml-list"/>');
+            if (viewType == 'agendaDay') {
+                eventListCnt.css('height', $($('.fc-view')[1]).outerHeight() - $('.calendar-list-header').outerHeight() - 40);
+            } else {
+                eventListCnt.css('height', $('.fc-view').outerHeight() - 40);
+            }
+            eventListCnt.append(eventListUl);
+
+            var menu = $('<div class="ml-menu" />');
+            var menuAll = $('<span class="menu-catg menu-catg-all">所有</span>');
+            var menuMine = $('<span class="menu-catg menu-catg-mine">我的</span>');
+
+            if (showAll) {
+                menuAll.addClass('menu-catg-selected');
+            } else {
+                menuMine.addClass('menu-catg-selected');
+            }
+
+            menuAll.click(function () {
+                $(this).addClass('menu-catg-selected').next().removeClass('menu-catg-selected');
+                showAll = true;
+                $('#calendar').fullCalendar('rerenderEvents');
+            });
+
+            menuMine.click(function () {
+                $(this).addClass('menu-catg-selected').prev().removeClass('menu-catg-selected');
+                showAll = false;
+                $('#calendar').fullCalendar('rerenderEvents');
+            });
+
+            menu.append(menuAll).append(menuMine).appendTo(eventList);
+
+            eventList.append(eventListCnt);
             return eventList;
         }
 
@@ -240,16 +268,6 @@
             $('body').editPanel('destroy');
 
             var eventStartTime = curEvent.start ? curEvent.start.clone() : moment();
-            var positionsJSON = [];
-
-            $.ajax({
-                url: 'meeting/GetMeetingPositions',
-                type: 'POST',
-                dateType: 'json',
-                async: false
-            }).done(function (result) {
-                positionsJSON = result;
-            });
 
             $('body').editPanel({
                 id: curEvent.id,
@@ -261,7 +279,9 @@
                 memo: curEvent.memo,
                 end: curEvent.end ? curEvent.end.clone() : eventStartTime.clone().add('hours', 1),
                 jsEvent: jsEvent,
+                titleColor: curEvent.isMine || curEvent.id === undefined ? '#27AE60' : '#34AADC',
                 positions: positionsJSON,
+                editable: curEvent.editable || curEvent.id === undefined ? true : false,
                 submit: function (e, data) {
                     var source = ConvertEventToMeetingData(data);
 
@@ -276,7 +296,9 @@
                         }
                     });
                 },
-                close: function () {
+                close: function (e, data) {
+                    $('#ml-li-' + data.id).removeClass('selected'); 
+                    $('.fc-event-container').find('.fc-event').removeClass('fc-event-selected');
                     $('#calendar').fullCalendar('unselect');
                 }
             });
@@ -310,13 +332,13 @@
         function ConvertEventToMeetingData(data) {
             return {
                 id: data.id ? data.id : -1,
-                m_title: data.title,
-                m_position: data.position,
-                m_start_time: data.start.format('YYYY-MM-DD HH:mm'),
-                m_end_time: data.end.format('YYYY-MM-DD HH:mm'),
-                m_level: data.level,
-                m_people: data.people,
-                m_memo: data.memo
+                mi_title: data.title,
+                mi_position: data.position,
+                mi_start_time: data.start.format('YYYY-MM-DD HH:mm'),
+                mi_end_time: data.end.format('YYYY-MM-DD HH:mm'),
+                mi_level: data.level,
+                mi_people: data.people,
+                mi_memo: data.memo
             };
         }
 

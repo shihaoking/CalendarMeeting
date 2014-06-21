@@ -21,6 +21,7 @@ using System.Xml.Serialization;
 
 [assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk_1", "meeting_position", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.meeting_position), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
 [assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk_2", "user_info", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.user_info), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
+[assembly: EdmRelationshipAttribute("MCDBModel", "user_info_ibfk_1", "user_grade_catg", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.user_grade_catg), "user_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.user_info), true)]
 
 #endregion
 
@@ -107,6 +108,22 @@ namespace DBEntity
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
+        public ObjectSet<user_grade_catg> user_grade_catg
+        {
+            get
+            {
+                if ((_user_grade_catg == null))
+                {
+                    _user_grade_catg = base.CreateObjectSet<user_grade_catg>("user_grade_catg");
+                }
+                return _user_grade_catg;
+            }
+        }
+        private ObjectSet<user_grade_catg> _user_grade_catg;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
         public ObjectSet<user_info> user_info
         {
             get
@@ -119,6 +136,22 @@ namespace DBEntity
             }
         }
         private ObjectSet<user_info> _user_info;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<user_info_detail> user_info_detail
+        {
+            get
+            {
+                if ((_user_info_detail == null))
+                {
+                    _user_info_detail = base.CreateObjectSet<user_info_detail>("user_info_detail");
+                }
+                return _user_info_detail;
+            }
+        }
+        private ObjectSet<user_info_detail> _user_info_detail;
 
         #endregion
 
@@ -141,11 +174,27 @@ namespace DBEntity
         }
     
         /// <summary>
+        /// 用于向 user_grade_catg EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTouser_grade_catg(user_grade_catg user_grade_catg)
+        {
+            base.AddObject("user_grade_catg", user_grade_catg);
+        }
+    
+        /// <summary>
         /// 用于向 user_info EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddTouser_info(user_info user_info)
         {
             base.AddObject("user_info", user_info);
+        }
+    
+        /// <summary>
+        /// 用于向 user_info_detail EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTouser_info_detail(user_info_detail user_info_detail)
+        {
+            base.AddObject("user_info_detail", user_info_detail);
         }
 
         #endregion
@@ -170,26 +219,24 @@ namespace DBEntity
         /// 创建新的 meeting_info 对象。
         /// </summary>
         /// <param name="id">id 属性的初始值。</param>
-        /// <param name="m_title">m_title 属性的初始值。</param>
-        /// <param name="m_position">m_position 属性的初始值。</param>
-        /// <param name="m_people">m_people 属性的初始值。</param>
-        /// <param name="m_start_time">m_start_time 属性的初始值。</param>
-        /// <param name="m_end_time">m_end_time 属性的初始值。</param>
-        /// <param name="m_level">m_level 属性的初始值。</param>
-        /// <param name="m_creator">m_creator 属性的初始值。</param>
-        /// <param name="m_create_time">m_create_time 属性的初始值。</param>
-        public static meeting_info Createmeeting_info(global::System.Int32 id, global::System.String m_title, global::System.Int16 m_position, global::System.String m_people, global::System.DateTime m_start_time, global::System.DateTime m_end_time, global::System.Int32 m_level, global::System.Int16 m_creator, global::System.DateTime m_create_time)
+        /// <param name="mi_title">mi_title 属性的初始值。</param>
+        /// <param name="mi_position">mi_position 属性的初始值。</param>
+        /// <param name="mi_start_time">mi_start_time 属性的初始值。</param>
+        /// <param name="mi_end_time">mi_end_time 属性的初始值。</param>
+        /// <param name="mi_level">mi_level 属性的初始值。</param>
+        /// <param name="mi_creator">mi_creator 属性的初始值。</param>
+        /// <param name="mi_create_time">mi_create_time 属性的初始值。</param>
+        public static meeting_info Createmeeting_info(global::System.Int32 id, global::System.String mi_title, global::System.Int16 mi_position, global::System.DateTime mi_start_time, global::System.DateTime mi_end_time, global::System.Int32 mi_level, global::System.Int16 mi_creator, global::System.DateTime mi_create_time)
         {
             meeting_info meeting_info = new meeting_info();
             meeting_info.id = id;
-            meeting_info.m_title = m_title;
-            meeting_info.m_position = m_position;
-            meeting_info.m_people = m_people;
-            meeting_info.m_start_time = m_start_time;
-            meeting_info.m_end_time = m_end_time;
-            meeting_info.m_level = m_level;
-            meeting_info.m_creator = m_creator;
-            meeting_info.m_create_time = m_create_time;
+            meeting_info.mi_title = mi_title;
+            meeting_info.mi_position = mi_position;
+            meeting_info.mi_start_time = mi_start_time;
+            meeting_info.mi_end_time = mi_end_time;
+            meeting_info.mi_level = mi_level;
+            meeting_info.mi_creator = mi_creator;
+            meeting_info.mi_create_time = mi_create_time;
             return meeting_info;
         }
 
@@ -229,216 +276,216 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String m_title
+        public global::System.String mi_title
         {
             get
             {
-                return _m_title;
+                return _mi_title;
             }
             set
             {
-                Onm_titleChanging(value);
-                ReportPropertyChanging("m_title");
-                _m_title = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("m_title");
-                Onm_titleChanged();
+                Onmi_titleChanging(value);
+                ReportPropertyChanging("mi_title");
+                _mi_title = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("mi_title");
+                Onmi_titleChanged();
             }
         }
-        private global::System.String _m_title;
-        partial void Onm_titleChanging(global::System.String value);
-        partial void Onm_titleChanged();
+        private global::System.String _mi_title;
+        partial void Onmi_titleChanging(global::System.String value);
+        partial void Onmi_titleChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int16 m_position
+        public global::System.Int16 mi_position
         {
             get
             {
-                return _m_position;
+                return _mi_position;
             }
             set
             {
-                Onm_positionChanging(value);
-                ReportPropertyChanging("m_position");
-                _m_position = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("m_position");
-                Onm_positionChanged();
+                Onmi_positionChanging(value);
+                ReportPropertyChanging("mi_position");
+                _mi_position = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("mi_position");
+                Onmi_positionChanged();
             }
         }
-        private global::System.Int16 _m_position;
-        partial void Onm_positionChanging(global::System.Int16 value);
-        partial void Onm_positionChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String m_people
-        {
-            get
-            {
-                return _m_people;
-            }
-            set
-            {
-                Onm_peopleChanging(value);
-                ReportPropertyChanging("m_people");
-                _m_people = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("m_people");
-                Onm_peopleChanged();
-            }
-        }
-        private global::System.String _m_people;
-        partial void Onm_peopleChanging(global::System.String value);
-        partial void Onm_peopleChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime m_start_time
-        {
-            get
-            {
-                return _m_start_time;
-            }
-            set
-            {
-                Onm_start_timeChanging(value);
-                ReportPropertyChanging("m_start_time");
-                _m_start_time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("m_start_time");
-                Onm_start_timeChanged();
-            }
-        }
-        private global::System.DateTime _m_start_time;
-        partial void Onm_start_timeChanging(global::System.DateTime value);
-        partial void Onm_start_timeChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime m_end_time
-        {
-            get
-            {
-                return _m_end_time;
-            }
-            set
-            {
-                Onm_end_timeChanging(value);
-                ReportPropertyChanging("m_end_time");
-                _m_end_time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("m_end_time");
-                Onm_end_timeChanged();
-            }
-        }
-        private global::System.DateTime _m_end_time;
-        partial void Onm_end_timeChanging(global::System.DateTime value);
-        partial void Onm_end_timeChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 m_level
-        {
-            get
-            {
-                return _m_level;
-            }
-            set
-            {
-                Onm_levelChanging(value);
-                ReportPropertyChanging("m_level");
-                _m_level = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("m_level");
-                Onm_levelChanged();
-            }
-        }
-        private global::System.Int32 _m_level;
-        partial void Onm_levelChanging(global::System.Int32 value);
-        partial void Onm_levelChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int16 m_creator
-        {
-            get
-            {
-                return _m_creator;
-            }
-            set
-            {
-                Onm_creatorChanging(value);
-                ReportPropertyChanging("m_creator");
-                _m_creator = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("m_creator");
-                Onm_creatorChanged();
-            }
-        }
-        private global::System.Int16 _m_creator;
-        partial void Onm_creatorChanging(global::System.Int16 value);
-        partial void Onm_creatorChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime m_create_time
-        {
-            get
-            {
-                return _m_create_time;
-            }
-            set
-            {
-                Onm_create_timeChanging(value);
-                ReportPropertyChanging("m_create_time");
-                _m_create_time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("m_create_time");
-                Onm_create_timeChanged();
-            }
-        }
-        private global::System.DateTime _m_create_time;
-        partial void Onm_create_timeChanging(global::System.DateTime value);
-        partial void Onm_create_timeChanged();
+        private global::System.Int16 _mi_position;
+        partial void Onmi_positionChanging(global::System.Int16 value);
+        partial void Onmi_positionChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String m_memo
+        public global::System.String mi_people
         {
             get
             {
-                return _m_memo;
+                return _mi_people;
             }
             set
             {
-                Onm_memoChanging(value);
-                ReportPropertyChanging("m_memo");
-                _m_memo = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("m_memo");
-                Onm_memoChanged();
+                Onmi_peopleChanging(value);
+                ReportPropertyChanging("mi_people");
+                _mi_people = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("mi_people");
+                Onmi_peopleChanged();
             }
         }
-        private global::System.String _m_memo;
-        partial void Onm_memoChanging(global::System.String value);
-        partial void Onm_memoChanged();
+        private global::System.String _mi_people;
+        partial void Onmi_peopleChanging(global::System.String value);
+        partial void Onmi_peopleChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime mi_start_time
+        {
+            get
+            {
+                return _mi_start_time;
+            }
+            set
+            {
+                Onmi_start_timeChanging(value);
+                ReportPropertyChanging("mi_start_time");
+                _mi_start_time = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("mi_start_time");
+                Onmi_start_timeChanged();
+            }
+        }
+        private global::System.DateTime _mi_start_time;
+        partial void Onmi_start_timeChanging(global::System.DateTime value);
+        partial void Onmi_start_timeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime mi_end_time
+        {
+            get
+            {
+                return _mi_end_time;
+            }
+            set
+            {
+                Onmi_end_timeChanging(value);
+                ReportPropertyChanging("mi_end_time");
+                _mi_end_time = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("mi_end_time");
+                Onmi_end_timeChanged();
+            }
+        }
+        private global::System.DateTime _mi_end_time;
+        partial void Onmi_end_timeChanging(global::System.DateTime value);
+        partial void Onmi_end_timeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 mi_level
+        {
+            get
+            {
+                return _mi_level;
+            }
+            set
+            {
+                Onmi_levelChanging(value);
+                ReportPropertyChanging("mi_level");
+                _mi_level = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("mi_level");
+                Onmi_levelChanged();
+            }
+        }
+        private global::System.Int32 _mi_level;
+        partial void Onmi_levelChanging(global::System.Int32 value);
+        partial void Onmi_levelChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 mi_creator
+        {
+            get
+            {
+                return _mi_creator;
+            }
+            set
+            {
+                Onmi_creatorChanging(value);
+                ReportPropertyChanging("mi_creator");
+                _mi_creator = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("mi_creator");
+                Onmi_creatorChanged();
+            }
+        }
+        private global::System.Int16 _mi_creator;
+        partial void Onmi_creatorChanging(global::System.Int16 value);
+        partial void Onmi_creatorChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime mi_create_time
+        {
+            get
+            {
+                return _mi_create_time;
+            }
+            set
+            {
+                Onmi_create_timeChanging(value);
+                ReportPropertyChanging("mi_create_time");
+                _mi_create_time = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("mi_create_time");
+                Onmi_create_timeChanged();
+            }
+        }
+        private global::System.DateTime _mi_create_time;
+        partial void Onmi_create_timeChanging(global::System.DateTime value);
+        partial void Onmi_create_timeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String mi_memo
+        {
+            get
+            {
+                return _mi_memo;
+            }
+            set
+            {
+                Onmi_memoChanging(value);
+                ReportPropertyChanging("mi_memo");
+                _mi_memo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("mi_memo");
+                Onmi_memoChanged();
+            }
+        }
+        private global::System.String _mi_memo;
+        partial void Onmi_memoChanging(global::System.String value);
+        partial void Onmi_memoChanged();
 
         #endregion
 
@@ -539,14 +586,14 @@ namespace DBEntity
         /// 创建新的 meeting_position 对象。
         /// </summary>
         /// <param name="id">id 属性的初始值。</param>
-        /// <param name="p_name">p_name 属性的初始值。</param>
-        /// <param name="p_size">p_size 属性的初始值。</param>
-        public static meeting_position Createmeeting_position(global::System.Int16 id, global::System.String p_name, global::System.SByte p_size)
+        /// <param name="mp_name">mp_name 属性的初始值。</param>
+        /// <param name="mp_size">mp_size 属性的初始值。</param>
+        public static meeting_position Createmeeting_position(global::System.Int16 id, global::System.String mp_name, global::System.SByte mp_size)
         {
             meeting_position meeting_position = new meeting_position();
             meeting_position.id = id;
-            meeting_position.p_name = p_name;
-            meeting_position.p_size = p_size;
+            meeting_position.mp_name = mp_name;
+            meeting_position.mp_size = mp_size;
             return meeting_position;
         }
 
@@ -586,48 +633,48 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String p_name
+        public global::System.String mp_name
         {
             get
             {
-                return _p_name;
+                return _mp_name;
             }
             set
             {
-                Onp_nameChanging(value);
-                ReportPropertyChanging("p_name");
-                _p_name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("p_name");
-                Onp_nameChanged();
+                Onmp_nameChanging(value);
+                ReportPropertyChanging("mp_name");
+                _mp_name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("mp_name");
+                Onmp_nameChanged();
             }
         }
-        private global::System.String _p_name;
-        partial void Onp_nameChanging(global::System.String value);
-        partial void Onp_nameChanged();
+        private global::System.String _mp_name;
+        partial void Onmp_nameChanging(global::System.String value);
+        partial void Onmp_nameChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.SByte p_size
+        public global::System.SByte mp_size
         {
             get
             {
-                return _p_size;
+                return _mp_size;
             }
             set
             {
-                Onp_sizeChanging(value);
-                ReportPropertyChanging("p_size");
-                _p_size = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("p_size");
-                Onp_sizeChanged();
+                Onmp_sizeChanging(value);
+                ReportPropertyChanging("mp_size");
+                _mp_size = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("mp_size");
+                Onmp_sizeChanged();
             }
         }
-        private global::System.SByte _p_size;
-        partial void Onp_sizeChanging(global::System.SByte value);
-        partial void Onp_sizeChanged();
+        private global::System.SByte _mp_size;
+        partial void Onmp_sizeChanging(global::System.SByte value);
+        partial void Onmp_sizeChanged();
 
         #endregion
 
@@ -663,6 +710,141 @@ namespace DBEntity
     /// <summary>
     /// 没有元数据文档可用。
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MCDBModel", Name="user_grade_catg")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class user_grade_catg : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 user_grade_catg 对象。
+        /// </summary>
+        /// <param name="id">id 属性的初始值。</param>
+        /// <param name="gc_level">gc_level 属性的初始值。</param>
+        /// <param name="gc_name">gc_name 属性的初始值。</param>
+        public static user_grade_catg Createuser_grade_catg(global::System.SByte id, global::System.SByte gc_level, global::System.String gc_name)
+        {
+            user_grade_catg user_grade_catg = new user_grade_catg();
+            user_grade_catg.id = id;
+            user_grade_catg.gc_level = gc_level;
+            user_grade_catg.gc_name = gc_name;
+            return user_grade_catg;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.SByte id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.SByte _id;
+        partial void OnidChanging(global::System.SByte value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.SByte gc_level
+        {
+            get
+            {
+                return _gc_level;
+            }
+            set
+            {
+                Ongc_levelChanging(value);
+                ReportPropertyChanging("gc_level");
+                _gc_level = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("gc_level");
+                Ongc_levelChanged();
+            }
+        }
+        private global::System.SByte _gc_level;
+        partial void Ongc_levelChanging(global::System.SByte value);
+        partial void Ongc_levelChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String gc_name
+        {
+            get
+            {
+                return _gc_name;
+            }
+            set
+            {
+                Ongc_nameChanging(value);
+                ReportPropertyChanging("gc_name");
+                _gc_name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("gc_name");
+                Ongc_nameChanged();
+            }
+        }
+        private global::System.String _gc_name;
+        partial void Ongc_nameChanging(global::System.String value);
+        partial void Ongc_nameChanged();
+
+        #endregion
+
+    
+        #region 导航属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "user_info_ibfk_1", "user_info")]
+        public EntityCollection<user_info> user_info
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<user_info>("MCDBModel.user_info_ibfk_1", "user_info");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<user_info>("MCDBModel.user_info_ibfk_1", "user_info", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCDBModel", Name="user_info")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -674,22 +856,24 @@ namespace DBEntity
         /// 创建新的 user_info 对象。
         /// </summary>
         /// <param name="id">id 属性的初始值。</param>
-        /// <param name="u_name">u_name 属性的初始值。</param>
-        /// <param name="u_password">u_password 属性的初始值。</param>
-        /// <param name="u_level">u_level 属性的初始值。</param>
-        /// <param name="u_email">u_email 属性的初始值。</param>
-        /// <param name="u_status">u_status 属性的初始值。</param>
-        /// <param name="u_create_time">u_create_time 属性的初始值。</param>
-        public static user_info Createuser_info(global::System.Int16 id, global::System.String u_name, global::System.String u_password, global::System.SByte u_level, global::System.String u_email, global::System.String u_status, global::System.DateTime u_create_time)
+        /// <param name="ui_name">ui_name 属性的初始值。</param>
+        /// <param name="ui_password">ui_password 属性的初始值。</param>
+        /// <param name="ui_email">ui_email 属性的初始值。</param>
+        /// <param name="ui_grade_id">ui_grade_id 属性的初始值。</param>
+        /// <param name="ui_gender">ui_gender 属性的初始值。</param>
+        /// <param name="ui_status">ui_status 属性的初始值。</param>
+        /// <param name="ui_create_time">ui_create_time 属性的初始值。</param>
+        public static user_info Createuser_info(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.String ui_status, global::System.DateTime ui_create_time)
         {
             user_info user_info = new user_info();
             user_info.id = id;
-            user_info.u_name = u_name;
-            user_info.u_password = u_password;
-            user_info.u_level = u_level;
-            user_info.u_email = u_email;
-            user_info.u_status = u_status;
-            user_info.u_create_time = u_create_time;
+            user_info.ui_name = ui_name;
+            user_info.ui_password = ui_password;
+            user_info.ui_email = ui_email;
+            user_info.ui_grade_id = ui_grade_id;
+            user_info.ui_gender = ui_gender;
+            user_info.ui_status = ui_status;
+            user_info.ui_create_time = ui_create_time;
             return user_info;
         }
 
@@ -729,144 +913,168 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String u_name
+        public global::System.String ui_name
         {
             get
             {
-                return _u_name;
+                return _ui_name;
             }
             set
             {
-                Onu_nameChanging(value);
-                ReportPropertyChanging("u_name");
-                _u_name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("u_name");
-                Onu_nameChanged();
+                Onui_nameChanging(value);
+                ReportPropertyChanging("ui_name");
+                _ui_name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ui_name");
+                Onui_nameChanged();
             }
         }
-        private global::System.String _u_name;
-        partial void Onu_nameChanging(global::System.String value);
-        partial void Onu_nameChanged();
+        private global::System.String _ui_name;
+        partial void Onui_nameChanging(global::System.String value);
+        partial void Onui_nameChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String u_password
+        public global::System.String ui_password
         {
             get
             {
-                return _u_password;
+                return _ui_password;
             }
             set
             {
-                Onu_passwordChanging(value);
-                ReportPropertyChanging("u_password");
-                _u_password = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("u_password");
-                Onu_passwordChanged();
+                Onui_passwordChanging(value);
+                ReportPropertyChanging("ui_password");
+                _ui_password = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ui_password");
+                Onui_passwordChanged();
             }
         }
-        private global::System.String _u_password;
-        partial void Onu_passwordChanging(global::System.String value);
-        partial void Onu_passwordChanged();
+        private global::System.String _ui_password;
+        partial void Onui_passwordChanging(global::System.String value);
+        partial void Onui_passwordChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.SByte u_level
+        public global::System.String ui_email
         {
             get
             {
-                return _u_level;
+                return _ui_email;
             }
             set
             {
-                Onu_levelChanging(value);
-                ReportPropertyChanging("u_level");
-                _u_level = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("u_level");
-                Onu_levelChanged();
+                Onui_emailChanging(value);
+                ReportPropertyChanging("ui_email");
+                _ui_email = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ui_email");
+                Onui_emailChanged();
             }
         }
-        private global::System.SByte _u_level;
-        partial void Onu_levelChanging(global::System.SByte value);
-        partial void Onu_levelChanged();
+        private global::System.String _ui_email;
+        partial void Onui_emailChanging(global::System.String value);
+        partial void Onui_emailChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String u_email
+        public global::System.SByte ui_grade_id
         {
             get
             {
-                return _u_email;
+                return _ui_grade_id;
             }
             set
             {
-                Onu_emailChanging(value);
-                ReportPropertyChanging("u_email");
-                _u_email = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("u_email");
-                Onu_emailChanged();
+                Onui_grade_idChanging(value);
+                ReportPropertyChanging("ui_grade_id");
+                _ui_grade_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ui_grade_id");
+                Onui_grade_idChanged();
             }
         }
-        private global::System.String _u_email;
-        partial void Onu_emailChanging(global::System.String value);
-        partial void Onu_emailChanged();
+        private global::System.SByte _ui_grade_id;
+        partial void Onui_grade_idChanging(global::System.SByte value);
+        partial void Onui_grade_idChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String u_status
+        public global::System.Boolean ui_gender
         {
             get
             {
-                return _u_status;
+                return _ui_gender;
             }
             set
             {
-                Onu_statusChanging(value);
-                ReportPropertyChanging("u_status");
-                _u_status = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("u_status");
-                Onu_statusChanged();
+                Onui_genderChanging(value);
+                ReportPropertyChanging("ui_gender");
+                _ui_gender = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ui_gender");
+                Onui_genderChanged();
             }
         }
-        private global::System.String _u_status;
-        partial void Onu_statusChanging(global::System.String value);
-        partial void Onu_statusChanged();
+        private global::System.Boolean _ui_gender;
+        partial void Onui_genderChanging(global::System.Boolean value);
+        partial void Onui_genderChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime u_create_time
+        public global::System.String ui_status
         {
             get
             {
-                return _u_create_time;
+                return _ui_status;
             }
             set
             {
-                Onu_create_timeChanging(value);
-                ReportPropertyChanging("u_create_time");
-                _u_create_time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("u_create_time");
-                Onu_create_timeChanged();
+                Onui_statusChanging(value);
+                ReportPropertyChanging("ui_status");
+                _ui_status = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ui_status");
+                Onui_statusChanged();
             }
         }
-        private global::System.DateTime _u_create_time;
-        partial void Onu_create_timeChanging(global::System.DateTime value);
-        partial void Onu_create_timeChanged();
+        private global::System.String _ui_status;
+        partial void Onui_statusChanging(global::System.String value);
+        partial void Onui_statusChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ui_create_time
+        {
+            get
+            {
+                return _ui_create_time;
+            }
+            set
+            {
+                Onui_create_timeChanging(value);
+                ReportPropertyChanging("ui_create_time");
+                _ui_create_time = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ui_create_time");
+                Onui_create_timeChanged();
+            }
+        }
+        private global::System.DateTime _ui_create_time;
+        partial void Onui_create_timeChanging(global::System.DateTime value);
+        partial void Onui_create_timeChanged();
 
         #endregion
 
@@ -894,9 +1102,365 @@ namespace DBEntity
                 }
             }
         }
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "user_info_ibfk_1", "user_grade_catg")]
+        public user_grade_catg user_grade_catg
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_grade_catg>("MCDBModel.user_info_ibfk_1", "user_grade_catg").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_grade_catg>("MCDBModel.user_info_ibfk_1", "user_grade_catg").Value = value;
+            }
+        }
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<user_grade_catg> user_grade_catgReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_grade_catg>("MCDBModel.user_info_ibfk_1", "user_grade_catg");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user_grade_catg>("MCDBModel.user_info_ibfk_1", "user_grade_catg", value);
+                }
+            }
+        }
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MCDBModel", Name="user_info_detail")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class user_info_detail : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 user_info_detail 对象。
+        /// </summary>
+        /// <param name="id">id 属性的初始值。</param>
+        /// <param name="ui_name">ui_name 属性的初始值。</param>
+        /// <param name="ui_password">ui_password 属性的初始值。</param>
+        /// <param name="ui_email">ui_email 属性的初始值。</param>
+        /// <param name="ui_grade_id">ui_grade_id 属性的初始值。</param>
+        /// <param name="ui_gender">ui_gender 属性的初始值。</param>
+        /// <param name="ui_status">ui_status 属性的初始值。</param>
+        /// <param name="ui_create_time">ui_create_time 属性的初始值。</param>
+        /// <param name="ui_grade_level">ui_grade_level 属性的初始值。</param>
+        /// <param name="ui_grade_name">ui_grade_name 属性的初始值。</param>
+        public static user_info_detail Createuser_info_detail(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.String ui_status, global::System.DateTime ui_create_time, global::System.SByte ui_grade_level, global::System.String ui_grade_name)
+        {
+            user_info_detail user_info_detail = new user_info_detail();
+            user_info_detail.id = id;
+            user_info_detail.ui_name = ui_name;
+            user_info_detail.ui_password = ui_password;
+            user_info_detail.ui_email = ui_email;
+            user_info_detail.ui_grade_id = ui_grade_id;
+            user_info_detail.ui_gender = ui_gender;
+            user_info_detail.ui_status = ui_status;
+            user_info_detail.ui_create_time = ui_create_time;
+            user_info_detail.ui_grade_level = ui_grade_level;
+            user_info_detail.ui_grade_name = ui_grade_name;
+            return user_info_detail;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int16 _id;
+        partial void OnidChanging(global::System.Int16 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ui_name
+        {
+            get
+            {
+                return _ui_name;
+            }
+            set
+            {
+                if (_ui_name != value)
+                {
+                    Onui_nameChanging(value);
+                    ReportPropertyChanging("ui_name");
+                    _ui_name = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ui_name");
+                    Onui_nameChanged();
+                }
+            }
+        }
+        private global::System.String _ui_name;
+        partial void Onui_nameChanging(global::System.String value);
+        partial void Onui_nameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ui_password
+        {
+            get
+            {
+                return _ui_password;
+            }
+            set
+            {
+                if (_ui_password != value)
+                {
+                    Onui_passwordChanging(value);
+                    ReportPropertyChanging("ui_password");
+                    _ui_password = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ui_password");
+                    Onui_passwordChanged();
+                }
+            }
+        }
+        private global::System.String _ui_password;
+        partial void Onui_passwordChanging(global::System.String value);
+        partial void Onui_passwordChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ui_email
+        {
+            get
+            {
+                return _ui_email;
+            }
+            set
+            {
+                if (_ui_email != value)
+                {
+                    Onui_emailChanging(value);
+                    ReportPropertyChanging("ui_email");
+                    _ui_email = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ui_email");
+                    Onui_emailChanged();
+                }
+            }
+        }
+        private global::System.String _ui_email;
+        partial void Onui_emailChanging(global::System.String value);
+        partial void Onui_emailChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.SByte ui_grade_id
+        {
+            get
+            {
+                return _ui_grade_id;
+            }
+            set
+            {
+                if (_ui_grade_id != value)
+                {
+                    Onui_grade_idChanging(value);
+                    ReportPropertyChanging("ui_grade_id");
+                    _ui_grade_id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ui_grade_id");
+                    Onui_grade_idChanged();
+                }
+            }
+        }
+        private global::System.SByte _ui_grade_id;
+        partial void Onui_grade_idChanging(global::System.SByte value);
+        partial void Onui_grade_idChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ui_gender
+        {
+            get
+            {
+                return _ui_gender;
+            }
+            set
+            {
+                if (_ui_gender != value)
+                {
+                    Onui_genderChanging(value);
+                    ReportPropertyChanging("ui_gender");
+                    _ui_gender = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ui_gender");
+                    Onui_genderChanged();
+                }
+            }
+        }
+        private global::System.Boolean _ui_gender;
+        partial void Onui_genderChanging(global::System.Boolean value);
+        partial void Onui_genderChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ui_status
+        {
+            get
+            {
+                return _ui_status;
+            }
+            set
+            {
+                if (_ui_status != value)
+                {
+                    Onui_statusChanging(value);
+                    ReportPropertyChanging("ui_status");
+                    _ui_status = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ui_status");
+                    Onui_statusChanged();
+                }
+            }
+        }
+        private global::System.String _ui_status;
+        partial void Onui_statusChanging(global::System.String value);
+        partial void Onui_statusChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ui_create_time
+        {
+            get
+            {
+                return _ui_create_time;
+            }
+            set
+            {
+                if (_ui_create_time != value)
+                {
+                    Onui_create_timeChanging(value);
+                    ReportPropertyChanging("ui_create_time");
+                    _ui_create_time = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ui_create_time");
+                    Onui_create_timeChanged();
+                }
+            }
+        }
+        private global::System.DateTime _ui_create_time;
+        partial void Onui_create_timeChanging(global::System.DateTime value);
+        partial void Onui_create_timeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.SByte ui_grade_level
+        {
+            get
+            {
+                return _ui_grade_level;
+            }
+            set
+            {
+                if (_ui_grade_level != value)
+                {
+                    Onui_grade_levelChanging(value);
+                    ReportPropertyChanging("ui_grade_level");
+                    _ui_grade_level = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ui_grade_level");
+                    Onui_grade_levelChanged();
+                }
+            }
+        }
+        private global::System.SByte _ui_grade_level;
+        partial void Onui_grade_levelChanging(global::System.SByte value);
+        partial void Onui_grade_levelChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ui_grade_name
+        {
+            get
+            {
+                return _ui_grade_name;
+            }
+            set
+            {
+                if (_ui_grade_name != value)
+                {
+                    Onui_grade_nameChanging(value);
+                    ReportPropertyChanging("ui_grade_name");
+                    _ui_grade_name = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ui_grade_name");
+                    Onui_grade_nameChanged();
+                }
+            }
+        }
+        private global::System.String _ui_grade_name;
+        partial void Onui_grade_nameChanging(global::System.String value);
+        partial void Onui_grade_nameChanged();
+
+        #endregion
+
+    
     }
 
     #endregion

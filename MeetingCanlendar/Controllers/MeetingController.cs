@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace MeetingCanlendar.Controllers
 {
+    [MCAuthorize]
     public class MeetingController : Controller
     {
         //
@@ -25,7 +26,7 @@ namespace MeetingCanlendar.Controllers
         {
             MeetingModel metModel = new MeetingModel();
             List<meeting_position> source = metModel.GetMeetingPositions().ToList();
-            var result = source.Select(r => new { value = r.id, text = r.p_name});
+            var result = source.Select(r => new { value = r.id, text = r.mp_name});
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -36,20 +37,26 @@ namespace MeetingCanlendar.Controllers
             DateTime startTime = new DateTime(year, month, 1);
             DateTime endTime = startTime.AddMonths(1).AddDays(-1);
 
+            UserModel userModel = new UserModel();
+            user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
+
             List<meeting_info> source = metModel.GetMeetings(startTime, endTime).ToList();
 
-            var result = source.OrderBy(r => r.m_start_time).Select(r => new
+            var result = source.OrderBy(r => r.mi_start_time).Select(r => new
             {
                 id = r.id,
-                title = r.m_title,
-                start = r.m_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
-                end = r.m_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
-                people = r.m_people,
-                memo = r.m_memo,
-                position = r.m_position,
-                creator = r.user_infoReference.Value.u_name,
-                level = r.m_level,
-                createTime = r.m_create_time
+                title = r.mi_title,
+                start = r.mi_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                end = r.mi_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                people = r.mi_people,
+                memo = r.mi_memo,
+                position = r.mi_position,
+                creator = r.user_infoReference.Value.ui_name,
+                level = r.mi_level,
+                createTime = r.mi_create_time,
+                className = r.mi_creator == userInfo.id ? "fc-event-mine" : "",
+                editable = r.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
+                isMine = r.mi_creator == userInfo.id ? 1 : 0
             });
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -61,7 +68,10 @@ namespace MeetingCanlendar.Controllers
             JavaScriptSerializer jser = new JavaScriptSerializer();
             meeting_info metData = jser.Deserialize<meeting_info>(source);
 
-            if(metModel.CheckMeetingAvailable(metData.id, metData.m_start_time, metData.m_end_time) == false)
+            UserModel userModel = new UserModel();
+            user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
+
+            if(metModel.CheckMeetingAvailable(metData.id, metData.mi_start_time, metData.mi_end_time) == false)
             {
                 return Json(new { type = 0, msg = "该时间段内已经有会议，请更改会议时间。" }, JsonRequestBehavior.AllowGet);
             }
@@ -70,21 +80,26 @@ namespace MeetingCanlendar.Controllers
             if(metData.id == -1)
             {
                 metInfo = new meeting_info();
-                metInfo.m_create_time = DateTime.Now;
-                metInfo.m_creator = 1;
+                metInfo.mi_create_time = DateTime.Now;
+                metInfo.mi_creator = userInfo.id;
             }
             else
             {
                 metInfo = metModel.GetMeeting(metData.id);
+
+                if(metInfo.mi_creator != userInfo.id)
+                {
+                    return Json(new { type = 0, msg = "该会议不是您创建的，无法修改。" }, JsonRequestBehavior.AllowGet);
+                }
             }
 
-            metInfo.m_start_time = metData.m_start_time;
-            metInfo.m_end_time = metData.m_end_time;
-            metInfo.m_level = metData.m_level;
-            metInfo.m_people = metData.m_people;
-            metInfo.m_position = metData.m_position;
-            metInfo.m_title = metData.m_title;
-            metInfo.m_memo = metData.m_memo;
+            metInfo.mi_start_time = metData.mi_start_time;
+            metInfo.mi_end_time = metData.mi_end_time;
+            metInfo.mi_level = metData.mi_level;
+            metInfo.mi_people = metData.mi_people;
+            metInfo.mi_position = metData.mi_position;
+            metInfo.mi_title = metData.mi_title;
+            metInfo.mi_memo = metData.mi_memo;
 
             try
             {
@@ -105,21 +120,30 @@ namespace MeetingCanlendar.Controllers
             return Json(new { type = 1, msg = "添加成功", 
                 data = new {
                     id = metInfo.id,
-                    title = metInfo.m_title,
-                    start = metInfo.m_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    end = metInfo.m_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    people = metInfo.m_people,
-                    memo = metInfo.m_memo,
-                    position = metInfo.m_position,
-                    creator = metInfo.user_infoReference.Value.u_name,
-                    level = metInfo.m_level,
-                    createTime = metInfo.m_create_time
+                    title = metInfo.mi_title,
+                    start = metInfo.mi_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    end = metInfo.mi_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    people = metInfo.mi_people,
+                    memo = metInfo.mi_memo,
+                    position = metInfo.mi_position,
+                    creator = metInfo.user_infoReference.Value.ui_name,
+                    level = metInfo.mi_level,
+                    createTime = metInfo.mi_create_time
                 } }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DeleteMeeting(int id)
         {
             MeetingModel metModel = new MeetingModel();
+            meeting_info metInfo = metModel.GetMeeting(id);
+            
+            UserModel userModel = new UserModel();
+            user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
+
+            if(metInfo.mi_creator != userInfo.id)
+            {
+                return Json(new { type = 0, msg = "该会议不是您创建的，无法删除。" }, JsonRequestBehavior.AllowGet);
+            }
 
             try
             {

@@ -6,6 +6,8 @@
         potision: 1,
         people: '',
         level: 0,
+        editable: true,
+        titleColor: '',
         start: new Date(),
         end: (new Date()).setHours(1),
         memo: '',
@@ -83,21 +85,30 @@
         var positions = options.positions;
         var level = options.level;
         var eventMemo = options.memo;
+        var editAble = options.editable;
+        var titleColor = options.titleColor;
 
-        var editPanel = $(
+        var editPanelHtml =
             '<div id="editPanel"><div class="ep-content">'
-                + '<div class="ep-dt ep-title"><input type="text" id="eveTitle" class="ep-input ep-title" value="会议主题" /></div>'
+                + '<div class="ep-dt ep-title"><input type="text" id="eveTitle" class="ep-input ep-title" style="color:' + titleColor + '" value="' + eventTitle + '" /></div>'
                 + '<div class="ep-dt ep-position"><span class="ep-tip">地点</span><select id="evePosition" class="ep-select ep-select-pos chosen-select"></select></div>'
                 + '<div class="ep-dt ep-start"><span class="ep-tip">从</span><input type="text" id="eveStartDate" class="datepicker ep-input ep-date ep-date-start"/><select id="eveStartSp" class="ep-select ep-select-time chosen-select" ><option value="0">上午</option><option value="1">下午</option></select><input type="text" id="eveStartTime" class="ep-input ep-time"/></div>'
                 + '<div class="ep-dt ep-end"><span class="ep-tip">到</span><input type="text" id="eveEndDate" class="datepicker ep-input ep-date ep-date-start"/><select id="eveEndSp" class="ep-select ep-select-time chosen-select" ><option value="0">上午</option><option value="1">下午</option></select><input type="text" id="eveEndTime" class="ep-input ep-time"/></div>'
                 + '<div class="ep-dt ep-people"><span class="ep-tip">人员</span><input type="text" id="evePeople" class="ep-input ep-people"/></div>'
                 + '<div class="ep-dt ep-memo"><span class="ep-tip">备注</span><input type="text" id="eveMemo" class="ep-input ep-memo" /></div>'
-            + '</div><div class="ep-action"><span id="eveDelete" class="epc-bt ep-action-del">删除</span><span id="eveSubmit" class="epc-bt ep-action-sub">提交</span><span class="epc-bt ep-action-sp">|</span><span id="eveClose" class="epc-bt ep-action-clo">取消</span><div class="clear"></div></div>');
-        editPanel.find('#eveTitle').val(eventTitle);
+            + '</div><div class="ep-action">';
 
-        if (!eventId || eventId == -1) {
-            editPanel.find('#eveDelete').remove();
+        if (eventId && editAble) {
+            editPanelHtml += '<span id="eveDelete" class="epc-bt ep-action-del">删除</span>';
         }
+
+        if (!eventId || editAble) {
+            editPanelHtml += '<span id="eveSubmit" class="epc-bt ep-action-sub">提交</span><span class="epc-bt ep-action-sp">|</span>';
+        }
+
+        editPanelHtml += '<span id="eveClose" class="epc-bt ep-action-clo">取消</span><div class="clear"></div></div>';
+
+        var editPanel = $(editPanelHtml);
 
         $.each(positions, function (index, data) {
             if (data) {
@@ -134,7 +145,7 @@
         });
 
         editPanel.find('#eveClose').click(function () {
-            options.close(this);
+            options.close(this, options);
             destroy();
         });
 
@@ -159,7 +170,7 @@
 
         editPanel.find(".datepicker").datepicker();
         editPanel.find(".chosen-select").chosen({ disable_search_threshold: 6 });
-        
+
         $(".ep-select-time").chosen().change(function () {
             var startSp = $('#eveStartSp').val();
             var endSp = $('#eveEndSp').val();

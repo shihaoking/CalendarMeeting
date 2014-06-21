@@ -15,7 +15,8 @@ select
 {
     font-family: "Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 }
-
+a{ text-decoration:none; color:#34AADC}
+a:active{ color:inherit;outline: none; background-color:transparent;}
 #top {
 	background: #eee;
 	border-bottom: 1px solid #ddd;
@@ -26,24 +27,39 @@ select
 
 .clear{ clear:both}
 
+header{ position:absolute; right:0;}
+.header .u_box{  height:25px; line-height:25px; }
+.header .u_box .i{ float:right;  margin-right:30px; font-size:15px;}
+.header .u_box .i span.sp{color:#A2A2A2;}
+.header .u_box .i a:hover{ color:#F56267}
+
 #calendar {
 	margin: 15px auto 0 auto;
 	min-width:1350px;
 }
 
-#meeting-list{ float:left; width:27%; margin-left:20px; min-width:370px; margin-top:21px; overflow-y:auto;border:1px solid #DDD; }
-#meeting-list ul{ margin:0; padding:0;font-size:0; }
-#meeting-list ul.ml-ul{ background-color:#F2F2F2; padding-bottom:1px;}
-#meeting-list li.ml-li-sp{border-left:3px solid #2ecc71; color:Black; }
-#meeting-list li.ml-li-sp.selected{ color:#2ecc71}
-#meeting-list li.ml-li{border-left:3px solid #34AADC;}
-#meeting-list li.ml-li-sp span{ font-size:13px;}
-#meeting-list li.ml-li-dt{ padding-left:15px; }
-#meeting-list li.ml-li-sp,#meeting-list li.ml-li{ list-style:none; padding:12px 5px; cursor:pointer; margin-top:1px; background-color:White;}
-#meeting-list li span.ml-title{ float:left; font-size:16px;}
-#meeting-list li span.ml-time{ float:right; color:#949494; font-size:12px; display:block; height:18px; line-height:18px;}
-#meeting-list li.ml-li.selected{background-color:#34AADC; color:white;}
-#meeting-list li.ml-li.selected span{color: inherit;}
+#meeting-list{ float:left; width:27%; margin-left:20px; min-width:370px; overflow-y:hidden; }
+.ml-list{border:1px solid #DDD; margin-top:10px; overflow-y:auto;}
+#meeting-list .ml-menu{text-align:center}
+#meeting-list .menu-catg{ padding:0 15px; height:1.9em; line-height:1.9em; border:1px solid #FF3B30; color:#FF3B30; display:inline-block; cursor:pointer;}
+#meeting-list .menu-catg.menu-catg-mine{ border-top-right-radius: 4px; border-bottom-right-radius: 4px;}
+#meeting-list .menu-catg.menu-catg-all{ border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-right:none;}
+#meeting-list .menu-catg.menu-catg-selected{ background-color:#FF3B30; color:White}
+.ml-list ul{ margin:0; padding:0;font-size:0; }
+.ml-list ul li{ -moz-user-select: none; -webkit-user-select: none;  -ms-user-select: none;  -khtml-user-select: none;  user-select: none;}
+.ml-list ul.ml-ul{ background-color:#F2F2F2; padding-bottom:1px;}
+.ml-list li.ml-li-sp{border-left:3px solid #9b59b6; color:Black; }
+.ml-list li.ml-li-sp.selected{ color:#9b59b6}
+.ml-list li.ml-li{border-left:3px solid #3498db;}
+.ml-list li.ml-li.mine{ border-color:#27ae60}
+.ml-list li.ml-li-sp span{ font-size:13px;}
+.ml-list li.ml-li-dt{ padding-left:15px; }
+.ml-list li.ml-li-sp,.ml-list li.ml-li{ list-style:none; padding:12px 5px; cursor:pointer; margin-top:1px; background-color:White;}
+.ml-list li span.ml-title{ float:left; font-size:16px;}
+.ml-list li span.ml-time{ float:right; color:#949494; font-size:12px; display:block; height:18px; line-height:18px;}
+.ml-list li.ml-li.mine.selected{background-color:#27ae60;}
+.ml-list li.ml-li.selected{background-color:#3498db; color:white;}
+.ml-list li.ml-li.selected span{color: inherit;}
 
 #calendarList{ float:left; width:45%; margin-left:20px; position:relative;min-width:450px}
 #calendarList .currentDayDetail{ position:absolute; bottom:5px}
@@ -64,7 +80,7 @@ select
 #editPanel{ width:350px; position: absolute; padding:15px; border:1px solid #E5E5E5; z-index:100; background:white; border-radius:5px; left:50px;top:50px}
 .ep-dt{ padding:5px 0}
 .ep-input{ border:1px solid #D9D9D9; height:25px; line-height:21px; padding:2px 3px 2px 5px; border-radius:2px; color:#1A1A1A;box-shadow: 0px 1px 1px #FAFAFA; font-size:15px; font-weight:300; width:290px; vertical-align:middle;}
-.ep-input.ep-title{ height:30px; line-height:26px; width:100%; font-size:21px;color:#34AADC}
+.ep-input.ep-title{ height:30px; line-height:26px; width:100%; font-size:21px;}
 .ep-tip{display:inline-block; width:50px; text-align:right; padding-right:3px; font-size:11px; color:#9E9E9E; margin-right:5px; vertical-align:sub;}
 .ep-input.ep-date{ width:100px; margin-right:5px;}
 .ep-input.ep-time{ width:60px; margin-left:5px;}

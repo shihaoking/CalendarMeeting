@@ -301,10 +301,20 @@ html .fc,
 	}
 .fc-event.fc-event-selected
 {
-    border: 1px solid #34AADC;
-	background-color: #34AADC; 
+    border: 1px solid #3498db;
+	background-color: #3498db; 
 	color: White;  
 }
+.fc-event.fc-event-mine {
+	background-color: #B5F6D0;
+	color:#00692C;
+	}
+.fc-event.fc-event-mine.fc-event-selected 
+{
+    border: 1px solid #27AE60;
+	background-color: #27AE60;
+	color:White;
+	}
 
 a.fc-event {
 	text-decoration: none;
@@ -318,7 +328,7 @@ a.fc-event,
 .fc-rtl .fc-event {
 	text-align: right;
 	}
-
+		
 .fc-event-inner {
 	width: 100%;
 	height: 100%;
@@ -589,8 +599,12 @@ table.fc-border-separate {
 .fc-event-vert .fc-event-inner {
 	position: relative;
 	z-index: 2;
-	border-top:2px solid #34AADC;
+	border-top:2px solid #3498DB;
 	}
+	
+.fc-event-vert.fc-event-mine .fc-event-inner {
+	border-top:2px solid #27AE60;
+	}	
 	
 .fc-event-vert .fc-event-bg { /* makes the event lighter w/ a semi-transparent overlay  */
 	position: absolute;

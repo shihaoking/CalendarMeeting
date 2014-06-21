@@ -8,7 +8,22 @@
         <EntityContainer Name="MCDBModelStoreContainer">
           <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
           <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" />
+          <EntitySet Name="user_grade_catg" EntityType="MCDBModel.Store.user_grade_catg" store:Type="Tables" Schema="mc_db" />
           <EntitySet Name="user_info" EntityType="MCDBModel.Store.user_info" store:Type="Tables" Schema="mc_db" />
+          <EntitySet Name="user_info_detail" EntityType="MCDBModel.Store.user_info_detail" store:Type="Views" store:Schema="mc_db" store:Name="user_info_detail">
+            <DefiningQuery>SELECT
+      `user_info_detail`.`id`, 
+      `user_info_detail`.`ui_name`, 
+      `user_info_detail`.`ui_password`, 
+      `user_info_detail`.`ui_email`, 
+      `user_info_detail`.`ui_grade_id`, 
+      `user_info_detail`.`ui_gender`, 
+      `user_info_detail`.`ui_status`, 
+      `user_info_detail`.`ui_create_time`, 
+      `user_info_detail`.`ui_grade_level`, 
+      `user_info_detail`.`ui_grade_name`
+      FROM `user_info_detail` AS `user_info_detail`</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.Store.meeting_info_ibfk_1">
             <End Role="meeting_position" EntitySet="meeting_position" />
             <End Role="meeting_info" EntitySet="meeting_info" />
@@ -17,41 +32,81 @@
             <End Role="user_info" EntitySet="user_info" />
             <End Role="meeting_info" EntitySet="meeting_info" />
           </AssociationSet>
+          <AssociationSet Name="user_info_ibfk_1" Association="MCDBModel.Store.user_info_ibfk_1">
+            <End Role="user_grade_catg" EntitySet="user_grade_catg" />
+            <End Role="user_info" EntitySet="user_info" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="meeting_info">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="m_title" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="m_position" Type="smallint" Nullable="false" />
-          <Property Name="m_people" Type="varchar" Nullable="false" MaxLength="200" />
-          <Property Name="m_start_time" Type="datetime" Nullable="false" />
-          <Property Name="m_end_time" Type="datetime" Nullable="false" />
-          <Property Name="m_level" Type="int" Nullable="false" />
-          <Property Name="m_creator" Type="smallint" Nullable="false" />
-          <Property Name="m_create_time" Type="datetime" Nullable="false" />
-          <Property Name="m_memo" Type="varchar" MaxLength="300" />
+          <Property Name="mi_title" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="mi_position" Type="smallint" Nullable="false" />
+          <Property Name="mi_people" Type="varchar" MaxLength="200" />
+          <Property Name="mi_start_time" Type="datetime" Nullable="false" />
+          <Property Name="mi_end_time" Type="datetime" Nullable="false" />
+          <Property Name="mi_level" Type="int" Nullable="false" />
+          <Property Name="mi_creator" Type="smallint" Nullable="false" />
+          <Property Name="mi_create_time" Type="datetime" Nullable="false" />
+          <Property Name="mi_memo" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="meeting_position">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="p_name" Type="varchar" Nullable="false" MaxLength="30" />
-          <Property Name="p_size" Type="tinyint" Nullable="false" />
+          <Property Name="mp_name" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="mp_size" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_grade_catg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="gc_level" Type="tinyint" Nullable="false" />
+          <Property Name="gc_name" Type="varchar" Nullable="false" MaxLength="10" />
         </EntityType>
         <EntityType Name="user_info">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="u_name" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="u_password" Type="varchar" Nullable="false" MaxLength="15" />
-          <Property Name="u_level" Type="tinyint" Nullable="false" />
-          <Property Name="u_email" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="u_status" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="u_create_time" Type="datetime" Nullable="false" />
+          <Property Name="ui_name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ui_password" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="ui_email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ui_grade_id" Type="tinyint" Nullable="false" />
+          <Property Name="ui_gender" Type="bit" Nullable="false" />
+          <Property Name="ui_status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="ui_create_time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“def.mc_db.user_info_detail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="user_info_detail">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="ui_name" />
+            <PropertyRef Name="ui_password" />
+            <PropertyRef Name="ui_email" />
+            <PropertyRef Name="ui_grade_id" />
+            <PropertyRef Name="ui_gender" />
+            <PropertyRef Name="ui_status" />
+            <PropertyRef Name="ui_create_time" />
+            <PropertyRef Name="ui_grade_level" />
+            <PropertyRef Name="ui_grade_name" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="ui_name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ui_password" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="ui_email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ui_grade_id" Type="tinyint" Nullable="false" />
+          <Property Name="ui_gender" Type="bit" Nullable="false" />
+          <Property Name="ui_status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="ui_create_time" Type="datetime" Nullable="false" />
+          <Property Name="ui_grade_level" Type="tinyint" Nullable="false" />
+          <Property Name="ui_grade_name" Type="varchar" Nullable="false" MaxLength="10" />
         </EntityType>
         <Association Name="meeting_info_ibfk_1">
           <End Role="meeting_position" Type="MCDBModel.Store.meeting_position" Multiplicity="1" />
@@ -61,7 +116,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="meeting_info">
-              <PropertyRef Name="m_position" />
+              <PropertyRef Name="mi_position" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -73,7 +128,19 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="meeting_info">
-              <PropertyRef Name="m_creator" />
+              <PropertyRef Name="mi_creator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_info_ibfk_1">
+          <End Role="user_grade_catg" Type="MCDBModel.Store.user_grade_catg" Multiplicity="1" />
+          <End Role="user_info" Type="MCDBModel.Store.user_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_grade_catg">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_info">
+              <PropertyRef Name="ui_grade_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -84,7 +151,9 @@
         <EntityContainer Name="mc_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="meeting_info" EntityType="MCDBModel.meeting_info" />
           <EntitySet Name="meeting_position" EntityType="MCDBModel.meeting_position" />
+          <EntitySet Name="user_grade_catg" EntityType="MCDBModel.user_grade_catg" />
           <EntitySet Name="user_info" EntityType="MCDBModel.user_info" />
+          <EntitySet Name="user_info_detail" EntityType="MCDBModel.user_info_detail" />
           <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.meeting_info_ibfk_1">
             <End Role="meeting_position" EntitySet="meeting_position" />
             <End Role="meeting_info" EntitySet="meeting_info" />
@@ -93,21 +162,25 @@
             <End Role="user_info" EntitySet="user_info" />
             <End Role="meeting_info" EntitySet="meeting_info" />
           </AssociationSet>
+          <AssociationSet Name="user_info_ibfk_1" Association="MCDBModel.user_info_ibfk_1">
+            <End Role="user_grade_catg" EntitySet="user_grade_catg" />
+            <End Role="user_info" EntitySet="user_info" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="meeting_info">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="m_title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Int16" Name="m_position" Nullable="false" />
-          <Property Type="String" Name="m_people" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="m_start_time" Nullable="false" />
-          <Property Type="DateTime" Name="m_end_time" Nullable="false" />
-          <Property Type="Int32" Name="m_level" Nullable="false" />
-          <Property Type="Int16" Name="m_creator" Nullable="false" />
-          <Property Type="DateTime" Name="m_create_time" Nullable="false" />
-          <Property Type="String" Name="m_memo" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="mi_title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="mi_position" Nullable="false" />
+          <Property Type="String" Name="mi_people" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="mi_start_time" Nullable="false" />
+          <Property Type="DateTime" Name="mi_end_time" Nullable="false" />
+          <Property Type="Int32" Name="mi_level" Nullable="false" />
+          <Property Type="Int16" Name="mi_creator" Nullable="false" />
+          <Property Type="DateTime" Name="mi_create_time" Nullable="false" />
+          <Property Type="String" Name="mi_memo" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="meeting_position" Relationship="MCDBModel.meeting_info_ibfk_1" FromRole="meeting_info" ToRole="meeting_position" />
           <NavigationProperty Name="user_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="meeting_info" ToRole="user_info" />
         </EntityType>
@@ -116,22 +189,57 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="p_name" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="SByte" Name="p_size" Nullable="false" />
+          <Property Type="String" Name="mp_name" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="mp_size" Nullable="false" />
           <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_1" FromRole="meeting_position" ToRole="meeting_info" />
+        </EntityType>
+        <EntityType Name="user_grade_catg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="SByte" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="SByte" Name="gc_level" Nullable="false" />
+          <Property Type="String" Name="gc_name" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user_info" Relationship="MCDBModel.user_info_ibfk_1" FromRole="user_grade_catg" ToRole="user_info" />
         </EntityType>
         <EntityType Name="user_info">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="u_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="u_password" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Type="SByte" Name="u_level" Nullable="false" />
-          <Property Type="String" Name="u_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="u_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="u_create_time" Nullable="false" />
+          <Property Type="String" Name="ui_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ui_password" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ui_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="ui_grade_id" Nullable="false" />
+          <Property Type="Boolean" Name="ui_gender" Nullable="false" />
+          <Property Type="String" Name="ui_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
           <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="user_info" ToRole="meeting_info" />
+          <NavigationProperty Name="user_grade_catg" Relationship="MCDBModel.user_info_ibfk_1" FromRole="user_info" ToRole="user_grade_catg" />
+        </EntityType>
+        <EntityType Name="user_info_detail">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="ui_name" />
+            <PropertyRef Name="ui_password" />
+            <PropertyRef Name="ui_email" />
+            <PropertyRef Name="ui_grade_id" />
+            <PropertyRef Name="ui_gender" />
+            <PropertyRef Name="ui_status" />
+            <PropertyRef Name="ui_create_time" />
+            <PropertyRef Name="ui_grade_level" />
+            <PropertyRef Name="ui_grade_name" />
+          </Key>
+          <Property Type="Int16" Name="id" Nullable="false" />
+          <Property Type="String" Name="ui_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ui_password" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ui_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="ui_grade_id" Nullable="false" />
+          <Property Type="Boolean" Name="ui_gender" Nullable="false" />
+          <Property Type="String" Name="ui_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
+          <Property Type="SByte" Name="ui_grade_level" Nullable="false" />
+          <Property Type="String" Name="ui_grade_name" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="meeting_info_ibfk_1">
           <End Type="MCDBModel.meeting_position" Role="meeting_position" Multiplicity="1" />
@@ -141,7 +249,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="meeting_info">
-              <PropertyRef Name="m_position" />
+              <PropertyRef Name="mi_position" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -153,7 +261,19 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="meeting_info">
-              <PropertyRef Name="m_creator" />
+              <PropertyRef Name="mi_creator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_info_ibfk_1">
+          <End Type="MCDBModel.user_grade_catg" Role="user_grade_catg" Multiplicity="1" />
+          <End Type="MCDBModel.user_info" Role="user_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_grade_catg">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_info">
+              <PropertyRef Name="ui_grade_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -166,15 +286,15 @@
           <EntitySetMapping Name="meeting_info">
             <EntityTypeMapping TypeName="MCDBModel.meeting_info">
               <MappingFragment StoreEntitySet="meeting_info">
-                <ScalarProperty Name="m_memo" ColumnName="m_memo" />
-                <ScalarProperty Name="m_create_time" ColumnName="m_create_time" />
-                <ScalarProperty Name="m_creator" ColumnName="m_creator" />
-                <ScalarProperty Name="m_level" ColumnName="m_level" />
-                <ScalarProperty Name="m_end_time" ColumnName="m_end_time" />
-                <ScalarProperty Name="m_start_time" ColumnName="m_start_time" />
-                <ScalarProperty Name="m_people" ColumnName="m_people" />
-                <ScalarProperty Name="m_position" ColumnName="m_position" />
-                <ScalarProperty Name="m_title" ColumnName="m_title" />
+                <ScalarProperty Name="mi_memo" ColumnName="mi_memo" />
+                <ScalarProperty Name="mi_create_time" ColumnName="mi_create_time" />
+                <ScalarProperty Name="mi_creator" ColumnName="mi_creator" />
+                <ScalarProperty Name="mi_level" ColumnName="mi_level" />
+                <ScalarProperty Name="mi_end_time" ColumnName="mi_end_time" />
+                <ScalarProperty Name="mi_start_time" ColumnName="mi_start_time" />
+                <ScalarProperty Name="mi_people" ColumnName="mi_people" />
+                <ScalarProperty Name="mi_position" ColumnName="mi_position" />
+                <ScalarProperty Name="mi_title" ColumnName="mi_title" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -182,8 +302,17 @@
           <EntitySetMapping Name="meeting_position">
             <EntityTypeMapping TypeName="MCDBModel.meeting_position">
               <MappingFragment StoreEntitySet="meeting_position">
-                <ScalarProperty Name="p_size" ColumnName="p_size" />
-                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="mp_size" ColumnName="mp_size" />
+                <ScalarProperty Name="mp_name" ColumnName="mp_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_grade_catg">
+            <EntityTypeMapping TypeName="MCDBModel.user_grade_catg">
+              <MappingFragment StoreEntitySet="user_grade_catg">
+                <ScalarProperty Name="gc_name" ColumnName="gc_name" />
+                <ScalarProperty Name="gc_level" ColumnName="gc_level" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -191,12 +320,29 @@
           <EntitySetMapping Name="user_info">
             <EntityTypeMapping TypeName="MCDBModel.user_info">
               <MappingFragment StoreEntitySet="user_info">
-                <ScalarProperty Name="u_create_time" ColumnName="u_create_time" />
-                <ScalarProperty Name="u_status" ColumnName="u_status" />
-                <ScalarProperty Name="u_email" ColumnName="u_email" />
-                <ScalarProperty Name="u_level" ColumnName="u_level" />
-                <ScalarProperty Name="u_password" ColumnName="u_password" />
-                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />
+                <ScalarProperty Name="ui_status" ColumnName="ui_status" />
+                <ScalarProperty Name="ui_gender" ColumnName="ui_gender" />
+                <ScalarProperty Name="ui_grade_id" ColumnName="ui_grade_id" />
+                <ScalarProperty Name="ui_email" ColumnName="ui_email" />
+                <ScalarProperty Name="ui_password" ColumnName="ui_password" />
+                <ScalarProperty Name="ui_name" ColumnName="ui_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_info_detail">
+            <EntityTypeMapping TypeName="MCDBModel.user_info_detail">
+              <MappingFragment StoreEntitySet="user_info_detail">
+                <ScalarProperty Name="ui_grade_name" ColumnName="ui_grade_name" />
+                <ScalarProperty Name="ui_grade_level" ColumnName="ui_grade_level" />
+                <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />
+                <ScalarProperty Name="ui_status" ColumnName="ui_status" />
+                <ScalarProperty Name="ui_gender" ColumnName="ui_gender" />
+                <ScalarProperty Name="ui_grade_id" ColumnName="ui_grade_id" />
+                <ScalarProperty Name="ui_email" ColumnName="ui_email" />
+                <ScalarProperty Name="ui_password" ColumnName="ui_password" />
+                <ScalarProperty Name="ui_name" ColumnName="ui_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -215,24 +361,31 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="MySqlDB">
-        <EntityTypeShape EntityType="MCDBModel.meeting_info" Width="1.5" PointX="3" PointY="1" Height="3.3071704101562496" />
-        <EntityTypeShape EntityType="MCDBModel.meeting_position" Width="1.5" PointX="0.75" PointY="1.75" Height="1.7790128580729165" />
-        <EntityTypeShape EntityType="MCDBModel.user_info" Width="1.5" PointX="0.75" PointY="5.375" Height="2.5430916341145817" />
+        <EntityTypeShape EntityType="MCDBModel.meeting_info" Width="1.5" PointX="5.25" PointY="1" Height="3.3071704101562496" />
+        <EntityTypeShape EntityType="MCDBModel.meeting_position" Width="1.5" PointX="3" PointY="5.75" Height="1.7790128580729174" />
+        <EntityTypeShape EntityType="MCDBModel.user_grade_catg" Width="1.5" PointX="0.75" PointY="1.75" Height="1.7790128580729174" />
+        <EntityTypeShape EntityType="MCDBModel.user_info" Width="1.5" PointX="3" PointY="1.125" Height="2.9251310221354174" />
+        <EntityTypeShape EntityType="MCDBModel.user_info_detail" Width="1.5" PointX="5.75" PointY="5.75" Height="2.9251310221354174" />
         <AssociationConnector Association="MCDBModel.meeting_info_ibfk_1" >
-          <ConnectorPoint PointX="2.25" PointY="2.6395064290364583" />
-          <ConnectorPoint PointX="3" PointY="2.6395064290364583" />
+          <ConnectorPoint PointX="4.5" PointY="5.75" />
+          <ConnectorPoint PointX="4.875" PointY="5.375" />
+          <ConnectorPoint PointX="4.875" PointY="2.6535852050781248" />
+          <ConnectorPoint PointX="5.25" PointY="2.6535852050781248" />
         </AssociationConnector>
         <AssociationConnector Association="MCDBModel.meeting_info_ibfk_2" >
-          <ConnectorPoint PointX="2.25" PointY="6.6465458170572909" />
-          <ConnectorPoint PointX="3.75" PointY="6.6465458170572909" />
-          <ConnectorPoint PointX="3.75" PointY="4.30717041015625" />
+          <ConnectorPoint PointX="4.5" PointY="1.8267926025390624" />
+          <ConnectorPoint PointX="5.25" PointY="1.8267926025390624" />
+        </AssociationConnector>
+        <AssociationConnector Association="MCDBModel.user_info_ibfk_1" >
+          <ConnectorPoint PointX="2.25" PointY="2.6395064290364587" />
+          <ConnectorPoint PointX="3" PointY="2.6395064290364587" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
