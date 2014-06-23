@@ -18,6 +18,12 @@ namespace MeetingCanlendar.Models
             return db.meeting_info.FirstOrDefault(r => r.id == id);
         }
 
+        public static int GetMeetintgCount()
+        {
+
+            return staticDb.meeting_info.Count();
+        }
+
         public IQueryable<meeting_info> GetMeetings(DateTime fromTime, DateTime toTime)
         {
             return db.meeting_info.Where(r => r.mi_start_time >= fromTime && r.mi_start_time <= toTime);
@@ -30,10 +36,6 @@ namespace MeetingCanlendar.Models
 
         public bool CheckMeetingAvailable(int metId, DateTime startTime, DateTime endTime)
         {
-            /*meeting_info d = db.meeting_info.FirstOrDefault(r => r.id != metId &&
-                (r.mi_start_time < startTime && startTime < r.mi_end_time ||
-                r.mi_start_time < endTime && endTime < r.mi_end_time));*/
-
             return !(db.meeting_info.Any(r => r.id != metId &&
                 (r.mi_start_time < startTime && startTime < r.mi_end_time ||
                 r.mi_start_time < endTime && endTime < r.mi_end_time ||

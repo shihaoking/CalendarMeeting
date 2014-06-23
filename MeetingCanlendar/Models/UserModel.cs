@@ -62,6 +62,28 @@ namespace MeetingCanlendar.Models
 
     public class UserModel : MySqlDBModel
     {
+        public IQueryable<user_info_detail> GetUserInfos()
+        {
+            return db.user_info_detail;
+        }
+
+        public IQueryable<user_info_detail> GetAvaliableUserInfos()
+        {
+            return db.user_info_detail.Where(r => r.ui_status == "A");
+        }
+
+        public static int GetUsersCount(string status = "")
+        {
+            if(string.IsNullOrEmpty(status))
+            {
+                return staticDb.user_info.Count();
+            }
+            else
+            {
+                return staticDb.user_info.Count(r => r.ui_status == status);
+            }
+        }
+
         public user_info GetUserInfo(string userName)
         {
             return db.user_info.FirstOrDefault(r => r.ui_name == userName || r.ui_email == userName);

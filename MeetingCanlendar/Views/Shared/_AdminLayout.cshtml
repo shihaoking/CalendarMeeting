@@ -1,0 +1,22 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/css/admin.css")" rel='stylesheet' />
+</head>
+<body>
+    <div class="adm-catg">
+        @Html.Partial("~/Views/Admin/_PartialCatalog.cshtml")
+    </div>
+    <div class="adm-cnt">
+        @RenderBody()
+    </div>
+    <div class="clear"></div>
+</body>
+</html>

@@ -116,6 +116,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -132,7 +133,9 @@
     <Compile Include="Tools\SendEmail.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\user_reg.css" />
+    <Content Include="Content\images\admin-icon-little.png" />
     <Content Include="Content\images\chosen-sprite.png" />
     <Content Include="Content\css\chosen.css" />
     <Content Include="Content\css\datepicker.css" />
@@ -189,6 +192,10 @@
     <Content Include="Views\Shared\_UserLayout.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Shared\_NoHeaderLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\_PartialCatalog.cshtml" />
+    <Content Include="Views\Admin\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBEntity\DBEntity.csproj">

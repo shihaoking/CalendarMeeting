@@ -1,0 +1,16 @@
+﻿@model IQueryable<DBEntity.user_info_detail>
+@{
+    ViewBag.Title = "用户列表";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<table>
+    <tr>
+        <th></th><th>用户名</th><th>会议数</th><th>等级</th>
+    </tr>
+    @foreach(DBEntity.user_info_detail item in Model)
+    {
+        <tr>
+            <td><input type="checkbox" id="u-item-@item.id" /></td><td>@item.ui_name</td><td></td>
+        </tr>
+    }
+</table>

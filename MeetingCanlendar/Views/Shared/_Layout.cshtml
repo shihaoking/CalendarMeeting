@@ -15,6 +15,9 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/fullcalendar-zh-cn.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/chzn-chosen.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/editPanel.js")"></script>
+    @{
+        string userLevel = MeetingCanlendar.Models.MCAuthorizeAttribute.GetRole(User.Identity.Name);
+    }
 </head>
 <body>
     <header>
@@ -23,6 +26,11 @@
                 <div class="i">
                 @if(Request.IsAuthenticated)
                 {
+                    if(userLevel == "9")
+                    {
+                        @Html.ActionLink("后台管理", "index", "admin")
+                        <span class="sp">|</span>
+                    }
                     @Html.ActionLink(User.Identity.Name, "index", "user", null, new { @class = "u_name" })
                     <span class="sp">|</span>
                     @Html.ActionLink("退出", "LogOut", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "u_lgo" })
@@ -38,8 +46,6 @@
         </div>
     </header>
     @RenderBody()
-
-    
     @RenderSection("scripts", required: false)
 </body>
 </html>
