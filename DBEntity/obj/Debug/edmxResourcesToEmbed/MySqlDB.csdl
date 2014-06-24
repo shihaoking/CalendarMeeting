@@ -92,6 +92,7 @@
     <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
     <Property Type="SByte" Name="ui_grade_level" Nullable="false" />
     <Property Type="String" Name="ui_grade_name" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="user_meeting_count" />
   </EntityType>
   <Association Name="meeting_info_ibfk_1">
     <End Type="MCDBModel.meeting_position" Role="meeting_position" Multiplicity="1" />

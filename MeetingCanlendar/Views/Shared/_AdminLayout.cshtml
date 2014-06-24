@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/css/admin.css")" rel='stylesheet' />
+    @Scripts.Render("~/bundles/jquery") 
 </head>
 <body>
     <div class="adm-catg">
@@ -18,5 +19,12 @@
         @RenderBody()
     </div>
     <div class="clear"></div>
+    <script type="text/javascript">
+        $('.adm-cnt').css('width', document.body.clientWidth - $('.adm-catg').outerWidth());
+        
+        $(window).resize(function () {
+            $('.adm-cnt').css('width', document.body.clientWidth - $('.adm-catg').outerWidth());
+        });
+    </script>
 </body>
 </html>

@@ -16,7 +16,8 @@
       `user_info_detail`.`ui_status`, 
       `user_info_detail`.`ui_create_time`, 
       `user_info_detail`.`ui_grade_level`, 
-      `user_info_detail`.`ui_grade_name`
+      `user_info_detail`.`ui_grade_name`, 
+      `user_info_detail`.`user_meeting_count`
       FROM `user_info_detail` AS `user_info_detail`</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.Store.meeting_info_ibfk_1">
@@ -102,6 +103,7 @@
     <Property Name="ui_create_time" Type="datetime" Nullable="false" />
     <Property Name="ui_grade_level" Type="tinyint" Nullable="false" />
     <Property Name="ui_grade_name" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="user_meeting_count" Type="bigint" />
   </EntityType>
   <Association Name="meeting_info_ibfk_1">
     <End Role="meeting_position" Type="MCDBModel.Store.meeting_position" Multiplicity="1" />

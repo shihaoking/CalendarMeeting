@@ -2,15 +2,74 @@
 @{
     ViewBag.Title = "用户列表";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    int pageNowIndex = ViewBag.PageNowIndex;
+    int pageSize = ViewBag.PageSize;
+    int pagesCount = ViewBag.PagesCount;
+    int pageStartIndex = ViewBag.PageStartIndex;
+    int pageEndIndex = ViewBag.PageEndIndex;
 }
-<table>
-    <tr>
-        <th></th><th>用户名</th><th>会议数</th><th>等级</th>
-    </tr>
-    @foreach(DBEntity.user_info_detail item in Model)
-    {
-        <tr>
-            <td><input type="checkbox" id="u-item-@item.id" /></td><td>@item.ui_name</td><td></td>
-        </tr>
-    }
-</table>
+<div class="u-list">
+    <table class="u-tb">
+        <thead>
+            <tr>
+                <th style="width:50px"></th><th style="text-align:left;">用户名</th><th>会议数</th><th>等级</th><th style=" text-align:left">邮箱</th><th>创建日期</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            int tick = 1;
+        }
+        @foreach(DBEntity.user_info_detail item in Model)
+        {
+            <tr @(tick % 2 == 0 ? "" : "class=u-tb-tr-odd")>
+                <td><input type="checkbox" id="u-item-@item.id" /></td>
+                <td style="text-align:left;">@item.ui_name</td>
+                <td style="text-align:center;">@item.user_meeting_count</td>
+                <td style="text-align:center;">@item.ui_grade_name</td>
+                <td style="text-align:left;">@item.ui_email</td>
+                <td style="text-align:center;">@item.ui_create_time.ToString("yyyy-MM-dd HH:mm")</td>
+            </tr>
+            tick++;
+        }
+        </tbody>
+    </table>
+</div>
+<div class="page_list">
+    <ul class="pg_ul">
+        @if(pageNowIndex > 1)
+        {
+            if(pagesCount > 9)
+            {
+            <li class="f">@Html.ActionLink("首页", null, new { p = 1})</li>
+            }
+            <li class="p">@Html.ActionLink("上一页", null, new { p = pageNowIndex - 1})</li>
+        }
+        @if(pagesCount != 1)
+        {
+            for(int i = pageStartIndex; i <= pageEndIndex; i++)
+            {
+            <li class="i">
+                @if(i == pageNowIndex)
+                {
+                    <strong>@i</strong>
+                }
+                else
+                {
+                    @Html.ActionLink(i.ToString(), null, new { p = i});
+                }
+            </li>
+            }
+        }
+        @if(pagesCount > pageNowIndex)
+        {
+            <li class="n">@Html.ActionLink("下一页", null, new { p = pageNowIndex + 1 })</li>
+            if(pagesCount > 9)
+            {
+            <li class="l">@Html.ActionLink("末页", null, new { p = pagesCount })</li>
+            }
+        }
+    </ul>
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>

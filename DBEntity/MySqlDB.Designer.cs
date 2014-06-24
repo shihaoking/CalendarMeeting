@@ -1457,6 +1457,30 @@ namespace DBEntity
         private global::System.String _ui_grade_name;
         partial void Onui_grade_nameChanging(global::System.String value);
         partial void Onui_grade_nameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> user_meeting_count
+        {
+            get
+            {
+                return _user_meeting_count;
+            }
+            set
+            {
+                Onuser_meeting_countChanging(value);
+                ReportPropertyChanging("user_meeting_count");
+                _user_meeting_count = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("user_meeting_count");
+                Onuser_meeting_countChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _user_meeting_count;
+        partial void Onuser_meeting_countChanging(Nullable<global::System.Int64> value);
+        partial void Onuser_meeting_countChanged();
 
         #endregion
 
