@@ -41,6 +41,7 @@ table{border-collapse: collapse;}
 .adm-cnt .u-act-bar .u-act.u-act-create{border:1px solid #27AE60; color:#27AE60;cursor:pointer;}
 .adm-cnt .u-act-bar .u-act.u-act-del.u-act-selected{ border-color:#FF3B30; color:#FF3B30;cursor:pointer;}
 .adm-cnt .u-act-bar .u-act.u-act-edit.u-act-selected{ border-color:#3498DB; color:#3498DB;cursor:pointer;}
+.adm-cnt .u-act-bar .u-stat{ float:right; margin-top:13px;}
 
 .adm-cnt .u-list table{ width:100%}
 .adm-cnt .u-list table th,.adm-cnt .u-list table td{ padding:10px;}
@@ -85,3 +86,10 @@ table{border-collapse: collapse;}
 .sticky-wrap th {
 	box-sizing: border-box;
 }
+
+.page_list { text-align: center; display: block; margin:30px auto 0 auto; width:100% }
+.pg_ul { margin: 0 auto; padding: 0;  display:inline-block;*display:inline;zoom:1}
+.pg_ul li { list-style: none; float:left; margin:0 5px;*display:inline; zoom:1}
+.pg_ul li a { display: block; color: #26221F; font-size: 14px; text-decoration: none;  background-color:White; padding:6px 12px; }
+.pg_ul li a:hover{background-color: #BFECFF; display: block; color:white; padding:6px 12px; border:none;}
+.pg_ul li.i strong { background-color: #3498DB; display: block; padding:6px 12px; color:white; font-weight:normal; }

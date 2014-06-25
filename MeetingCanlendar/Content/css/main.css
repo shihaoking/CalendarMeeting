@@ -10,7 +10,7 @@ body {
 input{
 	font-family: "Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 }
-
+.clear{clear:both}
 select
 {
     font-family: "Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
@@ -27,7 +27,7 @@ a:active{ color:inherit;outline: none; background-color:transparent;}
 
 .clear{ clear:both}
 
-header{ position:absolute; right:0;}
+header{ position:absolute; left:20;}
 .header .u_box{  height:25px; line-height:25px; }
 .header .u_box .i{ float:right;  margin-right:30px; font-size:15px;}
 .header .u_box .i span.sp{color:#A2A2A2;}
@@ -91,4 +91,10 @@ header{ position:absolute; right:0;}
 .epc-bt{float:right;color:#167EFB; cursor:pointer}
 .epc-bt.ep-action-del{float:left; color:#FF3B30}
 .epc-bt.ep-action-sp{margin:0 15px; color:#DAD9D4}
-.clear{clear:both}
+
+.page_list { text-align: center; display: block; margin:30px auto 0 auto; width:100% }
+.pg_ul { margin: 0 auto; padding: 0;  display:inline-block;*display:inline;zoom:1}
+.pg_ul li { list-style: none; float:left; margin:0 5px;*display:inline; zoom:1}
+.pg_ul li a { display: block; color: #26221F; font-size: 13px; text-decoration: none; border: 1px solid white; background-color:White; padding:7px 11px; }
+.pg_ul li a:hover{background-color: #F56267; display: block; color:white; padding:8px 12px; border:none;}
+.pg_ul li.i strong { background-color: #E93E44; display: block; padding:6px 11px; color:white; }

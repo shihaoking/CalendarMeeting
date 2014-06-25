@@ -26,14 +26,14 @@
                 <div class="i">
                 @if(Request.IsAuthenticated)
                 {
+                    @Html.ActionLink("退出", "LogOut", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "u_lgo" })
+                    <span class="sp">|</span>
+                    @Html.ActionLink(User.Identity.Name, "index", "user", null, new { @class = "u_name" })  
                     if(userLevel == "9")
                     {
-                        @Html.ActionLink("后台管理", "index", "admin")
                         <span class="sp">|</span>
+                        @Html.ActionLink("后台管理", "index", "admin", null, new { @target="_blank"})
                     }
-                    @Html.ActionLink(User.Identity.Name, "index", "user", null, new { @class = "u_name" })
-                    <span class="sp">|</span>
-                    @Html.ActionLink("退出", "LogOut", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "u_lgo" })
                 }
                 else
                 {

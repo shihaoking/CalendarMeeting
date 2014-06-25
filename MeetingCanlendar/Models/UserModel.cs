@@ -43,10 +43,12 @@ namespace MeetingCanlendar.Models
 
     public class ChangePassword
     {
+        public int UserId { get; set; }
+
         [Display(Name = "新密码")]
         public string NewPassword { get; set; }
 
-        [Display(Name = "确认新密码")]
+        [Display(Name = "确认密码")]
         public string NewPasswordConfirm { get; set; }
     }
 
@@ -87,6 +89,11 @@ namespace MeetingCanlendar.Models
         public user_info GetUserInfo(string userName)
         {
             return db.user_info.FirstOrDefault(r => r.ui_name == userName || r.ui_email == userName);
+        }
+
+        public user_info GetUserInfo(int userId)
+        {
+            return db.user_info.FirstOrDefault(r => r.id == userId);
         }
 
         public user_info_detail GetUserInfoDetail(string userName)
@@ -141,6 +148,11 @@ namespace MeetingCanlendar.Models
         {
             db.user_info.AddObject(userInfo);
             Save();
+        }
+
+        public int UpdateUserAsDelete(string ids)
+        {
+            return db.ExecuteStoreCommand("Update user_info Set ui_status = 'X' Where id In(" + ids + ")");
         }
 
         public void Save()

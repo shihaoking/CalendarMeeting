@@ -31,16 +31,16 @@
                 <td class="name_error" colspan="2"></td>
             </tr>
             <tr>
-                <td>密码：</td>
+                <td class="lb">密码：</td>
                 <td class="in_val">@Html.PasswordFor(m => m.Password, new { @autocomplete = "off" })</td>
-                <td class="tip">6~15位字符，必须同时包含字母、数字</td>
+                <td class="tip">必填</td>
             </tr>
             <tr class="error">
                 <td></td>
                 <td class="pwd_error" colspan="2"></td>
             </tr>
             <tr class="valid">
-                <td>验证码：</td>
+                <td class="lb">验证码：</td>
                 <td colspan="2" class="val">
                     @Html.TextBoxFor(m => m.ValidateCode)
                     <img id="validate_img" alt="" title="点击换一张" src="/User/GetImageValidate" onclick="this.src='/User/GetImageValidate?random='+Math.random(); return false;" />
@@ -52,7 +52,7 @@
                 <td class="val_error" colspan="2">@Html.ValidationMessageFor(m => m.ValidateCode, null, new { id = "valid_error" })</td>
             </tr>
             <tr>
-                <td class="btn" colspan="3"><input type="submit" class="green_btn" value="注册" /></td>
+                <td class="btn" colspan="3"><input type="submit" class="blue_btn" value="注册" /></td>
             </tr>
         </tbody>
     </table>

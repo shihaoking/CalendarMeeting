@@ -185,8 +185,6 @@
     <None Include="Content\fonts\HelveticaNeue-Medium.ttf" />
     <None Include="Content\fonts\HelveticaNeue-Medium.woff" />
     <Content Include="Views\User\ChangePassword.cshtml" />
-    <Content Include="Views\User\FindPassword.cshtml" />
-    <Content Include="Views\User\FindPasswordStep2.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Register.cshtml" />

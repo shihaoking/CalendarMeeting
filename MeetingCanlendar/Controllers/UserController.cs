@@ -33,7 +33,7 @@ namespace MeetingCanlendar.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel registerInfo, string returnUrl)
         {
-            if(User.Identity.IsAuthenticated)
+            if(User.Identity.IsAuthenticated == false)
                 return RedirectToAction("index", "meeting");
 
             if (ModelState.IsValid)
@@ -66,8 +66,9 @@ namespace MeetingCanlendar.Controllers
         }
 
         [MCAuthorize]
-        public ActionResult ChangePassword()
+        public ActionResult ChangePassword(int uid)
         {
+            ViewBag.UserId = uid;
             return View();
         }
 
@@ -76,7 +77,7 @@ namespace MeetingCanlendar.Controllers
         public ActionResult ChangePassword(ChangePassword pwdForm)
         {
             UserModel userModel = new UserModel();
-            user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
+            user_info userInfo = userModel.GetUserInfo(pwdForm.UserId);
             
             userInfo.ui_password = userModel.PasswordEncrypt(pwdForm.NewPassword);
             userModel.Save();
