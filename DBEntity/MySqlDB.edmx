@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="MCDBModelStoreContainer">
           <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
           <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" />
@@ -22,7 +22,7 @@
       `user_info_detail`.`ui_create_time`, 
       `user_info_detail`.`ui_grade_level`, 
       `user_info_detail`.`ui_grade_name`, 
-      `user_info_detail`.`user_meeting_count`
+      `user_info_detail`.`ui_meeting_count`
       FROM `user_info_detail` AS `user_info_detail`</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.Store.meeting_info_ibfk_1">
@@ -108,7 +108,7 @@
           <Property Name="ui_create_time" Type="datetime" Nullable="false" />
           <Property Name="ui_grade_level" Type="tinyint" Nullable="false" />
           <Property Name="ui_grade_name" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="user_meeting_count" Type="bigint" />
+          <Property Name="ui_meeting_count" Type="bigint" />
         </EntityType>
         <Association Name="meeting_info_ibfk_1">
           <End Role="meeting_position" Type="MCDBModel.Store.meeting_position" Multiplicity="1" />
@@ -242,7 +242,7 @@
           <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
           <Property Type="SByte" Name="ui_grade_level" Nullable="false" />
           <Property Type="String" Name="ui_grade_name" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Int64" Name="user_meeting_count" />
+          <Property Type="Int64" Name="ui_meeting_count" />
         </EntityType>
         <Association Name="meeting_info_ibfk_1">
           <End Type="MCDBModel.meeting_position" Role="meeting_position" Multiplicity="1" />
@@ -337,7 +337,7 @@
           <EntitySetMapping Name="user_info_detail">
             <EntityTypeMapping TypeName="MCDBModel.user_info_detail">
               <MappingFragment StoreEntitySet="user_info_detail">
-                <ScalarProperty Name="user_meeting_count" ColumnName="user_meeting_count" />
+                <ScalarProperty Name="ui_meeting_count" ColumnName="ui_meeting_count" />
                 <ScalarProperty Name="ui_grade_name" ColumnName="ui_grade_name" />
                 <ScalarProperty Name="ui_grade_level" ColumnName="ui_grade_level" />
                 <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />
@@ -376,7 +376,7 @@
         <EntityTypeShape EntityType="MCDBModel.meeting_position" Width="1.5" PointX="3" PointY="5.75" Height="1.7790128580729174" />
         <EntityTypeShape EntityType="MCDBModel.user_grade_catg" Width="1.5" PointX="0.75" PointY="1.75" Height="1.7790128580729174" />
         <EntityTypeShape EntityType="MCDBModel.user_info" Width="1.5" PointX="3" PointY="1.125" Height="2.9251310221354174" />
-        <EntityTypeShape EntityType="MCDBModel.user_info_detail" Width="1.5" PointX="5.75" PointY="5.75" Height="2.9251310221354174" />
+        <EntityTypeShape EntityType="MCDBModel.user_info_detail" Width="1.5" PointX="5.75" PointY="5.75" Height="2.9251310221354156" />
         <AssociationConnector Association="MCDBModel.meeting_info_ibfk_1" >
           <ConnectorPoint PointX="4.5" PointY="5.75" />
           <ConnectorPoint PointX="4.875" PointY="5.375" />

@@ -1,6 +1,6 @@
 ﻿@font-face{font-family:'Helvetica Neue';src:local("Helvetica Neue Light"),local("HelveticaNeue-Light"),url("../fonts/HelveticaNeue-Light.ttf") format("truetype"),url("../fonts/HelveticaNeue-Light.woff") format("woff");font-weight:300}@font-face{font-family:'Helvetica Neue';src:local("Helvetica Neue Medium"),local("HelveticaNeue-Medium"),url("../fonts/HelveticaNeue-Medium.ttf") format("truetype"),url("../fonts/HelveticaNeue-Medium.woff") format("woff");font-weight:500}@font-face{font-family:'Helvetica Neue XP';src:url("../fonts/HelveticaNeue-Light.svg#HelveticaNeue-Light") format("svg"),url("../fonts/HelveticaNeue-Light.woff") format("woff");font-weight:300}@font-face{font-family:'Helvetica Neue XP';src:url("../fonts/HelveticaNeue-Medium.svg#HelveticaNeue-Medium") format("svg"),url("../fonts/HelveticaNeue-Medium.woff") format("woff");font-weight:500}html{-ms-content-zooming:none}
-
-body{ padding:0; margin:0;font-family:arial; background:url(../images/login_bg.png);background-attachment:fixed; background-size: contain;font-family:"Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif; position:relative; }
+html{ height:100%;}
+body{ padding:0; margin:0;font-family:arial; height:100%; background:url(../images/login_bg.png);background-attachment:fixed; background-size: contain;font-family:"Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif; position:relative; }
 input{font-family:"Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;}
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { 
 background-color: White!important; 
@@ -17,10 +17,11 @@ th{ color:#333; font-size:22px; padding-bottom:20px}
 td.btn{ text-align:center; padding-top:25px}
 td.btn input{ height:30px; width:80px; font-size:14px; font-weight:bold; border:none; border-radius:3px; cursor: pointer}
 #validate_img{ cursor:pointer}
+input {outline:none}
 
 .logo{ text-align:center; margin-top:4%;}
 
-.login-box{top:0; left:0; right:0; bottom:0; position:absolute; overflow:hidden; }
+.login-box{top:0; left:0; right:0; bottom:0; position:absolute; overflow:hidden; height:100%; }
 .login_form{ width:360px; padding:40px 0;background-color:White; border-radius:50px; margin-top:-180px; margin-left:-180px; margin-right:auto; top:50%; left:50%; position:absolute; }
 .login_form table {width:300px; margin:0 auto}
 .login_form table td.lb{ width:60px; text-align:left}
@@ -31,7 +32,7 @@ td.btn input{ height:30px; width:80px; font-size:14px; font-weight:bold; border:
 .login_form table td.rem input{ margin:0;}
 .login_form table td .reg_lk{ float:right; margin-right:40px; color:#2A85E8}
 
-.reg_box{ width:450px; margin:50px auto;padding:20px 35px;border:3px solid #d5d5d5;background-color:White}
+.reg_box{ width:450px; margin:50px auto;padding:20px 35px;background-color:White; border-radius:50px; position:absolute; margin-top:-200px; margin-left:-250px; margin-right:auto; left:50%; top:50%; }
 .reg_box a{text-decoration:none; color:#1BA1E2}
 .reg_box tr td.lb{ width:70px; text-align:left}
 .reg_box tr td.in_val{ width:220px }

@@ -27,9 +27,6 @@ namespace MeetingCanlendar.Controllers
 
         public ActionResult Register()
         {
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("index");
-
             return View();
         }
 
@@ -55,10 +52,11 @@ namespace MeetingCanlendar.Controllers
                 userInfo.ui_email = registerInfo.Email;
                 userInfo.ui_grade_id = 1;
                 userInfo.ui_create_time = DateTime.Now;
+                userInfo.ui_status = "A";
 
                 userModel.Add(userInfo);
 
-                userModel.SignIn(userInfo, false);
+                //userModel.SignIn(userInfo, false);
             }
 
             if (!string.IsNullOrWhiteSpace(returnUrl))

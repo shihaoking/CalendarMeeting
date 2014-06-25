@@ -10,6 +10,10 @@
     int pageEndIndex = ViewBag.PageEndIndex;
 }
 <div class="u-list">
+    <div class="u-act-bar">
+        <span class="u-act u-act-create">新建</span><span class="u-act u-act-edit">修改</span><span class="u-act u-act-del">删除</span>
+        <div class="clear"></div>
+    </div>
     <table class="u-tb">
         <thead>
             <tr>
@@ -22,10 +26,10 @@
         }
         @foreach(DBEntity.user_info_detail item in Model)
         {
-            <tr @(tick % 2 == 0 ? "" : "class=u-tb-tr-odd")>
-                <td><input type="checkbox" id="u-item-@item.id" /></td>
+            <tr @(tick % 2 == 0 ? "" : "class=u-tb-tr-odd") onclick="userListLineClick(this)">
+                <td><input type="checkbox" id="u-item-@item.id" itemid="@item.id" class="u-item-check" /></td>
                 <td style="text-align:left;">@item.ui_name</td>
-                <td style="text-align:center;">@item.user_meeting_count</td>
+                <td style="text-align:center;">@item.ui_meeting_count</td>
                 <td style="text-align:center;">@item.ui_grade_name</td>
                 <td style="text-align:left;">@item.ui_email</td>
                 <td style="text-align:center;">@item.ui_create_time.ToString("yyyy-MM-dd HH:mm")</td>
@@ -71,5 +75,36 @@
         }
     </ul>
 </div>
+<script type="text/javascript">
+
+    function userListLineClick(e) {
+        var itemChecker = $(e).find('.u-item-check');
+        itemChecker.trigger('click');
+
+        if (itemChecker.is(':checked')) {
+            $(e).addClass('u-item-selected');
+        } else {
+            $(e).removeClass('u-item-selected');
+        }
+        event.stopPropagation();
+    }
+
+    $('.u-item-check').click(function (event) {
+        if ($(this).is(':checked')) {
+            $('.u-act').addClass('u-act-selected');
+            $(this).parents('tr').addClass('u-item-selected');
+        } else {
+            $(this).parents('tr').removeClass('u-item-selected');
+            if ($('.u-item-check:checked').length == 0) {
+                $('.u-act').removeClass('u-act-selected');
+            }
+        }
+        event.stopPropagation();
+    });
+
+    $('.u-act-create').click(function () {
+        window.location.href = "/user/register";
+    })
+</script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>

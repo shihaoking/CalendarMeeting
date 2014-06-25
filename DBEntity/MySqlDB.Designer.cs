@@ -1463,24 +1463,24 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int64> user_meeting_count
+        public Nullable<global::System.Int64> ui_meeting_count
         {
             get
             {
-                return _user_meeting_count;
+                return _ui_meeting_count;
             }
             set
             {
-                Onuser_meeting_countChanging(value);
-                ReportPropertyChanging("user_meeting_count");
-                _user_meeting_count = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("user_meeting_count");
-                Onuser_meeting_countChanged();
+                Onui_meeting_countChanging(value);
+                ReportPropertyChanging("ui_meeting_count");
+                _ui_meeting_count = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ui_meeting_count");
+                Onui_meeting_countChanged();
             }
         }
-        private Nullable<global::System.Int64> _user_meeting_count;
-        partial void Onuser_meeting_countChanging(Nullable<global::System.Int64> value);
-        partial void Onuser_meeting_countChanged();
+        private Nullable<global::System.Int64> _ui_meeting_count;
+        partial void Onui_meeting_countChanging(Nullable<global::System.Int64> value);
+        partial void Onui_meeting_countChanged();
 
         #endregion
 

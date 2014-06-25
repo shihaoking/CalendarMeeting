@@ -52,7 +52,7 @@
     <EntitySetMapping Name="user_info_detail">
       <EntityTypeMapping TypeName="MCDBModel.user_info_detail">
         <MappingFragment StoreEntitySet="user_info_detail">
-          <ScalarProperty Name="user_meeting_count" ColumnName="user_meeting_count" />
+          <ScalarProperty Name="ui_meeting_count" ColumnName="ui_meeting_count" />
           <ScalarProperty Name="ui_grade_name" ColumnName="ui_grade_name" />
           <ScalarProperty Name="ui_grade_level" ColumnName="ui_grade_level" />
           <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />

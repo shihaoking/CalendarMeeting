@@ -36,13 +36,20 @@ table{border-collapse: collapse;}
 .adm-catg .catg-tree li.catg-t-item-selected{ background-color:#49565E; color:White; border-left:3px solid #5DB8E2;}
 .adm-catg .catg-tree li.catg-t-item-selected a{ color:White; }
 
+.adm-cnt .u-act-bar{ padding:10px;}
+.adm-cnt .u-act-bar .u-act{ padding:0 10px; border-radius:3px; margin-left:15px; float:left; cursor:default; display:block; height:29px; line-height:29px;border:1px solid #DDDDDD; color:#DDDDDD;}
+.adm-cnt .u-act-bar .u-act.u-act-create{border:1px solid #27AE60; color:#27AE60;cursor:pointer;}
+.adm-cnt .u-act-bar .u-act.u-act-del.u-act-selected{ border-color:#FF3B30; color:#FF3B30;cursor:pointer;}
+.adm-cnt .u-act-bar .u-act.u-act-edit.u-act-selected{ border-color:#3498DB; color:#3498DB;cursor:pointer;}
+
 .adm-cnt .u-list table{ width:100%}
 .adm-cnt .u-list table th,.adm-cnt .u-list table td{ padding:10px;}
 .adm-cnt .u-list table th{ background-color:#3498DB; color:White; font-size:16px; font-weight:bolder;}
 .adm-cnt .u-list .u-tb-tr-odd{ background-color:#F5F5F5}
-.adm-cnt .u-list tbody tr:hover {
-    background-color: #C3E0F3;
+.adm-cnt .u-list tbody tr:hover,.adm-cnt .u-list tbody tr.u-item-selected {
+    background-color: #BFECFF;
 }
+
 .sticky-wrap {
 	overflow-x: auto;
 	overflow-y: hidden;

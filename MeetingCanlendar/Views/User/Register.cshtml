@@ -4,7 +4,7 @@
     ViewBag.Title = "用户注册";
 }
 <div class="reg_box">
-@using (Html.BeginForm("Register", null, FormMethod.Post, new { id = "reg_form" }))
+@using(Html.BeginForm("Register", null, FormMethod.Post, new { id = "reg_form", @autocomplete = "off" }))
 {
     @Html.Hidden("returnUrl", Request.QueryString["returnUrl"])
     <table border="0" cellspacing="0" cellpadding="0">
@@ -14,7 +14,7 @@
         <tbody>
             <tr>
                 <td class="lb">邮箱：</td>
-                <td class="in_val">@Html.TextBoxFor(m => m.Email)</td>
+                <td class="in_val">@Html.TextBoxFor(m => m.Email, new { @autocomplete = "off" })</td>
                 <td class="tip">必填</td>
             </tr>
             <tr class="error">
@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td class="lb">用户名：</td>
-                <td class="in_val">@Html.TextBoxFor(m => m.UserName)</td>
+                <td class="in_val">@Html.TextBoxFor(m => m.UserName, new { @autocomplete = "off" })</td>
                 <td class="tip">必填</td>
             </tr>
             <tr class="error">
@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td>密码：</td>
-                <td class="in_val">@Html.PasswordFor(m => m.Password)</td>
+                <td class="in_val">@Html.PasswordFor(m => m.Password, new { @autocomplete = "off" })</td>
                 <td class="tip">6~15位字符，必须同时包含字母、数字</td>
             </tr>
             <tr class="error">
@@ -52,8 +52,7 @@
                 <td class="val_error" colspan="2">@Html.ValidationMessageFor(m => m.ValidateCode, null, new { id = "valid_error" })</td>
             </tr>
             <tr>
-                <td class="btn" colspan="3"><input type="submit" value="注册" />
-                <span>已有账号？@Html.ActionLink("马上登录", "Login", new { returnUrl = Request.QueryString["returnUrl"] })</span></td>
+                <td class="btn" colspan="3"><input type="submit" class="green_btn" value="注册" /></td>
             </tr>
         </tbody>
     </table>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+<Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="MCDBModelStoreContainer">
     <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
     <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" />
@@ -17,7 +17,7 @@
       `user_info_detail`.`ui_create_time`, 
       `user_info_detail`.`ui_grade_level`, 
       `user_info_detail`.`ui_grade_name`, 
-      `user_info_detail`.`user_meeting_count`
+      `user_info_detail`.`ui_meeting_count`
       FROM `user_info_detail` AS `user_info_detail`</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.Store.meeting_info_ibfk_1">
@@ -103,7 +103,7 @@
     <Property Name="ui_create_time" Type="datetime" Nullable="false" />
     <Property Name="ui_grade_level" Type="tinyint" Nullable="false" />
     <Property Name="ui_grade_name" Type="varchar" Nullable="false" MaxLength="10" />
-    <Property Name="user_meeting_count" Type="bigint" />
+    <Property Name="ui_meeting_count" Type="bigint" />
   </EntityType>
   <Association Name="meeting_info_ibfk_1">
     <End Role="meeting_position" Type="MCDBModel.Store.meeting_position" Multiplicity="1" />
