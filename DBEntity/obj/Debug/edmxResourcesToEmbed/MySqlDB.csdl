@@ -64,7 +64,7 @@
     <Property Type="String" Name="ui_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Type="SByte" Name="ui_grade_id" Nullable="false" />
     <Property Type="Boolean" Name="ui_gender" Nullable="false" />
-    <Property Type="String" Name="ui_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="ui_status" Nullable="false" />
     <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
     <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="user_info" ToRole="meeting_info" />
     <NavigationProperty Name="user_grade_catg" Relationship="MCDBModel.user_info_ibfk_1" FromRole="user_info" ToRole="user_grade_catg" />
@@ -88,7 +88,7 @@
     <Property Type="String" Name="ui_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Type="SByte" Name="ui_grade_id" Nullable="false" />
     <Property Type="Boolean" Name="ui_gender" Nullable="false" />
-    <Property Type="String" Name="ui_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="ui_status" Nullable="false" />
     <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
     <Property Type="SByte" Name="ui_grade_level" Nullable="false" />
     <Property Type="String" Name="ui_grade_name" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />

@@ -20,7 +20,8 @@
     <table class="u-tb">
         <thead>
             <tr>
-                <th style="width:50px"></th>
+                <th style="width:30px"></th>
+                <th style="width:25px"></th>
                 <th style="text-align:left; width:155px;">用户名</th>
                 <th style=" width:150px;">会议数</th>
                 <th style=" width:200px;">等级</th>
@@ -34,8 +35,9 @@
         }
         @foreach(DBEntity.user_info_detail item in Model)
         { 
-            <tr @(tick % 2 == 0 ? "" : "class=u-tb-tr-odd") onclick="userListLineClick(this)">
-                <td><input type="checkbox" id="u-item-@item.id" itemid="@item.id" class="u-item-check" /></td>
+            <tr itemid="@item.id" id="u-item-@item.id" class="@((!item.ui_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " u-tb-tr-odd"))" onclick="userListLineClick(this)">
+                <td class="td-check"><input type="checkbox" itemid="@item.id" class="u-item-check" /></td>
+                <td class="td-act"><span class="u-act-ava">@(!item.ui_status ? "启用" : "")</span></td>
                 <td style="text-align:left;">@item.ui_name</td>
                 <td style="text-align:center;">@item.ui_meeting_count</td>
                 <td style="text-align:center;">@item.ui_grade_name</td>
@@ -85,9 +87,23 @@
 </div>
 <script type="text/javascript">
     var SelectedItemId = [];
-    var SelectedItem = [];
+
+    $('.u-tb tr').hover(
+    function () {
+        $(this).find('.td-act span').show(0);
+    },
+    function () {
+        $(this).find('.td-act span').hide(0);
+    });
+
+    $('.u-act-ava').click(function (event) {
+        event.stopPropagation();
+
+        ChangeUsersStatus($(this).parents('tr').attr('itemid'), 1);
+    });
 
     function userListLineClick(e) {
+        event.stopPropagation();
         var itemChecker = $(e).find('.u-item-check');
         itemChecker.trigger('click');
 
@@ -96,18 +112,16 @@
         } else {
             $(e).removeClass('u-item-selected');
         }
-        event.stopPropagation();
     }
 
     $('.u-item-check').click(function (event) {
+        event.stopPropagation();
         if ($(this).is(':checked')) {
             $('.u-act').addClass('u-act-selected');
             $(this).parents('tr').addClass('u-item-selected');
 
             SelectedItemId = [];
-            SelectedItem = [];
             $('.u-item-check:checked').each(function () {
-                SelectedItem.push($(this).parents('tr'));
                 SelectedItemId.push($(this).attr('itemid'));
             });
         } else {
@@ -117,13 +131,11 @@
             }
 
             SelectedItemId = [];
-            SelectedItem = [];
             $('.u-item-check:checked').each(function () {
-                SelectedItem.push($(this).parents('tr'));
                 SelectedItemId.push($(this).attr('itemid'));
             });
         }
-        event.stopPropagation();
+       
     });
 
     $('.u-act-create').click(function () {
@@ -143,16 +155,34 @@
             alert('请至少选择一项');
             return false;
         }
-        alert(JSON.stringify(SelectedItemId));
-        $.post('/admin/deleteuser', { ids: JSON.stringify(SelectedItemId) },
+
+        ChangeUsersStatus(SelectedItemId, 0);
+    });
+
+    function ChangeUsersStatus(userIds, status) {
+        if (!(toString.apply(userIds) === '[object Array]')) {
+            userIds = [userIds];
+        }
+
+        $.post('/admin/ChangeUserStatus',
+        { 'ids': JSON.stringify(userIds), 'status': status },
         function (result) {
             if (result.type == 1) {
-                $.each(SelectedItem, function (i, item) {
-                    item.remove();
-                });
+                if (status == 0) {
+                    $.each(userIds, function (i, item) {
+                        var trItem = $('#u-item-' + item);
+                        trItem.addClass('color-shadow').find('.u-item-check').trigger('click');
+                        trItem.find('.u-act-ava').text('启用')
+                    });
+                } else {
+                    $.each(userIds, function (i, item) {
+                        var trItem = $('#u-item-' + item);
+                        trItem.removeClass('color-shadow').find('.u-act-ava').text('')
+                    });
+                }
             }
         });
-    });
+    }
 </script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>

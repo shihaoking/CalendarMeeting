@@ -74,7 +74,7 @@
     <Property Name="ui_email" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="ui_grade_id" Type="tinyint" Nullable="false" />
     <Property Name="ui_gender" Type="bit" Nullable="false" />
-    <Property Name="ui_status" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="ui_status" Type="bool" Nullable="false" />
     <Property Name="ui_create_time" Type="datetime" Nullable="false" />
   </EntityType>
   <!--生成过程中发现错误:
@@ -99,7 +99,7 @@
     <Property Name="ui_email" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="ui_grade_id" Type="tinyint" Nullable="false" />
     <Property Name="ui_gender" Type="bit" Nullable="false" />
-    <Property Name="ui_status" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="ui_status" Type="bool" Nullable="false" />
     <Property Name="ui_create_time" Type="datetime" Nullable="false" />
     <Property Name="ui_grade_level" Type="tinyint" Nullable="false" />
     <Property Name="ui_grade_name" Type="varchar" Nullable="false" MaxLength="10" />

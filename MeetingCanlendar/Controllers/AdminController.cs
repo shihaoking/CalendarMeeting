@@ -25,7 +25,7 @@ namespace MeetingCanlendar.Controllers
         public ActionResult UserList(int p = 1)
         {
             UserModel userModel = new UserModel();
-            IQueryable<user_info_detail> userInfo = userModel.GetAvaliableUserInfos();
+            IQueryable<user_info_detail> userInfo = userModel.GetUserInfos();
             ViewBag.UsersCount = userInfo.Count();
 
             userInfo = userInfo.OrderBy(r => r.ui_name);
@@ -35,8 +35,8 @@ namespace MeetingCanlendar.Controllers
             return View(userInfo);
         }
 
-        [HttpPost]
-        public ActionResult DeleteUser(string ids)
+
+        public ActionResult ChangeUserStatus(string ids, short status)
         {
             JavaScriptSerializer jser = new JavaScriptSerializer();
             string[] result = jser.Deserialize<string[]>(ids);
@@ -45,14 +45,14 @@ namespace MeetingCanlendar.Controllers
             int calResult = 0;
             try
             {
-                calResult = userModel.UpdateUserAsDelete(string.Join(",", result));
+                calResult = userModel.UpdateUserStatus(string.Join(",", result), status);
             }
             catch(Exception ex)
             {
-                return Json(new { type = 0, msg = "删除失败" }, JsonRequestBehavior.AllowGet);
+                return Json(new { type = 0, msg = "更改失败：" + ex.Message }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { type = 1, msg = "删除成功" },JsonRequestBehavior.AllowGet);
+            return Json(new { type = 1, msg = "更改成功" },JsonRequestBehavior.AllowGet);
         }
     }
 }

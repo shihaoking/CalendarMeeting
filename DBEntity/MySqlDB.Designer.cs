@@ -863,7 +863,7 @@ namespace DBEntity
         /// <param name="ui_gender">ui_gender 属性的初始值。</param>
         /// <param name="ui_status">ui_status 属性的初始值。</param>
         /// <param name="ui_create_time">ui_create_time 属性的初始值。</param>
-        public static user_info Createuser_info(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.String ui_status, global::System.DateTime ui_create_time)
+        public static user_info Createuser_info(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.Boolean ui_status, global::System.DateTime ui_create_time)
         {
             user_info user_info = new user_info();
             user_info.id = id;
@@ -1033,7 +1033,7 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String ui_status
+        public global::System.Boolean ui_status
         {
             get
             {
@@ -1043,13 +1043,13 @@ namespace DBEntity
             {
                 Onui_statusChanging(value);
                 ReportPropertyChanging("ui_status");
-                _ui_status = StructuralObject.SetValidValue(value, false);
+                _ui_status = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ui_status");
                 Onui_statusChanged();
             }
         }
-        private global::System.String _ui_status;
-        partial void Onui_statusChanging(global::System.String value);
+        private global::System.Boolean _ui_status;
+        partial void Onui_statusChanging(global::System.Boolean value);
         partial void Onui_statusChanged();
     
         /// <summary>
@@ -1168,7 +1168,7 @@ namespace DBEntity
         /// <param name="ui_create_time">ui_create_time 属性的初始值。</param>
         /// <param name="ui_grade_level">ui_grade_level 属性的初始值。</param>
         /// <param name="ui_grade_name">ui_grade_name 属性的初始值。</param>
-        public static user_info_detail Createuser_info_detail(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.String ui_status, global::System.DateTime ui_create_time, global::System.SByte ui_grade_level, global::System.String ui_grade_name)
+        public static user_info_detail Createuser_info_detail(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.Boolean ui_status, global::System.DateTime ui_create_time, global::System.SByte ui_grade_level, global::System.String ui_grade_name)
         {
             user_info_detail user_info_detail = new user_info_detail();
             user_info_detail.id = id;
@@ -1355,7 +1355,7 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String ui_status
+        public global::System.Boolean ui_status
         {
             get
             {
@@ -1367,14 +1367,14 @@ namespace DBEntity
                 {
                     Onui_statusChanging(value);
                     ReportPropertyChanging("ui_status");
-                    _ui_status = StructuralObject.SetValidValue(value, false);
+                    _ui_status = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("ui_status");
                     Onui_statusChanged();
                 }
             }
         }
-        private global::System.String _ui_status;
-        partial void Onui_statusChanging(global::System.String value);
+        private global::System.Boolean _ui_status;
+        partial void Onui_statusChanging(global::System.Boolean value);
         partial void Onui_statusChanged();
     
         /// <summary>

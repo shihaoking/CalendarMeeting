@@ -52,7 +52,7 @@ namespace MeetingCanlendar.Controllers
                 userInfo.ui_email = registerInfo.Email;
                 userInfo.ui_grade_id = 1;
                 userInfo.ui_create_time = DateTime.Now;
-                userInfo.ui_status = "A";
+                userInfo.ui_status = true;
 
                 userModel.Add(userInfo);
 
@@ -68,8 +68,12 @@ namespace MeetingCanlendar.Controllers
         [MCAuthorize]
         public ActionResult ChangePassword(int uid)
         {
+            UserModel userModel = new UserModel();
+            user_info ui =  userModel.GetUserInfo(uid);
+            ChangePassword cp = new Models.ChangePassword();
+            cp.Status = ui.ui_status;
             ViewBag.UserId = uid;
-            return View();
+            return View(cp);
         }
 
         [HttpPost]
@@ -78,8 +82,12 @@ namespace MeetingCanlendar.Controllers
         {
             UserModel userModel = new UserModel();
             user_info userInfo = userModel.GetUserInfo(pwdForm.UserId);
-            
-            userInfo.ui_password = userModel.PasswordEncrypt(pwdForm.NewPassword);
+
+            if(!String.IsNullOrEmpty(pwdForm.NewPassword))
+            {
+                userInfo.ui_password = userModel.PasswordEncrypt(pwdForm.NewPassword);
+            }
+            userInfo.ui_status = pwdForm.Status;
             userModel.Save();
 
             userModel.SignOut();

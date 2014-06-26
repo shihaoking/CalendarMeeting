@@ -79,7 +79,7 @@
           <Property Name="ui_email" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ui_grade_id" Type="tinyint" Nullable="false" />
           <Property Name="ui_gender" Type="bit" Nullable="false" />
-          <Property Name="ui_status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="ui_status" Type="bool" Nullable="false" />
           <Property Name="ui_create_time" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
@@ -104,7 +104,7 @@
           <Property Name="ui_email" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ui_grade_id" Type="tinyint" Nullable="false" />
           <Property Name="ui_gender" Type="bit" Nullable="false" />
-          <Property Name="ui_status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="ui_status" Type="bool" Nullable="false" />
           <Property Name="ui_create_time" Type="datetime" Nullable="false" />
           <Property Name="ui_grade_level" Type="tinyint" Nullable="false" />
           <Property Name="ui_grade_name" Type="varchar" Nullable="false" MaxLength="10" />
@@ -214,7 +214,7 @@
           <Property Type="String" Name="ui_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="SByte" Name="ui_grade_id" Nullable="false" />
           <Property Type="Boolean" Name="ui_gender" Nullable="false" />
-          <Property Type="String" Name="ui_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="ui_status" Nullable="false" />
           <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
           <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="user_info" ToRole="meeting_info" />
           <NavigationProperty Name="user_grade_catg" Relationship="MCDBModel.user_info_ibfk_1" FromRole="user_info" ToRole="user_grade_catg" />
@@ -238,7 +238,7 @@
           <Property Type="String" Name="ui_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="SByte" Name="ui_grade_id" Nullable="false" />
           <Property Type="Boolean" Name="ui_gender" Nullable="false" />
-          <Property Type="String" Name="ui_status" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="ui_status" Nullable="false" />
           <Property Type="DateTime" Name="ui_create_time" Nullable="false" />
           <Property Type="SByte" Name="ui_grade_level" Nullable="false" />
           <Property Type="String" Name="ui_grade_name" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -376,7 +376,7 @@
         <EntityTypeShape EntityType="MCDBModel.meeting_position" Width="1.5" PointX="3" PointY="5.75" Height="1.7790128580729174" />
         <EntityTypeShape EntityType="MCDBModel.user_grade_catg" Width="1.5" PointX="0.75" PointY="1.75" Height="1.7790128580729174" />
         <EntityTypeShape EntityType="MCDBModel.user_info" Width="1.5" PointX="3" PointY="1.125" Height="2.9251310221354174" />
-        <EntityTypeShape EntityType="MCDBModel.user_info_detail" Width="1.5" PointX="5.75" PointY="5.75" Height="2.9251310221354156" />
+        <EntityTypeShape EntityType="MCDBModel.user_info_detail" Width="1.5" PointX="5.75" PointY="5.75" Height="3.1161507161458353" />
         <AssociationConnector Association="MCDBModel.meeting_info_ibfk_1" >
           <ConnectorPoint PointX="4.5" PointY="5.75" />
           <ConnectorPoint PointX="4.875" PointY="5.375" />

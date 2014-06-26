@@ -50,6 +50,10 @@ namespace MeetingCanlendar.Models
 
         [Display(Name = "确认密码")]
         public string NewPasswordConfirm { get; set; }
+
+        [Display(Name = "是否可用")]
+        public bool Status { get; set; }
+
     }
 
     public class FindPassword
@@ -71,18 +75,18 @@ namespace MeetingCanlendar.Models
 
         public IQueryable<user_info_detail> GetAvaliableUserInfos()
         {
-            return db.user_info_detail.Where(r => r.ui_status == "A");
+            return db.user_info_detail.Where(r => r.ui_status);
         }
 
-        public static int GetUsersCount(string status = "")
+        public static int GetUsersCount(bool showAll = true)
         {
-            if(string.IsNullOrEmpty(status))
+            if(showAll)
             {
                 return staticDb.user_info.Count();
             }
             else
             {
-                return staticDb.user_info.Count(r => r.ui_status == status);
+                return staticDb.user_info.Count(r => r.ui_status);
             }
         }
 
@@ -150,9 +154,9 @@ namespace MeetingCanlendar.Models
             Save();
         }
 
-        public int UpdateUserAsDelete(string ids)
+        public int UpdateUserStatus(string ids, short status)
         {
-            return db.ExecuteStoreCommand("Update user_info Set ui_status = 'X' Where id In(" + ids + ")");
+            return db.ExecuteStoreCommand("Update user_info Set ui_status=" + status + " Where id In(" + ids + ")");
         }
 
         public void Save()
