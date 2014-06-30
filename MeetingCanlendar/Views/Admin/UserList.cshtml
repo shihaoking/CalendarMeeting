@@ -10,14 +10,14 @@
     int pageEndIndex = ViewBag.PageEndIndex;
 }
 <div class="u-list">
-    <div class="u-act-bar">
-        <span class="u-act u-act-create">新建</span>
-        <span class="u-act u-act-edit">修改</span>
-        <span class="u-act u-act-del">删除</span>
-        <span class="u-stat">总共：<strong>@ViewBag.UsersCount</strong> 个用户</span>
+    <div class="item-act-bar">
+        <span class="item-act item-act-create">新建</span>
+        <span class="item-act item-act-edit">修改</span>
+        <span class="item-act item-act-del">删除</span>
+        <span class="item-stat">总共：<strong>@ViewBag.UsersCount</strong> 个用户</span>
         <div class="clear"></div>
     </div>
-    <table class="u-tb">
+    <table class="tb-info u-tb">
         <thead>
             <tr>
                 <th style="width:30px"></th>
@@ -35,9 +35,9 @@
         }
         @foreach(DBEntity.user_info_detail item in Model)
         { 
-            <tr itemid="@item.id" id="u-item-@item.id" class="@((!item.ui_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " u-tb-tr-odd"))" onclick="userListLineClick(this)">
+            <tr itemid="@item.id" id="u-item-@item.id" class="@((!item.ui_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " tr-odd"))" onclick="userListLineClick(this)">
                 <td class="td-check"><input type="checkbox" itemid="@item.id" class="u-item-check" /></td>
-                <td class="td-act"><span class="u-act-ava">@(!item.ui_status ? "启用" : "")</span></td>
+                <td class="td-act"><span class="item-act-ava">@(!item.ui_status ? "启用" : "")</span></td>
                 <td style="text-align:left;">@item.ui_name</td>
                 <td style="text-align:center;">@item.ui_meeting_count</td>
                 <td style="text-align:center;">@item.ui_grade_name</td>
@@ -48,8 +48,7 @@
         }
         </tbody>
     </table>
-</div>
-<div class="page_list">
+    <div class="page_list">
     <ul class="pg_ul">
         @if(pageNowIndex > 1)
         {
@@ -85,6 +84,7 @@
         }
     </ul>
 </div>
+</div>
 <script type="text/javascript">
     var SelectedItemId = [];
 
@@ -96,7 +96,7 @@
         $(this).find('.td-act span').hide(0);
     });
 
-    $('.u-act-ava').click(function (event) {
+    $('.item-act-ava').click(function (event) {
         event.stopPropagation();
 
         ChangeUsersStatus($(this).parents('tr').attr('itemid'), 1);
@@ -117,7 +117,7 @@
     $('.u-item-check').click(function (event) {
         event.stopPropagation();
         if ($(this).is(':checked')) {
-            $('.u-act').addClass('u-act-selected');
+            $('.item-act').addClass('u-act-selected');
             $(this).parents('tr').addClass('u-item-selected');
 
             SelectedItemId = [];
@@ -127,7 +127,7 @@
         } else {
             $(this).parents('tr').removeClass('u-item-selected');
             if ($('.u-item-check:checked').length == 0) {
-                $('.u-act').removeClass('u-act-selected');
+                $('.item-act').removeClass('u-act-selected');
             }
 
             SelectedItemId = [];
@@ -138,11 +138,11 @@
        
     });
 
-    $('.u-act-create').click(function () {
+    $('.item-act-create').click(function () {
         window.location.href = "/user/register?returnUrl=" + window.location.pathname;
     });
 
-    $('.u-act-edit').click(function () {
+    $('.item-act-edit').click(function () {
         if (SelectedItemId.length > 1) {
             alert('每次只能修改一条记录');
             return false;
@@ -150,7 +150,7 @@
         window.location.href = "/user/ChangePassword?uid=" + SelectedItemId[0];
     });
 
-    $('.u-act-del').click(function () {
+    $('.item-act-del').click(function () {
         if (SelectedItemId.length == 0) {
             alert('请至少选择一项');
             return false;
@@ -172,7 +172,7 @@
                     $.each(userIds, function (i, item) {
                         var trItem = $('#u-item-' + item);
                         trItem.addClass('color-shadow').find('.u-item-check').trigger('click');
-                        trItem.find('.u-act-ava').text('启用')
+                        trItem.find('.item-act-ava').text('启用')
                     });
                 } else {
                     $.each(userIds, function (i, item) {

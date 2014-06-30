@@ -7,12 +7,22 @@
           <ScalarProperty Name="mi_memo" ColumnName="mi_memo" />
           <ScalarProperty Name="mi_create_time" ColumnName="mi_create_time" />
           <ScalarProperty Name="mi_creator" ColumnName="mi_creator" />
-          <ScalarProperty Name="mi_level" ColumnName="mi_level" />
+          <ScalarProperty Name="mi_status" ColumnName="mi_status" />
+          <ScalarProperty Name="mi_level_id" ColumnName="mi_level_id" />
           <ScalarProperty Name="mi_end_time" ColumnName="mi_end_time" />
           <ScalarProperty Name="mi_start_time" ColumnName="mi_start_time" />
           <ScalarProperty Name="mi_people" ColumnName="mi_people" />
-          <ScalarProperty Name="mi_position" ColumnName="mi_position" />
+          <ScalarProperty Name="mi_position_id" ColumnName="mi_position_id" />
           <ScalarProperty Name="mi_title" ColumnName="mi_title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="meeting_level_catg">
+      <EntityTypeMapping TypeName="MCDBModel.meeting_level_catg">
+        <MappingFragment StoreEntitySet="meeting_level_catg">
+          <ScalarProperty Name="ml_name" ColumnName="ml_name" />
+          <ScalarProperty Name="ml_level" ColumnName="ml_level" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -45,6 +55,28 @@
           <ScalarProperty Name="ui_email" ColumnName="ui_email" />
           <ScalarProperty Name="ui_password" ColumnName="ui_password" />
           <ScalarProperty Name="ui_name" ColumnName="ui_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="meeting_info_detail">
+      <EntityTypeMapping TypeName="MCDBModel.meeting_info_detail">
+        <MappingFragment StoreEntitySet="meeting_info_detail">
+          <ScalarProperty Name="mi_memo" ColumnName="mi_memo" />
+          <ScalarProperty Name="mi_create_time" ColumnName="mi_create_time" />
+          <ScalarProperty Name="mi_status" ColumnName="mi_status" />
+          <ScalarProperty Name="mi_creator_name" ColumnName="mi_creator_name" />
+          <ScalarProperty Name="mi_creator" ColumnName="mi_creator" />
+          <ScalarProperty Name="mi_level_name" ColumnName="mi_level_name" />
+          <ScalarProperty Name="mi_level" ColumnName="mi_level" />
+          <ScalarProperty Name="mi_level_id" ColumnName="mi_level_id" />
+          <ScalarProperty Name="mi_end_time" ColumnName="mi_end_time" />
+          <ScalarProperty Name="mi_start_time" ColumnName="mi_start_time" />
+          <ScalarProperty Name="mi_people" ColumnName="mi_people" />
+          <ScalarProperty Name="mi_position_size" ColumnName="mi_position_size" />
+          <ScalarProperty Name="mi_position" ColumnName="mi_position" />
+          <ScalarProperty Name="mi_position_id" ColumnName="mi_position_id" />
+          <ScalarProperty Name="mi_title" ColumnName="mi_title" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

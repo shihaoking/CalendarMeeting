@@ -2,9 +2,30 @@
 <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="MCDBModelStoreContainer">
     <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
+    <EntitySet Name="meeting_level_catg" EntityType="MCDBModel.Store.meeting_level_catg" store:Type="Tables" Schema="mc_db" />
     <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" />
     <EntitySet Name="user_grade_catg" EntityType="MCDBModel.Store.user_grade_catg" store:Type="Tables" Schema="mc_db" />
     <EntitySet Name="user_info" EntityType="MCDBModel.Store.user_info" store:Type="Tables" Schema="mc_db" />
+    <EntitySet Name="meeting_info_detail" EntityType="MCDBModel.Store.meeting_info_detail" store:Type="Views" store:Schema="mc_db" store:Name="meeting_info_detail">
+      <DefiningQuery>SELECT
+      `meeting_info_detail`.`id`, 
+      `meeting_info_detail`.`mi_title`, 
+      `meeting_info_detail`.`mi_position_id`, 
+      `meeting_info_detail`.`mi_position`, 
+      `meeting_info_detail`.`mi_position_size`, 
+      `meeting_info_detail`.`mi_people`, 
+      `meeting_info_detail`.`mi_start_time`, 
+      `meeting_info_detail`.`mi_end_time`, 
+      `meeting_info_detail`.`mi_level_id`, 
+      `meeting_info_detail`.`mi_level`, 
+      `meeting_info_detail`.`mi_level_name`, 
+      `meeting_info_detail`.`mi_creator`, 
+      `meeting_info_detail`.`mi_creator_name`, 
+      `meeting_info_detail`.`mi_status`, 
+      `meeting_info_detail`.`mi_create_time`, 
+      `meeting_info_detail`.`mi_memo`
+      FROM `meeting_info_detail` AS `meeting_info_detail`</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="user_info_detail" EntityType="MCDBModel.Store.user_info_detail" store:Type="Views" store:Schema="mc_db" store:Name="user_info_detail">
       <DefiningQuery>SELECT
       `user_info_detail`.`id`, 
@@ -28,6 +49,10 @@
       <End Role="user_info" EntitySet="user_info" />
       <End Role="meeting_info" EntitySet="meeting_info" />
     </AssociationSet>
+    <AssociationSet Name="meeting_info_ibfk_3" Association="MCDBModel.Store.meeting_info_ibfk_3">
+      <End Role="meeting_level_catg" EntitySet="meeting_level_catg" />
+      <End Role="meeting_info" EntitySet="meeting_info" />
+    </AssociationSet>
     <AssociationSet Name="user_info_ibfk_1" Association="MCDBModel.Store.user_info_ibfk_1">
       <End Role="user_grade_catg" EntitySet="user_grade_catg" />
       <End Role="user_info" EntitySet="user_info" />
@@ -39,14 +64,23 @@
     </Key>
     <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="mi_title" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="mi_position" Type="smallint" Nullable="false" />
+    <Property Name="mi_position_id" Type="smallint" Nullable="false" />
     <Property Name="mi_people" Type="varchar" MaxLength="200" />
     <Property Name="mi_start_time" Type="datetime" Nullable="false" />
     <Property Name="mi_end_time" Type="datetime" Nullable="false" />
-    <Property Name="mi_level" Type="int" Nullable="false" />
+    <Property Name="mi_level_id" Type="tinyint" Nullable="false" />
+    <Property Name="mi_status" Type="bool" Nullable="false" />
     <Property Name="mi_creator" Type="smallint" Nullable="false" />
     <Property Name="mi_create_time" Type="datetime" Nullable="false" />
     <Property Name="mi_memo" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="meeting_level_catg">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ml_level" Type="tinyint" Nullable="false" />
+    <Property Name="ml_name" Type="varchar" Nullable="false" MaxLength="8" />
   </EntityType>
   <EntityType Name="meeting_position">
     <Key>
@@ -76,6 +110,43 @@
     <Property Name="ui_gender" Type="bit" Nullable="false" />
     <Property Name="ui_status" Type="bool" Nullable="false" />
     <Property Name="ui_create_time" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--生成过程中发现错误:
+      警告 6002: 表/视图“def.mc_db.meeting_info_detail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+  <EntityType Name="meeting_info_detail">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="mi_title" />
+      <PropertyRef Name="mi_position_id" />
+      <PropertyRef Name="mi_position" />
+      <PropertyRef Name="mi_position_size" />
+      <PropertyRef Name="mi_start_time" />
+      <PropertyRef Name="mi_end_time" />
+      <PropertyRef Name="mi_level_id" />
+      <PropertyRef Name="mi_level" />
+      <PropertyRef Name="mi_level_name" />
+      <PropertyRef Name="mi_creator" />
+      <PropertyRef Name="mi_creator_name" />
+      <PropertyRef Name="mi_status" />
+      <PropertyRef Name="mi_create_time" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="mi_title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="mi_position_id" Type="smallint" Nullable="false" />
+    <Property Name="mi_position" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="mi_position_size" Type="tinyint" Nullable="false" />
+    <Property Name="mi_people" Type="varchar" MaxLength="200" />
+    <Property Name="mi_start_time" Type="datetime" Nullable="false" />
+    <Property Name="mi_end_time" Type="datetime" Nullable="false" />
+    <Property Name="mi_level_id" Type="tinyint" Nullable="false" />
+    <Property Name="mi_level" Type="tinyint" Nullable="false" />
+    <Property Name="mi_level_name" Type="varchar" Nullable="false" MaxLength="8" />
+    <Property Name="mi_creator" Type="smallint" Nullable="false" />
+    <Property Name="mi_creator_name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="mi_status" Type="bool" Nullable="false" />
+    <Property Name="mi_create_time" Type="datetime" Nullable="false" />
+    <Property Name="mi_memo" Type="varchar" MaxLength="300" />
   </EntityType>
   <!--生成过程中发现错误:
       警告 6002: 表/视图“def.mc_db.user_info_detail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
@@ -113,7 +184,7 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="meeting_info">
-        <PropertyRef Name="mi_position" />
+        <PropertyRef Name="mi_position_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -126,6 +197,18 @@
       </Principal>
       <Dependent Role="meeting_info">
         <PropertyRef Name="mi_creator" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="meeting_info_ibfk_3">
+    <End Role="meeting_level_catg" Type="MCDBModel.Store.meeting_level_catg" Multiplicity="1" />
+    <End Role="meeting_info" Type="MCDBModel.Store.meeting_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="meeting_level_catg">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="meeting_info">
+        <PropertyRef Name="mi_level_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

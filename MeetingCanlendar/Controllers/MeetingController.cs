@@ -17,7 +17,6 @@ namespace MeetingCanlendar.Controllers
 
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -50,9 +49,9 @@ namespace MeetingCanlendar.Controllers
                 end = r.mi_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                 people = r.mi_people,
                 memo = r.mi_memo,
-                position = r.mi_position,
+                position = r.mi_position_id,
                 creator = r.user_infoReference.Value.ui_name,
-                level = r.mi_level,
+                level = r.mi_level_id,
                 createTime = r.mi_create_time,
                 className = r.mi_creator == userInfo.id ? "fc-event-mine" : "",
                 editable = r.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
@@ -87,7 +86,7 @@ namespace MeetingCanlendar.Controllers
             {
                 metInfo = metModel.GetMeeting(metData.id);
 
-                if(metInfo.mi_creator != userInfo.id)
+                if(metInfo.mi_creator != userInfo.id && metInfo.meeting_level_catg.ml_level != 9)
                 {
                     return Json(new { type = 0, msg = "该会议不是您创建的，无法修改。" }, JsonRequestBehavior.AllowGet);
                 }
@@ -95,9 +94,9 @@ namespace MeetingCanlendar.Controllers
 
             metInfo.mi_start_time = metData.mi_start_time;
             metInfo.mi_end_time = metData.mi_end_time;
-            metInfo.mi_level = metData.mi_level;
+            metInfo.mi_level_id = metData.mi_level_id;
             metInfo.mi_people = metData.mi_people;
-            metInfo.mi_position = metData.mi_position;
+            metInfo.mi_position_id = metData.mi_position_id;
             metInfo.mi_title = metData.mi_title;
             metInfo.mi_memo = metData.mi_memo;
 
@@ -125,9 +124,9 @@ namespace MeetingCanlendar.Controllers
                     end = metInfo.mi_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                     people = metInfo.mi_people,
                     memo = metInfo.mi_memo,
-                    position = metInfo.mi_position,
+                    position = metInfo.mi_position_id,
                     creator = metInfo.user_infoReference.Value.ui_name,
-                    level = metInfo.mi_level,
+                    level = metInfo.mi_level_id,
                     createTime = metInfo.mi_create_time
                 } }, JsonRequestBehavior.AllowGet);
         }

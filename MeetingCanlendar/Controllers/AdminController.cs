@@ -18,8 +18,7 @@ namespace MeetingCanlendar.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.MeetingsCount = MeetingModel.GetMeetintgCount();
-            return View();
+            return RedirectToAction("UserList");
         }
 
         public ActionResult UserList(int p = 1)
@@ -35,6 +34,37 @@ namespace MeetingCanlendar.Controllers
             return View(userInfo);
         }
 
+        public ActionResult MeetingList(string startTime, string endTime, int p = 1)
+        {
+            MeetingModel meetingModel = new MeetingModel();
+            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+            if(!string.IsNullOrEmpty(startTime))
+            {
+                if(DateTime.TryParse(startTime, out startDate) == false)
+                {
+                    startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                }
+            }
+
+            if(!string.IsNullOrEmpty(endTime))
+            {
+                if(DateTime.TryParse(endTime, out endDate) == false)
+                {
+                    endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                }
+            }
+
+            IQueryable<meeting_info_detail> meetings = meetingModel.GetMeetingsDetail(startDate, endDate);
+            ViewBag.MeetingsCount = meetings.Count();
+
+            meetings = meetings.OrderByDescending(r => r.mi_create_time);
+            int pageSize = 5;
+            Paging.ToPaging(p, ViewBag.MeetingsCount, this, pageSize);
+            meetings = meetings.Skip((p - 1) * pageSize).Take(pageSize);
+            return View(meetings);
+        }
 
         public ActionResult ChangeUserStatus(string ids, short status)
         {

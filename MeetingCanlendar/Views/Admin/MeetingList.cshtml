@@ -1,0 +1,98 @@
+﻿@model IQueryable<DBEntity.meeting_info_detail>
+@{
+    ViewBag.Title = "会议列表";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+
+    int pageNowIndex = ViewBag.PageNowIndex;
+    int pageSize = ViewBag.PageSize;
+    int pagesCount = ViewBag.PagesCount;
+    int pageStartIndex = ViewBag.PageStartIndex;
+    int pageEndIndex = ViewBag.PageEndIndex;
+}
+<div class="mt-list">
+    <div class="item-act-bar">
+        <span class="item-act item-act-create">新建</span>
+        <span class="item-act item-act-edit">修改</span>
+        <span class="item-act item-act-del">删除</span>
+        <span class="item-stat">总共：<strong>@ViewBag.UsersCount</strong> 个会议</span>
+        <div class="clear"></div>
+    </div>
+    <table class="tb-info mt-tb">
+        <thead>
+            <tr>
+                <th style="width:30px"></th>
+                <th style="width:25px"></th>
+                <th style="width:60px;">级别</th>
+                <th style="min-width:220px;">会议主题</th>
+                <th style="width:100px;">地点</th>
+                <th style="width:200px;">与会人员</th>
+                <th style="width:135px;">开始时间</th>
+                <th style="width:135px;">结束时间</th>
+                <th style="width:90px;">创建人</th>
+                <th style="width:135px;">创建日期</th>
+                <th style="width:150px">备注</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            int tick = 1;
+        }
+        @foreach(DBEntity.meeting_info_detail item in Model)
+        { 
+            <tr itemid="@item.id" id="u-item-@item.id" class="@((!item.mi_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " u-tb-tr-odd"))" onclick="userListLineClick(this)">
+                <td class="td-check"><input type="checkbox" itemid="@item.id" class="u-item-check" /></td>
+                <td class="td-act"><span class="u-act-ava">@(!item.mi_status ? "启用" : "")</span></td>
+                <td style="text-align:center;">@item.mi_level_name</td>
+                <td style="text-align:left;">@item.mi_title</td>
+                <td style="text-align:left;"><span title="@item.mi_position">@(item.mi_position.Length > 5 ? item.mi_position.Substring(0, 5) + "..." : item.mi_position)</span></td>
+                <td style="text-align:left;"><span title=">@item.mi_people">@(item.mi_people.Length > 12 ? item.mi_people.Substring(0, 12) + "..." : item.mi_people)</span></td>
+                <td style="text-align:center;">@item.mi_start_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td style="text-align:center;">@item.mi_end_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td style="text-align:center;">@item.mi_creator_name</td>
+                <td style="text-align:center;">@item.mi_create_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td><span title=">@item.mi_memo">@(item.mi_memo.Length > 8 ? item.mi_memo.Substring(0, 8) + "..." : item.mi_memo)</span></td>
+            </tr>
+            tick++;
+        }
+        </tbody>
+    </table>
+</div>
+<div class="page_list">
+    <ul class="pg_ul">
+        @if(pageNowIndex > 1)
+        {
+            if(pagesCount > 9)
+            {
+            <li class="f">@Html.ActionLink("首页", null, new { p = 1 })</li>
+            }
+            <li class="p">@Html.ActionLink("上一页", null, new { p = pageNowIndex - 1 })</li>
+        }
+        @if(pagesCount != 1)
+        {
+            for(int i = pageStartIndex; i <= pageEndIndex; i++)
+            {
+            <li class="i">
+                @if(i == pageNowIndex)
+                {
+                    <strong>@i</strong>
+                }
+                else
+                {
+                    @Html.ActionLink(i.ToString(), null, new { p = i });
+                }
+            </li>
+            }
+        }
+        @if(pagesCount > pageNowIndex)
+        {
+            <li class="n">@Html.ActionLink("下一页", null, new { p = pageNowIndex + 1 })</li>
+            if(pagesCount > 9)
+            {
+            <li class="l">@Html.ActionLink("末页", null, new { p = pagesCount })</li>
+            }
+        }
+    </ul>
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>

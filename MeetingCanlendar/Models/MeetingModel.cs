@@ -29,6 +29,12 @@ namespace MeetingCanlendar.Models
             return db.meeting_info.Where(r => r.mi_start_time >= fromTime && r.mi_start_time <= toTime);
         }
 
+
+        public IQueryable<meeting_info_detail> GetMeetingsDetail(DateTime fromTime, DateTime toTime)
+        {
+            return db.meeting_info_detail.Where(r => r.mi_start_time >= fromTime && r.mi_start_time <= toTime);
+        }
+
         public IQueryable<meeting_position> GetMeetingPositions()
         {
             return db.meeting_position;

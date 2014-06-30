@@ -2,9 +2,11 @@
 <Schema Namespace="MCDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
   <EntityContainer Name="mc_dbEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="meeting_info" EntityType="MCDBModel.meeting_info" />
+    <EntitySet Name="meeting_level_catg" EntityType="MCDBModel.meeting_level_catg" />
     <EntitySet Name="meeting_position" EntityType="MCDBModel.meeting_position" />
     <EntitySet Name="user_grade_catg" EntityType="MCDBModel.user_grade_catg" />
     <EntitySet Name="user_info" EntityType="MCDBModel.user_info" />
+    <EntitySet Name="meeting_info_detail" EntityType="MCDBModel.meeting_info_detail" />
     <EntitySet Name="user_info_detail" EntityType="MCDBModel.user_info_detail" />
     <AssociationSet Name="meeting_info_ibfk_1" Association="MCDBModel.meeting_info_ibfk_1">
       <End Role="meeting_position" EntitySet="meeting_position" />
@@ -12,6 +14,10 @@
     </AssociationSet>
     <AssociationSet Name="meeting_info_ibfk_2" Association="MCDBModel.meeting_info_ibfk_2">
       <End Role="user_info" EntitySet="user_info" />
+      <End Role="meeting_info" EntitySet="meeting_info" />
+    </AssociationSet>
+    <AssociationSet Name="meeting_info_ibfk_3" Association="MCDBModel.meeting_info_ibfk_3">
+      <End Role="meeting_level_catg" EntitySet="meeting_level_catg" />
       <End Role="meeting_info" EntitySet="meeting_info" />
     </AssociationSet>
     <AssociationSet Name="user_info_ibfk_1" Association="MCDBModel.user_info_ibfk_1">
@@ -25,16 +31,27 @@
     </Key>
     <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="String" Name="mi_title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Type="Int16" Name="mi_position" Nullable="false" />
+    <Property Type="Int16" Name="mi_position_id" Nullable="false" />
     <Property Type="String" Name="mi_people" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Type="DateTime" Name="mi_start_time" Nullable="false" />
     <Property Type="DateTime" Name="mi_end_time" Nullable="false" />
-    <Property Type="Int32" Name="mi_level" Nullable="false" />
+    <Property Type="SByte" Name="mi_level_id" Nullable="false" />
+    <Property Type="Boolean" Name="mi_status" Nullable="false" />
     <Property Type="Int16" Name="mi_creator" Nullable="false" />
     <Property Type="DateTime" Name="mi_create_time" Nullable="false" />
     <Property Type="String" Name="mi_memo" MaxLength="300" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="meeting_position" Relationship="MCDBModel.meeting_info_ibfk_1" FromRole="meeting_info" ToRole="meeting_position" />
     <NavigationProperty Name="user_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="meeting_info" ToRole="user_info" />
+    <NavigationProperty Name="meeting_level_catg" Relationship="MCDBModel.meeting_info_ibfk_3" FromRole="meeting_info" ToRole="meeting_level_catg" />
+  </EntityType>
+  <EntityType Name="meeting_level_catg">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="SByte" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="SByte" Name="ml_level" Nullable="false" />
+    <Property Type="String" Name="ml_name" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_3" FromRole="meeting_level_catg" ToRole="meeting_info" />
   </EntityType>
   <EntityType Name="meeting_position">
     <Key>
@@ -69,6 +86,40 @@
     <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_2" FromRole="user_info" ToRole="meeting_info" />
     <NavigationProperty Name="user_grade_catg" Relationship="MCDBModel.user_info_ibfk_1" FromRole="user_info" ToRole="user_grade_catg" />
   </EntityType>
+  <EntityType Name="meeting_info_detail">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="mi_title" />
+      <PropertyRef Name="mi_position_id" />
+      <PropertyRef Name="mi_position" />
+      <PropertyRef Name="mi_position_size" />
+      <PropertyRef Name="mi_start_time" />
+      <PropertyRef Name="mi_end_time" />
+      <PropertyRef Name="mi_level_id" />
+      <PropertyRef Name="mi_level" />
+      <PropertyRef Name="mi_level_name" />
+      <PropertyRef Name="mi_creator" />
+      <PropertyRef Name="mi_creator_name" />
+      <PropertyRef Name="mi_status" />
+      <PropertyRef Name="mi_create_time" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="mi_title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="mi_position_id" Nullable="false" />
+    <Property Type="String" Name="mi_position" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="mi_position_size" Nullable="false" />
+    <Property Type="String" Name="mi_people" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="mi_start_time" Nullable="false" />
+    <Property Type="DateTime" Name="mi_end_time" Nullable="false" />
+    <Property Type="SByte" Name="mi_level_id" Nullable="false" />
+    <Property Type="SByte" Name="mi_level" Nullable="false" />
+    <Property Type="String" Name="mi_level_name" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="mi_creator" Nullable="false" />
+    <Property Type="String" Name="mi_creator_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="mi_status" Nullable="false" />
+    <Property Type="DateTime" Name="mi_create_time" Nullable="false" />
+    <Property Type="String" Name="mi_memo" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="user_info_detail">
     <Key>
       <PropertyRef Name="id" />
@@ -102,7 +153,7 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="meeting_info">
-        <PropertyRef Name="mi_position" />
+        <PropertyRef Name="mi_position_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -115,6 +166,18 @@
       </Principal>
       <Dependent Role="meeting_info">
         <PropertyRef Name="mi_creator" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="meeting_info_ibfk_3">
+    <End Type="MCDBModel.meeting_level_catg" Role="meeting_level_catg" Multiplicity="1" />
+    <End Type="MCDBModel.meeting_info" Role="meeting_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="meeting_level_catg">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="meeting_info">
+        <PropertyRef Name="mi_level_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
