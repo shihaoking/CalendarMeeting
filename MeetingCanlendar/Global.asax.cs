@@ -17,7 +17,7 @@ namespace MeetingCanlendar
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            BundleTable.EnableOptimizations = false;
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

@@ -146,7 +146,9 @@
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\images\login_bg.png" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\admin-common.js" />
     <Content Include="Scripts\chzn-chosen.js" />
     <Content Include="Scripts\datepicker.js" />
     <Content Include="Scripts\datepicker.zh-CN.js" />

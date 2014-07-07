@@ -24,9 +24,20 @@ namespace MeetingCanlendar.Models
             return staticDb.meeting_info.Count();
         }
 
-        public IQueryable<meeting_info> GetMeetings(DateTime fromTime, DateTime toTime)
+        public IQueryable<meeting_info_detail> GetMeetings(params DateTime[] dates)
         {
-            return db.meeting_info.Where(r => r.mi_start_time >= fromTime && r.mi_start_time <= toTime);
+            string dateFilter = "";
+            foreach(DateTime dt in dates)
+            {
+                dateFilter += string.Format(" Or (mi_start_time >= '{0}' And mi_start_time < '{1}')", dt.ToString("yyyy-MM-01"), dt.AddMonths(1).ToString("yyyy-MM-01"));
+            }
+
+            if(!string.IsNullOrWhiteSpace(dateFilter))
+            {
+               dateFilter = dateFilter.Substring(4);
+            }
+
+            return db.ExecuteStoreQuery<meeting_info_detail>("Select * From meeting_info_detail Where " + dateFilter).AsQueryable();
         }
 
 

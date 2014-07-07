@@ -37,8 +37,8 @@ namespace MeetingCanlendar.Controllers
         public ActionResult MeetingList(string startTime, string endTime, int p = 1)
         {
             MeetingModel meetingModel = new MeetingModel();
-            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            DateTime endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
+            DateTime endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1);
 
             if(!string.IsNullOrEmpty(startTime))
             {
@@ -56,11 +56,17 @@ namespace MeetingCanlendar.Controllers
                 }
             }
 
+            ViewBag.StartDateFilter = startDate.ToString("yyyy-MM-dd");
+            ViewBag.EndDateFilter = endDate.ToString("yyyy-MM-dd");
+
             IQueryable<meeting_info_detail> meetings = meetingModel.GetMeetingsDetail(startDate, endDate);
             ViewBag.MeetingsCount = meetings.Count();
 
-            meetings = meetings.OrderByDescending(r => r.mi_create_time);
-            int pageSize = 5;
+            var creators = meetings.GroupBy(r => new { r.mi_creator, r.mi_creator_name }).Select(r => new { r.Key.mi_creator, r.Key.mi_creator_name });
+            ViewBag.CreatorSelectList = new SelectList(creators, "mi_creator", "mi_creator_name");
+
+            meetings = meetings.OrderByDescending(r => r.mi_start_time);
+            int pageSize = 10;
             Paging.ToPaging(p, ViewBag.MeetingsCount, this, pageSize);
             meetings = meetings.Skip((p - 1) * pageSize).Take(pageSize);
             return View(meetings);

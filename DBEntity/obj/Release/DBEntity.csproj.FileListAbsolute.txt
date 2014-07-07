@@ -1,0 +1,6 @@
+E:\Projects\MeetingCanlendar\DBEntity\bin\Release\DBEntity.dll.config
+E:\Projects\MeetingCanlendar\DBEntity\bin\Release\DBEntity.dll
+E:\Projects\MeetingCanlendar\DBEntity\bin\Release\DBEntity.pdb
+E:\Projects\MeetingCanlendar\DBEntity\obj\Release\DBEntity.dll
+E:\Projects\MeetingCanlendar\DBEntity\obj\Release\DBEntity.pdb
+E:\Projects\MeetingCanlendar\DBEntity\obj\Release\DBEntity.csprojResolveAssemblyReference.cache

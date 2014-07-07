@@ -30,16 +30,22 @@ namespace MeetingCanlendar.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetMeetingsByMonth(int year, int month)
+        public ActionResult GetMeetings(string months)
         {
+            JavaScriptSerializer jser = new JavaScriptSerializer();
+            string[] monthList = jser.Deserialize<string[]>(months);
             MeetingModel metModel = new MeetingModel();
-            DateTime startTime = new DateTime(year, month, 1);
-            DateTime endTime = startTime.AddMonths(1).AddDays(-1);
+
+            List<DateTime> dataMonths = new List<DateTime>();
+            foreach(string monthStr in monthList)
+            {
+                dataMonths.Add(DateTime.Parse(monthStr));
+            }
 
             UserModel userModel = new UserModel();
             user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
 
-            List<meeting_info> source = metModel.GetMeetings(startTime, endTime).ToList();
+            List<meeting_info_detail> source = metModel.GetMeetings(dataMonths.ToArray()).ToList();
 
             var result = source.OrderBy(r => r.mi_start_time).Select(r => new
             {
@@ -50,7 +56,7 @@ namespace MeetingCanlendar.Controllers
                 people = r.mi_people,
                 memo = r.mi_memo,
                 position = r.mi_position_id,
-                creator = r.user_infoReference.Value.ui_name,
+                creator = r.mi_creator_name,
                 level = r.mi_level_id,
                 createTime = r.mi_create_time,
                 className = r.mi_creator == userInfo.id ? "fc-event-mine" : "",
@@ -127,7 +133,10 @@ namespace MeetingCanlendar.Controllers
                     position = metInfo.mi_position_id,
                     creator = metInfo.user_infoReference.Value.ui_name,
                     level = metInfo.mi_level_id,
-                    createTime = metInfo.mi_create_time
+                    createTime = metInfo.mi_create_time,
+                    className = metInfo.mi_creator == userInfo.id ? "fc-event-mine" : "",
+                    editable = metInfo.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
+                    isMine = metInfo.mi_creator == userInfo.id ? 1 : 0
                 } }, JsonRequestBehavior.AllowGet);
         }
 
@@ -139,7 +148,7 @@ namespace MeetingCanlendar.Controllers
             UserModel userModel = new UserModel();
             user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
 
-            if(metInfo.mi_creator != userInfo.id)
+            if(metInfo.mi_creator != userInfo.id && userInfo.user_grade_catg.gc_level != 9)
             {
                 return Json(new { type = 0, msg = "该会议不是您创建的，无法删除。" }, JsonRequestBehavior.AllowGet);
             }
