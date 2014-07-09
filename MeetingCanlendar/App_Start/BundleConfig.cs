@@ -17,9 +17,16 @@ namespace MeetingCanlendar
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/css/main.css",
+                "~/Content/css/common.css",
                 "~/Content/css/datepicker.css",
                 "~/Content/css/chosen.css",
                 "~/Content/css/fullcalendar.css"));
+
+            bundles.Add(new StyleBundle("~/Admin/Content/css").Include(
+                "~/Content/css/admin.css",
+                "~/Content/css/common.css",
+                "~/Content/css/datepicker.css",
+                "~/Content/css/chosen.css"));
         }
     }
 }

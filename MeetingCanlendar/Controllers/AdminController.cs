@@ -24,7 +24,7 @@ namespace MeetingCanlendar.Controllers
         public ActionResult UserList(int p = 1)
         {
             UserModel userModel = new UserModel();
-            IQueryable<user_info_detail> userInfo = userModel.GetUserInfos();
+            IQueryable<user_info_detail> userInfo = userModel.GetUserInfoDetails();
             ViewBag.UsersCount = userInfo.Count();
 
             userInfo = userInfo.OrderBy(r => r.ui_name);
@@ -34,36 +34,39 @@ namespace MeetingCanlendar.Controllers
             return View(userInfo);
         }
 
-        public ActionResult MeetingList(string startTime, string endTime, int p = 1)
+        public ActionResult MeetingList(string startDate, string endDate, int? creator, int p = 1)
         {
             MeetingModel meetingModel = new MeetingModel();
-            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
-            DateTime endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1);
+            DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
+            DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1);
 
-            if(!string.IsNullOrEmpty(startTime))
+            if(!string.IsNullOrEmpty(startDate))
             {
-                if(DateTime.TryParse(startTime, out startDate) == false)
+                if(DateTime.TryParse(startDate, out startTime) == false)
                 {
-                    startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 }
             }
 
-            if(!string.IsNullOrEmpty(endTime))
+            if(!string.IsNullOrEmpty(endDate))
             {
-                if(DateTime.TryParse(endTime, out endDate) == false)
+                if(DateTime.TryParse(endDate, out endTime) == false)
                 {
-                    endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                 }
             }
 
-            ViewBag.StartDateFilter = startDate.ToString("yyyy-MM-dd");
-            ViewBag.EndDateFilter = endDate.ToString("yyyy-MM-dd");
+            ViewBag.StartDateFilter = startTime.ToString("yyyy-MM-dd");
+            ViewBag.EndDateFilter = endTime.ToString("yyyy-MM-dd");
+            ViewBag.CreatorFilter = creator.HasValue ? creator.Value : -1;
 
-            IQueryable<meeting_info_detail> meetings = meetingModel.GetMeetingsDetail(startDate, endDate);
+            IQueryable<meeting_info_detail> meetings = meetingModel.GetMeetingsDetail(startTime, endTime, creator);
             ViewBag.MeetingsCount = meetings.Count();
 
-            var creators = meetings.GroupBy(r => new { r.mi_creator, r.mi_creator_name }).Select(r => new { r.Key.mi_creator, r.Key.mi_creator_name });
-            ViewBag.CreatorSelectList = new SelectList(creators, "mi_creator", "mi_creator_name");
+            UserModel userModel = new UserModel();
+
+            var creators = userModel.GetUserInfos().GroupBy(r => new { r.id, r.ui_name }).Select(r => new { r.Key.id, r.Key.ui_name });
+            ViewBag.CreatorSelectList = new SelectList(creators, "id", "ui_name");
 
             meetings = meetings.OrderByDescending(r => r.mi_start_time);
             int pageSize = 10;

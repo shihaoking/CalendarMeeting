@@ -68,9 +68,14 @@ namespace MeetingCanlendar.Models
 
     public class UserModel : MySqlDBModel
     {
-        public IQueryable<user_info_detail> GetUserInfos()
+        public IQueryable<user_info_detail> GetUserInfoDetails()
         {
             return db.user_info_detail;
+        }
+
+        public IQueryable<user_info> GetUserInfos()
+        {
+            return db.user_info;
         }
 
         public IQueryable<user_info_detail> GetAvaliableUserInfos()

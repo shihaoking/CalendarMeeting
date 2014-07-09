@@ -86,18 +86,19 @@
 </div>
 </div>
 <script type="text/javascript">
-    $('.u-tb tr').hover(
-    function () {
-        $(this).find('.td-act span').show(0);
-    },
-    function () {
-        $(this).find('.td-act span').hide(0);
-    });
-
     $('.item-act-ava').click(function (event) {
         event.stopPropagation();
 
         ChangeUsersStatus($(this).parents('tr').attr('itemid'), 1);
+    });
+
+    $('.item-act-del').click(function () {
+        if (SelectedItemId.length == 0) {
+            alert('请至少选择一项');
+            return false;
+        }
+
+        ChangeUsersStatus(SelectedItemId, 0);
     });
 
     $('.item-act-create').click(function () {
@@ -110,15 +111,6 @@
             return false;
         }
         window.location.href = "/user/ChangePassword?uid=" + SelectedItemId[0];
-    });
-
-    $('.item-act-del').click(function () {
-        if (SelectedItemId.length == 0) {
-            alert('请至少选择一项');
-            return false;
-        }
-
-        ChangeUsersStatus(SelectedItemId, 0);
     });
 
     function ChangeUsersStatus(userIds, status) {
@@ -134,12 +126,12 @@
                     $.each(userIds, function (i, item) {
                         var trItem = $('#ls-item-' + item);
                         trItem.addClass('color-shadow').find('.ls-item-check').trigger('click');
-                        trItem.find('.item-act-ava').text('启用')
+                        trItem.find('.item-act-ava').text('启用');
                     });
                 } else {
                     $.each(userIds, function (i, item) {
                         var trItem = $('#ls-item-' + item);
-                        trItem.removeClass('color-shadow').find('.u-act-ava').text('')
+                        trItem.removeClass('color-shadow').find('.item-act-ava').text('');
                     });
                 }
             }

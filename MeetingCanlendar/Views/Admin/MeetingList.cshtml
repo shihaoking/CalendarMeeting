@@ -12,18 +12,18 @@
 }
 <div class="list-cnt mt-list">
     <div class="item-filter-bar">
-        <input type="text" class="datepicker" id="meetingStartDate" value="@ViewBag.StartDateFilter" />
-        <span>—</span><input type="text" class="datepicker" id="meetingStartDateFt" value="@ViewBag.EndDateFilter" />
+        <input type="text" class="datepicker" id="filterStartDate" value="@ViewBag.StartDateFilter" />
+        <span>—</span><input type="text" class="datepicker" id="filterEndDate" value="@ViewBag.EndDateFilter" />
         <span>期间</span>
-        <select id="meetingCreatorFt" class="u-select chosen-select">
+        <select id="filterCreator" class="u-select chosen-select">
             <option>所有人</option>
             @foreach(SelectListItem item in (SelectList)ViewBag.CreatorSelectList)
             {
-                <option value="@item.Value" @(item.Selected ? "selected=selected" : "") >@item.Text</option>
+                <option value="@item.Value" @(ViewBag.CreatorFilter.ToString() == item.Value ? "selected=selected" : "") >@item.Text</option>
             }
         </select>
         <span>创建</span>
-        <span class="item-act item-act-filter">筛选</span>
+        <span class="item-act item-act-filter" onclick="FilterSubmit(this)">筛选</span>
     </div>
     <div class="item-act-bar">
         <span class="item-act item-act-create">新建</span>
@@ -56,16 +56,16 @@
         { 
             <tr itemid="@item.id" id="ls-item-@item.id" class="@((!item.mi_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " u-tb-tr-odd"))" onclick="listItemClick(this)">
                 <td class="td-check"><input type="checkbox" itemid="@item.id" class="ls-item-check" /></td>
-                <td class="td-act"><span class="u-act-ava">@(!item.mi_status ? "启用" : "")</span></td>
-                <td style="text-align:center;">@item.mi_level_name</td>
-                <td style="text-align:left;">@item.mi_title</td>
-                <td style="text-align:left;"><span title="@item.mi_position">@(item.mi_position.Length > 5 ? item.mi_position.Substring(0, 5) + "..." : item.mi_position)</span></td>
-                <td style="text-align:left;"><span title=">@item.mi_people">@(item.mi_people.Length > 12 ? item.mi_people.Substring(0, 12) + "..." : item.mi_people)</span></td>
-                <td style="text-align:center;">@item.mi_start_time.ToString("yyyy-MM-dd HH:mm")</td>
-                <td style="text-align:center;">@item.mi_end_time.ToString("yyyy-MM-dd HH:mm")</td>
-                <td style="text-align:center;">@item.mi_creator_name</td>
-                <td style="text-align:center;">@item.mi_create_time.ToString("yyyy-MM-dd HH:mm")</td>
-                <td><span title=">@item.mi_memo">@(item.mi_memo.Length > 8 ? item.mi_memo.Substring(0, 8) + "..." : item.mi_memo)</span></td>
+                <td class="td-act"><span class="item-act-ava">@(!item.mi_status ? "启用" : "")</span></td>
+                <td class="td-mt-level" style="text-align:center;">@item.mi_level_name</td>
+                <td class="td-mt-title" style="text-align:left;">@item.mi_title</td>
+                <td class="td-mt-position" style="text-align:left;"><span title="@item.mi_position">@(item.mi_position.Length > 5 ? item.mi_position.Substring(0, 5) + "..." : item.mi_position)</span></td>
+                <td class="td-mt-people" style="text-align:left;"><span title=">@item.mi_people">@(item.mi_people.Length > 12 ? item.mi_people.Substring(0, 12) + "..." : item.mi_people)</span></td>
+                <td class="td-mt-startdate" style="text-align:center;">@item.mi_start_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td class="td-mt-enddate" style="text-align:center;">@item.mi_end_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td class="td-mt-creatorname" style="text-align:center;">@item.mi_creator_name</td>
+                <td class="td-mt-createtime" style="text-align:center;">@item.mi_create_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td class="td-mt-memo"><span title=">@item.mi_memo">@(item.mi_memo.Length > 8 ? item.mi_memo.Substring(0, 8) + "..." : item.mi_memo)</span></td>
             </tr>
             tick++;
         }
@@ -108,10 +108,136 @@
         }
     </ul>
 </div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/editPanel.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>
 <script type="text/javascript">
-    $('.item-act-filter').click(function () { 
-    
+    $('.item-act-ava').click(function (event) {
+        event.stopPropagation();
+
+        ChangeMeetingsStatus($(this).parents('tr').attr('itemid'), 1);
     });
+
+    $('.item-act-del').click(function () {
+        if (SelectedItemId.length == 0) {
+            alert('请至少选择一项');
+            return false;
+        }
+
+        ChangeMeetingsStatus(SelectedItemId, 0);
+    });
+
+    $('.item-act-edit').click(function () {
+        $.post('/meeting/GetMeetingsByIds',
+        { 'ids': JSON.stringify(SelectedItemId) },
+        function (result) {
+            if (result.length > 0) {
+                EventEditPanel(result[0]);
+            } else {
+                alert('获取会议信息出错！');
+            }
+        });
+    });
+
+    function ChangeMeetingsStatus(ids, status) {
+        if (!(toString.apply(ids) === '[object Array]')) {
+            ids = [ids];
+        }
+
+        $.post('/meeting/changeMeetingStatus',
+                { 'ids': JSON.stringify(ids), 'status': status },
+                function (result) {
+                    if (result.type == 1) {
+                        if (status == 0) {
+                            $.each(ids, function (i, item) {
+                                var trItem = $('#ls-item-' + item);
+                                trItem.addClass('color-shadow').find('.ls-item-check').trigger('click');
+                                trItem.find('.item-act-ava').text('启用')
+                            });
+                        } else {
+                            $.each(ids, function (i, item) {
+                                var trItem = $('#ls-item-' + item);
+                                trItem.removeClass('color-shadow').find('.item-act-ava').text('')
+                            });
+                        }
+                    }
+                });
+    }
+
+    function EventEditPanel(curEvent) {
+        $('body').editPanel('destroy');
+        curEvent.start = moment(curEvent.start);
+        curEvent.end = moment(curEvent.end);
+        var eventStartTime = curEvent.start ? curEvent.start.clone() : moment();
+
+        $('body').editPanel({
+            id: curEvent.id,
+            title: curEvent.title,
+            position: curEvent.position,
+            people: curEvent.people,
+            start: eventStartTime,
+            level: curEvent.level,
+            memo: curEvent.memo,
+            end: curEvent.end ? curEvent.end.clone() : eventStartTime.clone().add('hours', 1),
+            showOnCenter: true,
+            titleColor: curEvent.isMine || curEvent.id === undefined ? '#27AE60' : '#34AADC',
+            positions: positionsJSON,
+            editable: curEvent.editable || curEvent.id === undefined ? true : false,
+            submit: function (e, data) {
+                var source = ConvertEventToMeetingData(data);
+
+                UpdateMeeting(curEvent, source);
+            },
+            remove: function (e, data) {
+                $.post('meeting/DeleteMeeting', { id: data.id }, function (result) {
+                    if (result.type == 0) {
+                        alert(result.msg);
+                    } else if (result.type == 1) {
+                        $('#calendar').fullCalendar('removeEvents', data.id);
+                    }
+                });
+            },
+            close: function (e, data) {
+            }
+        });
+    }
+
+    function FilterSubmit(e) {
+        var startDate = $('#filterStartDate').val();
+        var endDate = $('#filterEndDate').val();
+        var creator = $('#filterCreator').val();
+        var dateReg = /\d{4}-\d{1,2}-\d{1,2}/;
+        var filterStr = '';
+
+        if (startDate != '') {
+            if (dateReg.test(startDate) == false) {
+                alert('起始日期格式不正确！');
+                return false;
+            }
+            else {
+                filterStr += 'startdate=' + startDate;
+            }
+        }
+
+        if (endDate != '') {
+            if (dateReg.test(endDate) == false) {
+                alert('截止日期格式不正确！');
+                return false;
+            } else {
+                if (filterStr.length != 0) {
+                    filterStr += '&';
+                }
+                filterStr += 'enddate=' + endDate;
+            }
+        }
+
+        if (creator) {
+            if (filterStr.length != 0) {
+                filterStr += '&';
+            }
+            filterStr += 'creator=' + creator;
+        }
+
+        window.location.href = window.location.pathname + '?' + filterStr;
+    }
 </script>

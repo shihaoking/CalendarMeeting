@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\admin.css" />
+    <Content Include="Content\css\common.css" />
     <Content Include="Content\css\user_reg.css" />
     <Content Include="Content\images\admin-icon-little.png" />
     <Content Include="Content\images\chosen-sprite.png" />

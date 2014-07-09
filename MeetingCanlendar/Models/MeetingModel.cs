@@ -24,6 +24,11 @@ namespace MeetingCanlendar.Models
             return staticDb.meeting_info.Count();
         }
 
+        public IQueryable<meeting_info_detail> GetMeetingsDetail(params int[] ids)
+        {
+            return db.meeting_info_detail.Where(r => ids.Contains(r.id));
+        }
+
         public IQueryable<meeting_info_detail> GetMeetings(params DateTime[] dates)
         {
             string dateFilter = "";
@@ -40,10 +45,15 @@ namespace MeetingCanlendar.Models
             return db.ExecuteStoreQuery<meeting_info_detail>("Select * From meeting_info_detail Where " + dateFilter).AsQueryable();
         }
 
-
-        public IQueryable<meeting_info_detail> GetMeetingsDetail(DateTime fromTime, DateTime toTime)
+        public IQueryable<meeting_info_detail> GetMeetingsDetail(DateTime fromTime, DateTime toTime, int? creator)
         {
-            return db.meeting_info_detail.Where(r => r.mi_start_time >= fromTime && r.mi_start_time <= toTime);
+            IQueryable<meeting_info_detail> result = db.meeting_info_detail.Where(r => r.mi_start_time >= fromTime && r.mi_start_time <= toTime);
+            if(creator.HasValue)
+            {
+                result = result.Where(r => r.mi_creator == creator.Value);
+            }
+
+            return result;
         }
 
         public IQueryable<meeting_position> GetMeetingPositions()
@@ -57,6 +67,11 @@ namespace MeetingCanlendar.Models
                 (r.mi_start_time < startTime && startTime < r.mi_end_time ||
                 r.mi_start_time < endTime && endTime < r.mi_end_time ||
                 r.mi_start_time == startTime && r.mi_end_time == endTime)));
+        }
+
+        public int UpdateMeetingStatus(string ids, short status)
+        {
+            return db.ExecuteStoreCommand("Update meeting_info Set mi_status=" + status + " Where id In(" + ids + ")");
         }
 
         public void DeleteMeeting(int id)

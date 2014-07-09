@@ -30,6 +30,37 @@ namespace MeetingCanlendar.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetMeetingsByIds(string ids)
+        {
+            JavaScriptSerializer jser = new JavaScriptSerializer();
+            MeetingModel metModel = new MeetingModel();
+            int[] idList = jser.Deserialize<int[]>(ids);
+
+            UserModel userModel = new UserModel();
+            user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
+
+            List<meeting_info_detail> source = metModel.GetMeetingsDetail(idList).ToList();
+
+            var result = source.OrderBy(r => r.mi_start_time).Select(r => new
+            {
+                id = r.id,
+                title = r.mi_title,
+                start = r.mi_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                end = r.mi_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
+                people = r.mi_people,
+                memo = r.mi_memo,
+                position = r.mi_position_id,
+                creator = r.mi_creator_name,
+                level = r.mi_level_id,
+                createTime = r.mi_create_time,
+                className = r.mi_creator == userInfo.id ? "fc-event-mine" : "",
+                editable = r.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
+                isMine = r.mi_creator == userInfo.id ? 1 : 0
+            });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetMeetings(string months)
         {
             JavaScriptSerializer jser = new JavaScriptSerializer();
@@ -138,6 +169,25 @@ namespace MeetingCanlendar.Controllers
                     editable = metInfo.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
                     isMine = metInfo.mi_creator == userInfo.id ? 1 : 0
                 } }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ChangeMeetingStatus(string ids, short status)
+        {
+            JavaScriptSerializer jser = new JavaScriptSerializer();
+            string[] result = jser.Deserialize<string[]>(ids);
+            MeetingModel meetingModel = new MeetingModel();
+
+            int calResult = 0;
+            try
+            {
+                calResult = meetingModel.UpdateMeetingStatus(string.Join(",", result), status);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { type = 0, msg = "更改失败：" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { type = 1, msg = "更改成功" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DeleteMeeting(int id)
