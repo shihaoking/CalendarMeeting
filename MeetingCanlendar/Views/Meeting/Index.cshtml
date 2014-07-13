@@ -360,7 +360,7 @@
         }
 
         function UpdateMeeting(curEvent, source) {
-            $.post('meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
+            $.post('/meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
                 if (result.type == 0) {
                     $('#calendar').fullCalendar('unselect');
                     alert(result.msg);

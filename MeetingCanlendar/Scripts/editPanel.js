@@ -248,7 +248,7 @@
         });
 
         if (options.showOnCenter) {
-            editPanel.css({ 'left': '45%', 'top': '45%' });
+            editPanel.addClass('center').show(200);
         } else {
             var hiddenX = jsEvent.pageX - jsEvent.clientX;
             var hiddenY = jsEvent.pageY - jsEvent.clientY;
@@ -272,7 +272,11 @@
         }
 
         function destroy() {
-            editPanel.remove();
+            if (options.showOnCenter) {
+                editPanel.addClass('center').hide(200, function () { $(this).remove(); });
+            } else {
+                editPanel.remove();
+            }
             element.find('.datepicker-container').remove();
             element.removeData('editPanel');
         }

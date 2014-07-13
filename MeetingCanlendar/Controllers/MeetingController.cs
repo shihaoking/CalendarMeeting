@@ -52,7 +52,7 @@ namespace MeetingCanlendar.Controllers
                 position = r.mi_position_id,
                 creator = r.mi_creator_name,
                 level = r.mi_level_id,
-                createTime = r.mi_create_time,
+                createTime = r.mi_create_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                 className = r.mi_creator == userInfo.id ? "fc-event-mine" : "",
                 editable = r.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
                 isMine = r.mi_creator == userInfo.id ? 1 : 0
@@ -61,7 +61,7 @@ namespace MeetingCanlendar.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetMeetings(string months)
+        public ActionResult GetMeetingsByMonths(string months)
         {
             JavaScriptSerializer jser = new JavaScriptSerializer();
             string[] monthList = jser.Deserialize<string[]>(months);
@@ -162,9 +162,11 @@ namespace MeetingCanlendar.Controllers
                     people = metInfo.mi_people,
                     memo = metInfo.mi_memo,
                     position = metInfo.mi_position_id,
+                    positionName = metInfo.meeting_positionReference.Value.mp_name,
                     creator = metInfo.user_infoReference.Value.ui_name,
                     level = metInfo.mi_level_id,
-                    createTime = metInfo.mi_create_time,
+                    levelName = metInfo.meeting_level_catgReference.Value.ml_name,
+                    createTime = metInfo.mi_create_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                     className = metInfo.mi_creator == userInfo.id ? "fc-event-mine" : "",
                     editable = metInfo.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
                     isMine = metInfo.mi_creator == userInfo.id ? 1 : 0

@@ -196,7 +196,7 @@
     <Content Include="Views\Shared\_NoHeaderLayout.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\_PartialCatalog.cshtml" />
+    <Content Include="Views\Admin\_PartialMenu.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
     <Content Include="Views\Admin\MeetingList.cshtml" />
   </ItemGroup>

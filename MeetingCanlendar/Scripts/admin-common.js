@@ -6,7 +6,7 @@ $(document).ready(function () {
     $(".chosen-select").chosen({ disable_search_threshold: 6 });
 
     $.ajax({
-        url: 'meeting/GetMeetingPositions',
+        url: '/meeting/GetMeetingPositions',
         type: 'POST',
         dateType: 'json',
         async: false
