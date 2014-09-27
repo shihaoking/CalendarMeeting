@@ -77,21 +77,6 @@ header{ position:absolute; left:20;}
 .smallCanlendar .fc-border-separate tr td:hover{ background-color:#EBF8FB}
 .smallCanlendar .fc-state-highlight{border-top-color:#ddd;border-top-width:1px!important; color:#F72F37; background:none;}
 
-#editPanel{ width:350px; position: absolute; padding:15px; border:1px solid #E5E5E5; z-index:100; background:white; border-radius:5px; left:50px;top:50px}
-.ep-dt{ padding:5px 0}
-.ep-input{ border:1px solid #D9D9D9; height:25px; line-height:21px; padding:2px 3px 2px 5px; border-radius:2px; color:#1A1A1A;box-shadow: 0px 1px 1px #FAFAFA; font-size:15px; font-weight:300; width:290px; vertical-align:middle;}
-.ep-input.ep-title{ height:30px; line-height:26px; width:100%; font-size:21px;}
-.ep-tip{display:inline-block; width:50px; text-align:right; padding-right:3px; font-size:11px; color:#9E9E9E; margin-right:5px; vertical-align:sub;}
-.ep-input.ep-date{ width:100px; margin-right:5px;}
-.ep-input.ep-time{ width:60px; margin-left:5px;}
-.ep-select{height:25px;border:1px solid #D9D9D9;}
-.ep-select.ep-select-pos{width:150px}
-.ep-select.ep-select-time{width:70px}
-.ep-action{ margin-top:10px;}
-.epc-bt{float:right;color:#167EFB; cursor:pointer}
-.epc-bt.ep-action-del{float:left; color:#FF3B30}
-.epc-bt.ep-action-sp{margin:0 15px; color:#DAD9D4}
-
 .page_list { text-align: center; display: block; margin:30px auto 0 auto; width:100% }
 .pg_ul { margin: 0 auto; padding: 0;  display:inline-block;*display:inline;zoom:1}
 .pg_ul li { list-style: none; float:left; margin:0 5px;*display:inline; zoom:1}

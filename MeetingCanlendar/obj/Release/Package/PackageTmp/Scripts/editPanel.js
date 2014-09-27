@@ -12,6 +12,7 @@
         end: (new Date()).setHours(1),
         memo: '',
         positions: [],
+        showOnCenter: false,
         submit: function () {
         },
         close: function () {
@@ -246,28 +247,36 @@
             }
         });
 
-        var hiddenX = jsEvent.pageX - jsEvent.clientX;
-        var hiddenY = jsEvent.pageY - jsEvent.clientY;
-        var panelX = jsEvent.pageX + 10;
-        var panelY = jsEvent.pageY - editPanel.outerHeight() / 2;
+        if (options.showOnCenter) {
+            editPanel.addClass('center').show(200);
+        } else {
+            var hiddenX = jsEvent.pageX - jsEvent.clientX;
+            var hiddenY = jsEvent.pageY - jsEvent.clientY;
+            var panelX = jsEvent.pageX + 10;
+            var panelY = jsEvent.pageY - editPanel.outerHeight() / 2;
 
-        if (document.body.clientWidth <= jsEvent.clientX + editPanel.outerWidth() + 20) {
-            panelX = jsEvent.pageX - editPanel.outerWidth() - 10;
+            if (document.body.clientWidth <= jsEvent.clientX + editPanel.outerWidth() + 20) {
+                panelX = jsEvent.pageX - editPanel.outerWidth() - 10;
+            }
+
+
+            if (window.innerHeight < jsEvent.clientY + editPanel.outerHeight() / 2) {
+                panelY = window.innerHeight + hiddenY - editPanel.outerHeight() - 10;
+            }
+
+            if (jsEvent.clientY < editPanel.outerHeight() / 2) {
+                panelY = 10 + hiddenY;
+            }
+
+            editPanel.css({ 'left': panelX, 'top': panelY });
         }
-
-
-        if (window.innerHeight < jsEvent.clientY + editPanel.outerHeight() / 2) {
-            panelY = window.innerHeight + hiddenY - editPanel.outerHeight() - 10;
-        }
-
-        if (jsEvent.clientY < editPanel.outerHeight() / 2) {
-            panelY = 10 + hiddenY;
-        }
-
-        editPanel.css({ 'left': panelX, 'top': panelY });
 
         function destroy() {
-            editPanel.remove();
+            if (options.showOnCenter) {
+                editPanel.addClass('center').hide(200, function () { $(this).remove(); });
+            } else {
+                editPanel.remove();
+            }
             element.find('.datepicker-container').remove();
             element.removeData('editPanel');
         }

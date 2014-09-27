@@ -19,8 +19,11 @@ td.btn input{ height:30px; width:80px; font-size:14px; font-weight:bold; border:
 #validate_img{ cursor:pointer}
 input {outline:none}
 th,h1,h2,h3,h4{color:#597883;}
-
 .logo{ text-align:center; margin-top:4%;}
+.blur{ -webkit-filter: blur(1px);
+       -moz-filter: blur(1px);
+        -ms-filter: blur(1px);    
+            filter: blur(1px);   }
 
 .login-box{top:0; left:0; right:0; bottom:0; position:absolute; overflow:hidden; height:100%; }
 .login_form{ width:360px; padding:40px 0;background-color:White; border-radius:50px; margin-top:-180px; margin-left:-180px; margin-right:auto; top:50%; left:50%; position:absolute; }

@@ -32,7 +32,10 @@ header{ position:absolute; left:20;}
 .header .u_box .i{ float:right;  margin-right:30px; font-size:15px;}
 .header .u_box .i span.sp{color:#A2A2A2;}
 .header .u_box .i a:hover{ color:#F56267}
-
+.blur{ -webkit-filter: blur(1px);
+       -moz-filter: blur(1px);
+        -ms-filter: blur(1px);    
+            filter: blur(1px);   }
 #calendar {
 	margin: 15px auto 0 auto;
 	min-width:1350px;
@@ -47,14 +50,15 @@ header{ position:absolute; left:20;}
 #meeting-list .menu-catg.menu-catg-selected{ background-color:#FF3B30; color:White}
 .ml-list ul{ margin:0; padding:0;font-size:0; }
 .ml-list ul li{ -moz-user-select: none; -webkit-user-select: none;  -ms-user-select: none;  -khtml-user-select: none;  user-select: none;}
-.ml-list ul.ml-ul{ background-color:#F2F2F2; padding-bottom:1px;}
-.ml-list li.ml-li-sp{border-left:3px solid #9b59b6; color:Black; }
-.ml-list li.ml-li-sp.selected{ color:#9b59b6}
-.ml-list li.ml-li{border-left:3px solid #3498db;}
+.ml-list ul.ml-ul{ background-color:White; padding-bottom:1px;}
 .ml-list li.ml-li.mine{ border-color:#27ae60}
+.ml-list .ml-ul-dt{ background-color:#F1F1F1; padding-bottom:1px;}
+.ml-list li.ml-li-sp,.ml-list li.ml-li{ list-style:none; padding:12px 5px; cursor:pointer;  background-color:White;}
+.ml-list li.ml-li{border-left:3px solid #3498db; margin-top:1px;}
+.ml-list li.ml-li:first-child{margin-top:0;}
+.ml-list li.ml-li-sp{ color:#9B9B9B; background-color:#F1F1F1; border-bottom:1px solid White;}
 .ml-list li.ml-li-sp span{ font-size:13px;}
-.ml-list li.ml-li-dt{ padding-left:15px; }
-.ml-list li.ml-li-sp,.ml-list li.ml-li{ list-style:none; padding:12px 5px; cursor:pointer; margin-top:1px; background-color:White;}
+.ml-list li.ml-li-sp.selected{ color:#9b59b6;border-bottom:1px solid #F1F1F1; color:Black}
 .ml-list li span.ml-title{ float:left; font-size:16px;}
 .ml-list li span.ml-time{ float:right; color:#949494; font-size:12px; display:block; height:18px; line-height:18px;}
 .ml-list li.ml-li.mine.selected{background-color:#27ae60;}

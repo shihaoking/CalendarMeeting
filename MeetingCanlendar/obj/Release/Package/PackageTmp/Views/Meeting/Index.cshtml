@@ -184,7 +184,7 @@
         function GetMeetings(months) {
             var dataResult;
             $.ajax({
-                url: 'meeting/GetMeetings',
+                url: 'meeting/GetMeetingsByMonths',
                 type: 'POST',
                 dateType: 'json',
                 async: false,
@@ -360,7 +360,7 @@
         }
 
         function UpdateMeeting(curEvent, source) {
-            $.post('meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
+            $.post('/meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
                 if (result.type == 0) {
                     $('#calendar').fullCalendar('unselect');
                     alert(result.msg);
