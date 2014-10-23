@@ -5,6 +5,9 @@
 
 <div id='calendar'></div>
 <div class='calendarList'></div>
+<input id="userId" value="@User.Identity.Name" type="hidden" />
+<script src="@Url.Content("~/Scripts/jquery.signalR-2.1.2.min.js")"></script>
+<script src="@Url.Content("~/signalr/hubs")"></script>
 @section scripts{
     <script type="text/javascript">
         var currentLangCode = 'zh-cn';
@@ -65,10 +68,12 @@
                         EventEditPanel(calEvent, jsEvent);
                     },
                     eventDrop: function (event, jsEvent, ui, view) {
-                        UpdateMeeting(event, ConvertEventToMeetingData(event));
+                        meetingHub.server.addMetting($('#userId').val(), ConvertEventToMeetingData(event));
+                        //UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
                     eventResize: function (event, jsEvent, ui, view) {
-                        UpdateMeeting(event, ConvertEventToMeetingData(event));
+                        meetingHub.server.addMetting($('#userId').val(), ConvertEventToMeetingData(event));
+                        //UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
                     eventRender: function (event, element, view) {
                         if (!event.isMine && !showAll) {
@@ -318,10 +323,39 @@
             $('#calendarList').find('.cdt-date').text(currentSelDate.format('YYYY年M月D日 星期dd'));
             $('.smallCanlendar').fullCalendar('select', currentSelDate, currentSelDate);
         }
+
+        var meetingHub = $.connection.meetingHub;
+        
+
+        meetingHub.client.broadcastMettingEdit = function (result) {
+            if (result.type == 0) {
+                $('#calendar').fullCalendar('unselect');
+                alert(result.msg);
+            } else if (result.type == 1 || result.type == 2) {
+                if (result.type == 1) {//新建
+                    $('#calendar').fullCalendar('renderEvent', result.data, true);
+                } else {//编辑
+                    var currentEvent = $('#calendar').fullCalendar('clientEvents', result.data.id);
+
+                    $.each(currentEvent, function (i, event) {
+                        event.title = result.data.title;
+                        event.start = result.data.start;
+                        event.end = result.data.end;
+                        event.position = result.data.position;
+                        event.memo = result.data.memo;
+                        event.level = result.data.level;
+                        event.people = result.data.people;
+
+                        $('#calendar').fullCalendar('updateEvent', event);
+                    });
+                }
+
+                $('#calendar').fullCalendar('unselect');
+            }
+        }
         
         function EventEditPanel(curEvent, jsEvent) {
             $('body').editPanel('destroy');
-
             var eventStartTime = curEvent.start ? curEvent.start.clone() : moment();
 
             $('body').editPanel({
@@ -339,8 +373,8 @@
                 editable: curEvent.editable || curEvent.id === undefined ? true : false,
                 submit: function (e, data) {
                     var source = ConvertEventToMeetingData(data);
-
-                    UpdateMeeting(curEvent, source);
+                    meetingHub.server.addMetting($('#userId').val(), source);
+                    //UpdateMeeting(curEvent, source);
                 },
                 remove: function (e, data) {
                     $.post('meeting/DeleteMeeting', { id: data.id }, function (result) {
@@ -359,41 +393,44 @@
             });
         }
 
+
         function UpdateMeeting(curEvent, source) {
-            $.post('/meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
-                if (result.type == 0) {
-                    $('#calendar').fullCalendar('unselect');
-                    alert(result.msg);
-                } else if (result.type == 1) {
-                    if (source.id == -1) {
-                        $('#calendar').fullCalendar('renderEvent', result.data, true);
-                    } else {
-                        curEvent.title = result.data.title;
-                        curEvent.start = result.data.start;
-                        curEvent.end = result.data.end;
-                        curEvent.position = result.data.position;
-                        curEvent.memo = result.data.memo;
-                        curEvent.level = result.data.level;
-                        curEvent.people = result.data.people;
+            $.post('/meeting/EditMeeting', { 'source': JSON.stringify(source) },
+                function (result) {
+                    if (result.type == 0) {
+                        $('#calendar').fullCalendar('unselect');
+                        alert(result.msg);
+                    } else if (result.type == 1) {
+                        if (source.id == -1) {
+                            $('#calendar').fullCalendar('renderEvent', result.data, true);
+                        } else {
+                            curEvent.title = result.data.title;
+                            curEvent.start = result.data.start;
+                            curEvent.end = result.data.end;
+                            curEvent.position = result.data.position;
+                            curEvent.memo = result.data.memo;
+                            curEvent.level = result.data.level;
+                            curEvent.people = result.data.people;
 
-                        $('#calendar').fullCalendar('updateEvent', curEvent);
+                            $('#calendar').fullCalendar('updateEvent', curEvent);
+                        }
+
+                        $('#calendar').fullCalendar('unselect');
                     }
-
-                    $('#calendar').fullCalendar('unselect');
                 }
-            });
+            );
         }
 
         function ConvertEventToMeetingData(data) {
             return {
-                id: data.id ? data.id : -1,
-                mi_title: data.title,
-                mi_position_id: data.position,
-                mi_start_time: data.start.format('YYYY-MM-DD HH:mm'),
-                mi_end_time: data.end.format('YYYY-MM-DD HH:mm'),
-                mi_level_id: data.level,
-                mi_people: data.people,
-                mi_memo: data.memo
+                'id': (data.id ? data.id : -1),
+                'mi_title': data.title,
+                'mi_position_id': data.position,
+                'mi_start_time': data.start.format('YYYY-MM-DD HH:mm'),
+                'mi_end_time': data.end.format('YYYY-MM-DD HH:mm'),
+                'mi_level_id': data.level,
+                'mi_people': data.people,
+                'mi_memo': data.memo
             };
         }
 
@@ -414,5 +451,8 @@
             }
             return 0;
         }
+
+        $.connection.hub.start({ transport: ['webSockets', 'longPolling'] }).done(function () {
+        });
     </script>
 }

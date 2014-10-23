@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+<Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="MCDBModelStoreContainer">
-    <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" />
-    <EntitySet Name="meeting_level_catg" EntityType="MCDBModel.Store.meeting_level_catg" store:Type="Tables" Schema="mc_db" />
-    <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" />
-    <EntitySet Name="user_grade_catg" EntityType="MCDBModel.Store.user_grade_catg" store:Type="Tables" Schema="mc_db" />
-    <EntitySet Name="user_info" EntityType="MCDBModel.Store.user_info" store:Type="Tables" Schema="mc_db" />
-    <EntitySet Name="meeting_info_detail" EntityType="MCDBModel.Store.meeting_info_detail" store:Type="Views" store:Schema="mc_db" store:Name="meeting_info_detail">
+    <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="meeting_level_catg" EntityType="MCDBModel.Store.meeting_level_catg" store:Type="Tables" Schema="mc_db" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="meeting_position" EntityType="MCDBModel.Store.meeting_position" store:Type="Tables" Schema="mc_db" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="user_grade_catg" EntityType="MCDBModel.Store.user_grade_catg" store:Type="Tables" Schema="mc_db" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="user_info" EntityType="MCDBModel.Store.user_info" store:Type="Tables" Schema="mc_db" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="meeting_info_detail" EntityType="MCDBModel.Store.meeting_info_detail" store:Type="Views" store:Schema="mc_db" store:Name="meeting_info_detail" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
       <DefiningQuery>SELECT
       `meeting_info_detail`.`id`, 
       `meeting_info_detail`.`mi_title`, 
@@ -26,7 +26,7 @@
       `meeting_info_detail`.`mi_memo`
       FROM `meeting_info_detail` AS `meeting_info_detail`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="user_info_detail" EntityType="MCDBModel.Store.user_info_detail" store:Type="Views" store:Schema="mc_db" store:Name="user_info_detail">
+    <EntitySet Name="user_info_detail" EntityType="MCDBModel.Store.user_info_detail" store:Type="Views" store:Schema="mc_db" store:Name="user_info_detail" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
       <DefiningQuery>SELECT
       `user_info_detail`.`id`, 
       `user_info_detail`.`ui_name`, 

@@ -151,8 +151,8 @@
         });
 
         editPanel.find('#eveSubmit').click(function () {
-            var start = moment($('#eveStartDate').val() + ' ' + $('#eveStartTime').val());
-            var end = moment($('#eveEndDate').val() + ' ' + $('#eveEndTime').val());
+            var start = moment($('#eveStartDate').val() + ' ' + $('#eveStartTime').val(), "YYYY-MM-DD HH:mm");
+            var end = moment($('#eveEndDate').val() + ' ' + $('#eveEndTime').val(), "YYYY-MM-DD HH:mm");
 
             options.submit(editPanel, {
                 id: options.id,
