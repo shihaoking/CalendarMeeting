@@ -68,11 +68,11 @@
                         EventEditPanel(calEvent, jsEvent);
                     },
                     eventDrop: function (event, jsEvent, ui, view) {
-                        meetingHub.server.addMetting($('#userId').val(), ConvertEventToMeetingData(event));
+                        meetingHub.server.addMeeting($('#userId').val(), ConvertEventToMeetingData(event));
                         //UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
                     eventResize: function (event, jsEvent, ui, view) {
-                        meetingHub.server.addMetting($('#userId').val(), ConvertEventToMeetingData(event));
+                        meetingHub.server.addMeeting($('#userId').val(), ConvertEventToMeetingData(event));
                         //UpdateMeeting(event, ConvertEventToMeetingData(event));
                     },
                     eventRender: function (event, element, view) {
@@ -326,8 +326,7 @@
 
         var meetingHub = $.connection.meetingHub;
         
-
-        meetingHub.client.broadcastMettingEdit = function (result) {
+        meetingHub.client.broadcastMeetingEdit = function (result) {
             if (result.type == 0) {
                 $('#calendar').fullCalendar('unselect');
                 alert(result.msg);
@@ -353,6 +352,14 @@
                 $('#calendar').fullCalendar('unselect');
             }
         }
+
+        meetingHub.client.broadcastMeetingDelete = function (result) {
+            if (result.type == 0) {
+                alert(result.msg);
+            } else if (result.type == 1) {
+                $('#calendar').fullCalendar('removeEvents', result.data.id);
+            }
+        }
         
         function EventEditPanel(curEvent, jsEvent) {
             $('body').editPanel('destroy');
@@ -373,17 +380,11 @@
                 editable: curEvent.editable || curEvent.id === undefined ? true : false,
                 submit: function (e, data) {
                     var source = ConvertEventToMeetingData(data);
-                    meetingHub.server.addMetting($('#userId').val(), source);
+                    meetingHub.server.addMeeting($('#userId').val(), source);
                     //UpdateMeeting(curEvent, source);
                 },
                 remove: function (e, data) {
-                    $.post('meeting/DeleteMeeting', { id: data.id }, function (result) {
-                        if (result.type == 0) {
-                            alert(result.msg);
-                        } else if (result.type == 1) {
-                            $('#calendar').fullCalendar('removeEvents', data.id);
-                        }
-                    });
+                    meetingHub.server.deleteMeeting($('#userId').val(), data.id);
                 },
                 close: function (e, data) {
                     $('#ml-li-' + data.id).removeClass('selected'); 
@@ -392,7 +393,6 @@
                 }
             });
         }
-
 
         function UpdateMeeting(curEvent, source) {
             $.post('/meeting/EditMeeting', { 'source': JSON.stringify(source) },

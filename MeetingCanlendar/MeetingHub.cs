@@ -10,7 +10,7 @@ namespace MeetingCanlendar
 {
     public class MeetingHub : Hub
     {
-        public void AddMetting(string userName, meeting_info metData)
+        public void AddMeeting(string userName, meeting_info metData)
         {
             MeetingModel metModel = new MeetingModel();
             UserModel userModel = new UserModel();
@@ -20,6 +20,8 @@ namespace MeetingCanlendar
             if (metModel.CheckMeetingAvailable(metData.id, metData.mi_start_time, metData.mi_end_time) == false)
             {
                 result = new { type = 0, msg = "该时间段内已经有会议，请更改会议时间。" };
+                Clients.Caller.broadcastMeetingEdit(result);
+                return;
             }
 
             meeting_info metInfo;
@@ -38,6 +40,8 @@ namespace MeetingCanlendar
                 if (metInfo.mi_creator != userInfo.id && metInfo.meeting_level_catg.ml_level != 9)
                 {
                     result = new { type = 0, msg = "该会议不是您创建的，无法修改。" };
+                    Clients.Caller.broadcastMeetingEdit(result);
+                    return;
                 }
             }
               
@@ -63,7 +67,7 @@ namespace MeetingCanlendar
             catch (Exception ex)
             {
                 result = new { type = 0, msg = "添加失败，请联系管理员。\n错误信息：" + ex.Message };
-                Clients.All.broadcastMettingEdit(result);
+                Clients.Caller.broadcastMeetingEdit(result);
                 return;
             }
 
@@ -92,7 +96,32 @@ namespace MeetingCanlendar
                 }
             };
 
-            Clients.All.broadcastMettingEdit(result);
+            Clients.All.broadcastMeetingEdit(result);
+        }
+
+        public void DeleteMeeting(string userName, int id)
+        {
+            MeetingModel metModel = new MeetingModel();
+            meeting_info metInfo = metModel.GetMeeting(id);
+
+            UserModel userModel = new UserModel();
+            user_info userInfo = userModel.GetUserInfo(userName);
+
+            if (metInfo.mi_creator != userInfo.id && userInfo.user_grade_catg.gc_level != 9)
+            {
+                Clients.Caller.broadcastMeetingDelete(new { type = 0, msg = "该会议不是您创建的，无法删除。" });
+            }
+
+            try
+            {
+                metModel.DeleteMeeting(id);
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.broadcastMeetingDelete(new { type = 0, msg = "删除失败：" + ex.Message });
+            }
+
+            Clients.All.broadcastMeetingDelete(new { type = 1, data = new { id = id }, msg = "删除成功" });
         }
     }
 }
