@@ -293,7 +293,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 简单属性
+        #region 基元属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -312,7 +312,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value, "id");
+                    _id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -337,7 +337,7 @@ namespace DBEntity
             {
                 Onmi_titleChanging(value);
                 ReportPropertyChanging("mi_title");
-                _mi_title = StructuralObject.SetValidValue(value, false, "mi_title");
+                _mi_title = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("mi_title");
                 Onmi_titleChanged();
             }
@@ -361,7 +361,7 @@ namespace DBEntity
             {
                 Onmi_position_idChanging(value);
                 ReportPropertyChanging("mi_position_id");
-                _mi_position_id = StructuralObject.SetValidValue(value, "mi_position_id");
+                _mi_position_id = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mi_position_id");
                 Onmi_position_idChanged();
             }
@@ -385,7 +385,7 @@ namespace DBEntity
             {
                 Onmi_peopleChanging(value);
                 ReportPropertyChanging("mi_people");
-                _mi_people = StructuralObject.SetValidValue(value, true, "mi_people");
+                _mi_people = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("mi_people");
                 Onmi_peopleChanged();
             }
@@ -409,7 +409,7 @@ namespace DBEntity
             {
                 Onmi_start_timeChanging(value);
                 ReportPropertyChanging("mi_start_time");
-                _mi_start_time = StructuralObject.SetValidValue(value, "mi_start_time");
+                _mi_start_time = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mi_start_time");
                 Onmi_start_timeChanged();
             }
@@ -433,7 +433,7 @@ namespace DBEntity
             {
                 Onmi_end_timeChanging(value);
                 ReportPropertyChanging("mi_end_time");
-                _mi_end_time = StructuralObject.SetValidValue(value, "mi_end_time");
+                _mi_end_time = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mi_end_time");
                 Onmi_end_timeChanged();
             }
@@ -457,7 +457,7 @@ namespace DBEntity
             {
                 Onmi_level_idChanging(value);
                 ReportPropertyChanging("mi_level_id");
-                _mi_level_id = StructuralObject.SetValidValue(value, "mi_level_id");
+                _mi_level_id = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mi_level_id");
                 Onmi_level_idChanged();
             }
@@ -481,7 +481,7 @@ namespace DBEntity
             {
                 Onmi_statusChanging(value);
                 ReportPropertyChanging("mi_status");
-                _mi_status = StructuralObject.SetValidValue(value, "mi_status");
+                _mi_status = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mi_status");
                 Onmi_statusChanged();
             }
@@ -505,7 +505,7 @@ namespace DBEntity
             {
                 Onmi_creatorChanging(value);
                 ReportPropertyChanging("mi_creator");
-                _mi_creator = StructuralObject.SetValidValue(value, "mi_creator");
+                _mi_creator = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mi_creator");
                 Onmi_creatorChanged();
             }
@@ -529,7 +529,7 @@ namespace DBEntity
             {
                 Onmi_create_timeChanging(value);
                 ReportPropertyChanging("mi_create_time");
-                _mi_create_time = StructuralObject.SetValidValue(value, "mi_create_time");
+                _mi_create_time = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mi_create_time");
                 Onmi_create_timeChanged();
             }
@@ -553,7 +553,7 @@ namespace DBEntity
             {
                 Onmi_memoChanging(value);
                 ReportPropertyChanging("mi_memo");
-                _mi_memo = StructuralObject.SetValidValue(value, true, "mi_memo");
+                _mi_memo = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("mi_memo");
                 Onmi_memoChanged();
             }
@@ -564,6 +564,7 @@ namespace DBEntity
 
         #endregion
 
+    
         #region 导航属性
     
         /// <summary>
@@ -733,7 +734,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 简单属性
+        #region 基元属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -752,7 +753,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value, "id");
+                    _id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -779,7 +780,7 @@ namespace DBEntity
                 {
                     Onmi_titleChanging(value);
                     ReportPropertyChanging("mi_title");
-                    _mi_title = StructuralObject.SetValidValue(value, false, "mi_title");
+                    _mi_title = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("mi_title");
                     Onmi_titleChanged();
                 }
@@ -806,7 +807,7 @@ namespace DBEntity
                 {
                     Onmi_position_idChanging(value);
                     ReportPropertyChanging("mi_position_id");
-                    _mi_position_id = StructuralObject.SetValidValue(value, "mi_position_id");
+                    _mi_position_id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_position_id");
                     Onmi_position_idChanged();
                 }
@@ -833,7 +834,7 @@ namespace DBEntity
                 {
                     Onmi_positionChanging(value);
                     ReportPropertyChanging("mi_position");
-                    _mi_position = StructuralObject.SetValidValue(value, false, "mi_position");
+                    _mi_position = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("mi_position");
                     Onmi_positionChanged();
                 }
@@ -860,7 +861,7 @@ namespace DBEntity
                 {
                     Onmi_position_sizeChanging(value);
                     ReportPropertyChanging("mi_position_size");
-                    _mi_position_size = StructuralObject.SetValidValue(value, "mi_position_size");
+                    _mi_position_size = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_position_size");
                     Onmi_position_sizeChanged();
                 }
@@ -885,7 +886,7 @@ namespace DBEntity
             {
                 Onmi_peopleChanging(value);
                 ReportPropertyChanging("mi_people");
-                _mi_people = StructuralObject.SetValidValue(value, true, "mi_people");
+                _mi_people = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("mi_people");
                 Onmi_peopleChanged();
             }
@@ -911,7 +912,7 @@ namespace DBEntity
                 {
                     Onmi_start_timeChanging(value);
                     ReportPropertyChanging("mi_start_time");
-                    _mi_start_time = StructuralObject.SetValidValue(value, "mi_start_time");
+                    _mi_start_time = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_start_time");
                     Onmi_start_timeChanged();
                 }
@@ -938,7 +939,7 @@ namespace DBEntity
                 {
                     Onmi_end_timeChanging(value);
                     ReportPropertyChanging("mi_end_time");
-                    _mi_end_time = StructuralObject.SetValidValue(value, "mi_end_time");
+                    _mi_end_time = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_end_time");
                     Onmi_end_timeChanged();
                 }
@@ -965,7 +966,7 @@ namespace DBEntity
                 {
                     Onmi_level_idChanging(value);
                     ReportPropertyChanging("mi_level_id");
-                    _mi_level_id = StructuralObject.SetValidValue(value, "mi_level_id");
+                    _mi_level_id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_level_id");
                     Onmi_level_idChanged();
                 }
@@ -992,7 +993,7 @@ namespace DBEntity
                 {
                     Onmi_levelChanging(value);
                     ReportPropertyChanging("mi_level");
-                    _mi_level = StructuralObject.SetValidValue(value, "mi_level");
+                    _mi_level = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_level");
                     Onmi_levelChanged();
                 }
@@ -1019,7 +1020,7 @@ namespace DBEntity
                 {
                     Onmi_level_nameChanging(value);
                     ReportPropertyChanging("mi_level_name");
-                    _mi_level_name = StructuralObject.SetValidValue(value, false, "mi_level_name");
+                    _mi_level_name = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("mi_level_name");
                     Onmi_level_nameChanged();
                 }
@@ -1046,7 +1047,7 @@ namespace DBEntity
                 {
                     Onmi_creatorChanging(value);
                     ReportPropertyChanging("mi_creator");
-                    _mi_creator = StructuralObject.SetValidValue(value, "mi_creator");
+                    _mi_creator = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_creator");
                     Onmi_creatorChanged();
                 }
@@ -1073,7 +1074,7 @@ namespace DBEntity
                 {
                     Onmi_creator_nameChanging(value);
                     ReportPropertyChanging("mi_creator_name");
-                    _mi_creator_name = StructuralObject.SetValidValue(value, false, "mi_creator_name");
+                    _mi_creator_name = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("mi_creator_name");
                     Onmi_creator_nameChanged();
                 }
@@ -1100,7 +1101,7 @@ namespace DBEntity
                 {
                     Onmi_statusChanging(value);
                     ReportPropertyChanging("mi_status");
-                    _mi_status = StructuralObject.SetValidValue(value, "mi_status");
+                    _mi_status = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_status");
                     Onmi_statusChanged();
                 }
@@ -1127,7 +1128,7 @@ namespace DBEntity
                 {
                     Onmi_create_timeChanging(value);
                     ReportPropertyChanging("mi_create_time");
-                    _mi_create_time = StructuralObject.SetValidValue(value, "mi_create_time");
+                    _mi_create_time = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("mi_create_time");
                     Onmi_create_timeChanged();
                 }
@@ -1152,7 +1153,7 @@ namespace DBEntity
             {
                 Onmi_memoChanging(value);
                 ReportPropertyChanging("mi_memo");
-                _mi_memo = StructuralObject.SetValidValue(value, true, "mi_memo");
+                _mi_memo = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("mi_memo");
                 Onmi_memoChanged();
             }
@@ -1163,6 +1164,7 @@ namespace DBEntity
 
         #endregion
 
+    
     }
     
     /// <summary>
@@ -1192,7 +1194,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 简单属性
+        #region 基元属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1211,7 +1213,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value, "id");
+                    _id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1236,7 +1238,7 @@ namespace DBEntity
             {
                 Onml_levelChanging(value);
                 ReportPropertyChanging("ml_level");
-                _ml_level = StructuralObject.SetValidValue(value, "ml_level");
+                _ml_level = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ml_level");
                 Onml_levelChanged();
             }
@@ -1260,7 +1262,7 @@ namespace DBEntity
             {
                 Onml_nameChanging(value);
                 ReportPropertyChanging("ml_name");
-                _ml_name = StructuralObject.SetValidValue(value, false, "ml_name");
+                _ml_name = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("ml_name");
                 Onml_nameChanged();
             }
@@ -1271,6 +1273,7 @@ namespace DBEntity
 
         #endregion
 
+    
         #region 导航属性
     
         /// <summary>
@@ -1326,7 +1329,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 简单属性
+        #region 基元属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1345,7 +1348,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value, "id");
+                    _id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1370,7 +1373,7 @@ namespace DBEntity
             {
                 Onmp_nameChanging(value);
                 ReportPropertyChanging("mp_name");
-                _mp_name = StructuralObject.SetValidValue(value, false, "mp_name");
+                _mp_name = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("mp_name");
                 Onmp_nameChanged();
             }
@@ -1394,7 +1397,7 @@ namespace DBEntity
             {
                 Onmp_sizeChanging(value);
                 ReportPropertyChanging("mp_size");
-                _mp_size = StructuralObject.SetValidValue(value, "mp_size");
+                _mp_size = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("mp_size");
                 Onmp_sizeChanged();
             }
@@ -1405,6 +1408,7 @@ namespace DBEntity
 
         #endregion
 
+    
         #region 导航属性
     
         /// <summary>
@@ -1460,7 +1464,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 简单属性
+        #region 基元属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1479,7 +1483,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value, "id");
+                    _id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1504,7 +1508,7 @@ namespace DBEntity
             {
                 Ongc_levelChanging(value);
                 ReportPropertyChanging("gc_level");
-                _gc_level = StructuralObject.SetValidValue(value, "gc_level");
+                _gc_level = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("gc_level");
                 Ongc_levelChanged();
             }
@@ -1528,7 +1532,7 @@ namespace DBEntity
             {
                 Ongc_nameChanging(value);
                 ReportPropertyChanging("gc_name");
-                _gc_name = StructuralObject.SetValidValue(value, false, "gc_name");
+                _gc_name = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("gc_name");
                 Ongc_nameChanged();
             }
@@ -1539,6 +1543,7 @@ namespace DBEntity
 
         #endregion
 
+    
         #region 导航属性
     
         /// <summary>
@@ -1604,7 +1609,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 简单属性
+        #region 基元属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1623,7 +1628,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value, "id");
+                    _id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1648,7 +1653,7 @@ namespace DBEntity
             {
                 Onui_nameChanging(value);
                 ReportPropertyChanging("ui_name");
-                _ui_name = StructuralObject.SetValidValue(value, false, "ui_name");
+                _ui_name = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("ui_name");
                 Onui_nameChanged();
             }
@@ -1672,7 +1677,7 @@ namespace DBEntity
             {
                 Onui_passwordChanging(value);
                 ReportPropertyChanging("ui_password");
-                _ui_password = StructuralObject.SetValidValue(value, false, "ui_password");
+                _ui_password = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("ui_password");
                 Onui_passwordChanged();
             }
@@ -1696,7 +1701,7 @@ namespace DBEntity
             {
                 Onui_emailChanging(value);
                 ReportPropertyChanging("ui_email");
-                _ui_email = StructuralObject.SetValidValue(value, false, "ui_email");
+                _ui_email = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("ui_email");
                 Onui_emailChanged();
             }
@@ -1720,7 +1725,7 @@ namespace DBEntity
             {
                 Onui_grade_idChanging(value);
                 ReportPropertyChanging("ui_grade_id");
-                _ui_grade_id = StructuralObject.SetValidValue(value, "ui_grade_id");
+                _ui_grade_id = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ui_grade_id");
                 Onui_grade_idChanged();
             }
@@ -1744,7 +1749,7 @@ namespace DBEntity
             {
                 Onui_genderChanging(value);
                 ReportPropertyChanging("ui_gender");
-                _ui_gender = StructuralObject.SetValidValue(value, "ui_gender");
+                _ui_gender = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ui_gender");
                 Onui_genderChanged();
             }
@@ -1768,7 +1773,7 @@ namespace DBEntity
             {
                 Onui_statusChanging(value);
                 ReportPropertyChanging("ui_status");
-                _ui_status = StructuralObject.SetValidValue(value, "ui_status");
+                _ui_status = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ui_status");
                 Onui_statusChanged();
             }
@@ -1792,7 +1797,7 @@ namespace DBEntity
             {
                 Onui_create_timeChanging(value);
                 ReportPropertyChanging("ui_create_time");
-                _ui_create_time = StructuralObject.SetValidValue(value, "ui_create_time");
+                _ui_create_time = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ui_create_time");
                 Onui_create_timeChanged();
             }
@@ -1803,6 +1808,7 @@ namespace DBEntity
 
         #endregion
 
+    
         #region 导航属性
     
         /// <summary>
@@ -1910,7 +1916,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 简单属性
+        #region 基元属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1929,7 +1935,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value, "id");
+                    _id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1956,7 +1962,7 @@ namespace DBEntity
                 {
                     Onui_nameChanging(value);
                     ReportPropertyChanging("ui_name");
-                    _ui_name = StructuralObject.SetValidValue(value, false, "ui_name");
+                    _ui_name = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("ui_name");
                     Onui_nameChanged();
                 }
@@ -1983,7 +1989,7 @@ namespace DBEntity
                 {
                     Onui_passwordChanging(value);
                     ReportPropertyChanging("ui_password");
-                    _ui_password = StructuralObject.SetValidValue(value, false, "ui_password");
+                    _ui_password = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("ui_password");
                     Onui_passwordChanged();
                 }
@@ -2010,7 +2016,7 @@ namespace DBEntity
                 {
                     Onui_emailChanging(value);
                     ReportPropertyChanging("ui_email");
-                    _ui_email = StructuralObject.SetValidValue(value, false, "ui_email");
+                    _ui_email = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("ui_email");
                     Onui_emailChanged();
                 }
@@ -2037,7 +2043,7 @@ namespace DBEntity
                 {
                     Onui_grade_idChanging(value);
                     ReportPropertyChanging("ui_grade_id");
-                    _ui_grade_id = StructuralObject.SetValidValue(value, "ui_grade_id");
+                    _ui_grade_id = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("ui_grade_id");
                     Onui_grade_idChanged();
                 }
@@ -2064,7 +2070,7 @@ namespace DBEntity
                 {
                     Onui_genderChanging(value);
                     ReportPropertyChanging("ui_gender");
-                    _ui_gender = StructuralObject.SetValidValue(value, "ui_gender");
+                    _ui_gender = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("ui_gender");
                     Onui_genderChanged();
                 }
@@ -2091,7 +2097,7 @@ namespace DBEntity
                 {
                     Onui_statusChanging(value);
                     ReportPropertyChanging("ui_status");
-                    _ui_status = StructuralObject.SetValidValue(value, "ui_status");
+                    _ui_status = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("ui_status");
                     Onui_statusChanged();
                 }
@@ -2118,7 +2124,7 @@ namespace DBEntity
                 {
                     Onui_create_timeChanging(value);
                     ReportPropertyChanging("ui_create_time");
-                    _ui_create_time = StructuralObject.SetValidValue(value, "ui_create_time");
+                    _ui_create_time = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("ui_create_time");
                     Onui_create_timeChanged();
                 }
@@ -2145,7 +2151,7 @@ namespace DBEntity
                 {
                     Onui_grade_levelChanging(value);
                     ReportPropertyChanging("ui_grade_level");
-                    _ui_grade_level = StructuralObject.SetValidValue(value, "ui_grade_level");
+                    _ui_grade_level = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("ui_grade_level");
                     Onui_grade_levelChanged();
                 }
@@ -2172,7 +2178,7 @@ namespace DBEntity
                 {
                     Onui_grade_nameChanging(value);
                     ReportPropertyChanging("ui_grade_name");
-                    _ui_grade_name = StructuralObject.SetValidValue(value, false, "ui_grade_name");
+                    _ui_grade_name = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("ui_grade_name");
                     Onui_grade_nameChanged();
                 }
@@ -2197,7 +2203,7 @@ namespace DBEntity
             {
                 Onui_meeting_countChanging(value);
                 ReportPropertyChanging("ui_meeting_count");
-                _ui_meeting_count = StructuralObject.SetValidValue(value, "ui_meeting_count");
+                _ui_meeting_count = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ui_meeting_count");
                 Onui_meeting_countChanged();
             }
@@ -2208,8 +2214,10 @@ namespace DBEntity
 
         #endregion
 
+    
     }
 
     #endregion
 
+    
 }

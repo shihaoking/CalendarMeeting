@@ -3,7 +3,7 @@
     var defaults = {
         id: 0,
         title: '会议主题',
-        potision: 1,
+        position: 1,
         people: '',
         level: 0,
         editable: true,
@@ -151,8 +151,8 @@
         });
 
         editPanel.find('#eveSubmit').click(function () {
-            var start = moment($('#eveStartDate').val() + ' ' + $('#eveStartTime').val());
-            var end = moment($('#eveEndDate').val() + ' ' + $('#eveEndTime').val());
+            var start = moment($('#eveStartDate').val() + ' ' + $('#eveStartTime').val(), "YYYY-MM-DD HH:mm");
+            var end = moment($('#eveEndDate').val() + ' ' + $('#eveEndTime').val(), "YYYY-MM-DD HH:mm");
 
             options.submit(editPanel, {
                 id: options.id,

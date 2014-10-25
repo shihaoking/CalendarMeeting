@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MCDBModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="MCDBModelStoreContainer">
           <EntitySet Name="meeting_info" EntityType="MCDBModel.Store.meeting_info" store:Type="Tables" Schema="mc_db" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="meeting_level_catg" EntityType="MCDBModel.Store.meeting_level_catg" store:Type="Tables" Schema="mc_db" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
@@ -232,8 +232,8 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MCDBModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
-        <EntityContainer Name="mc_dbEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+      <Schema Namespace="MCDBModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="mc_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="meeting_info" EntityType="MCDBModel.meeting_info" />
           <EntitySet Name="meeting_level_catg" EntityType="MCDBModel.meeting_level_catg" />
           <EntitySet Name="meeting_position" EntityType="MCDBModel.meeting_position" />
@@ -262,7 +262,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="mi_title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="Int16" Name="mi_position_id" Nullable="false" />
           <Property Type="String" Name="mi_people" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -281,7 +281,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Type="SByte" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="SByte" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="SByte" Name="ml_level" Nullable="false" />
           <Property Type="String" Name="ml_name" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_3" FromRole="meeting_level_catg" ToRole="meeting_info" />
@@ -290,7 +290,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="mp_name" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Type="SByte" Name="mp_size" Nullable="false" />
           <NavigationProperty Name="meeting_info" Relationship="MCDBModel.meeting_info_ibfk_1" FromRole="meeting_position" ToRole="meeting_info" />
@@ -299,7 +299,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Type="SByte" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="SByte" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="SByte" Name="gc_level" Nullable="false" />
           <Property Type="String" Name="gc_name" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="user_info" Relationship="MCDBModel.user_info_ibfk_1" FromRole="user_grade_catg" ToRole="user_info" />
@@ -308,7 +308,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int16" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="ui_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ui_password" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ui_email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -430,7 +430,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MCDBModelStoreContainer" CdmEntityContainer="mc_dbEntities">
           <EntitySetMapping Name="meeting_info">
             <EntityTypeMapping TypeName="MCDBModel.meeting_info">
@@ -534,7 +534,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />

@@ -1,0 +1,284 @@
+﻿@model IQueryable<DBEntity.meeting_info_detail>
+@{
+    ViewBag.Title = "会议列表";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+
+    int pageNowIndex = ViewBag.PageNowIndex;
+    int pageSize = ViewBag.PageSize;
+    int pagesCount = ViewBag.PagesCount;
+    int pageStartIndex = ViewBag.PageStartIndex;
+    int pageEndIndex = ViewBag.PageEndIndex;
+}
+<div class="list-cnt mt-list">
+    <div class="item-filter-bar">
+        <input type="text" class="datepicker" id="filterStartDate" value="@ViewBag.StartDateFilter" />
+        <span>—</span><input type="text" class="datepicker" id="filterEndDate" value="@ViewBag.EndDateFilter" />
+        <span>期间</span>
+        <select id="filterCreator" class="u-select chosen-select">
+            <option>所有人</option>
+            @foreach(SelectListItem item in (SelectList)ViewBag.CreatorSelectList)
+            {
+                <option value="@item.Value" @(ViewBag.CreatorFilter.ToString() == item.Value ? "selected=selected" : "") >@item.Text</option>
+            }
+        </select>
+        <span>创建</span>
+        <span class="item-act item-act-filter" onclick="FilterSubmit(this)">筛选</span>
+    </div>
+    <div class="item-act-bar">
+        <span class="item-act item-act-edit">修改</span>
+        <span class="item-act item-act-del">删除</span>
+        <span class="item-stat">总共：<strong>@ViewBag.MeetingsCount</strong> 个会议</span>
+        <div class="clear"></div>
+    </div>
+    <table class="tb-info mt-tb">
+        <thead>
+            <tr>
+                <th style="width:30px"></th>
+                <th style="width:25px"></th>
+                <th style="width:60px;">级别</th>
+                <th style="min-width:220px;">会议主题</th>
+                <th style="width:100px;">地点</th>
+                <th style="width:200px;">与会人员</th>
+                <th style="width:135px;">开始时间</th>
+                <th style="width:135px;">结束时间</th>
+                <th style="width:90px;">创建人</th>
+                <th style="width:135px;">创建日期</th>
+                <th style="width:150px">备注</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            int tick = 1;
+        }
+        @foreach(DBEntity.meeting_info_detail item in Model)
+        { 
+            <tr itemid="@item.id" id="ls-item-@item.id" class="@((!item.mi_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " u-tb-tr-odd"))" onclick="listItemClick(this)">
+                <td class="td-check"><input type="checkbox" itemid="@item.id" class="ls-item-check" /></td>
+                <td class="td-act"><span class="item-act-ava">@(!item.mi_status ? "启用" : "")</span></td>
+                <td class="td-mi-level" style="text-align:center;">@item.mi_level_name</td>
+                <td class="td-mi-title" style="text-align:left;">@item.mi_title</td>
+                <td class="td-mi-position" style="text-align:left;"><span title="@item.mi_position">@(item.mi_position.Length > 5 ? item.mi_position.Substring(0, 5) + "..." : item.mi_position)</span></td>
+                <td class="td-mi-people" style="text-align:left;"><span title=">@item.mi_people">@(item.mi_people.Length > 12 ? item.mi_people.Substring(0, 12) + "..." : item.mi_people)</span></td>
+                <td class="td-mi-startdate" style="text-align:center;">@item.mi_start_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td class="td-mi-enddate" style="text-align:center;">@item.mi_end_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td class="td-mi-creatorname" style="text-align:center;">@item.mi_creator_name</td>
+                <td class="td-mi-createtime" style="text-align:center;">@item.mi_create_time.ToString("yyyy-MM-dd HH:mm")</td>
+                <td class="td-mi-memo"><span title="@item.mi_memo">@(item.mi_memo.Length > 8 ? item.mi_memo.Substring(0, 8) + "..." : item.mi_memo)</span></td>
+            </tr>
+            tick++;
+        }
+        </tbody>
+    </table>
+</div>
+<div class="page_list">
+    <ul class="pg_ul">
+        @if(pageNowIndex > 1)
+        {
+            if(pagesCount > 9)
+            {
+            <li class="f">@Html.ActionLink("首页", null, new { p = 1 })</li>
+            }
+            <li class="p">@Html.ActionLink("上一页", null, new { p = pageNowIndex - 1 })</li>
+        }
+        @if(pagesCount != 1)
+        {
+            for(int i = pageStartIndex; i <= pageEndIndex; i++)
+            {
+            <li class="i">
+                @if(i == pageNowIndex)
+                {
+                    <strong>@i</strong>
+                }
+                else
+                {
+                    @Html.ActionLink(i.ToString(), null, new { p = i });
+                }
+            </li>
+            }
+        }
+        @if(pagesCount > pageNowIndex)
+        {
+            <li class="n">@Html.ActionLink("下一页", null, new { p = pageNowIndex + 1 })</li>
+            if(pagesCount > 9)
+            {
+            <li class="l">@Html.ActionLink("末页", null, new { p = pagesCount })</li>
+            }
+        }
+    </ul>
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/editPanel.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>
+<script type="text/javascript">
+    $('.item-act-ava').click(function (event) {
+        event.stopPropagation();
+
+        ChangeMeetingsStatus($(this).parents('tr').attr('itemid'), 1);
+    });
+
+    $('.item-act-del').click(function () {
+        if (SelectedItemId.length == 0) {
+            alert('请至少选择一项');
+            return false;
+        }
+
+        ChangeMeetingsStatus(SelectedItemId, 0);
+    });
+
+    $('.item-act-edit').click(function () {
+        $.post('/meeting/GetMeetingsByIds',
+        { 'ids': JSON.stringify(SelectedItemId) },
+        function (result) {
+            if (result.length > 0) {
+                EventEditPanel(result[0]);
+            } else {
+                alert('获取会议信息出错！');
+            }
+        });
+    });
+
+    function ChangeMeetingsStatus(ids, status) {
+        if (!(toString.apply(ids) === '[object Array]')) {
+            ids = [ids];
+        }
+
+        $.post('/meeting/changeMeetingStatus',
+                { 'ids': JSON.stringify(ids), 'status': status },
+                function (result) {
+                    if (result.type == 1) {
+                        if (status == 0) {
+                            $.each(ids, function (i, item) {
+                                var trItem = $('#ls-item-' + item);
+                                trItem.addClass('color-shadow').find('.ls-item-check').trigger('click');
+                                trItem.find('.item-act-ava').text('启用')
+                            });
+                        } else {
+                            $.each(ids, function (i, item) {
+                                var trItem = $('#ls-item-' + item);
+                                trItem.removeClass('color-shadow').find('.item-act-ava').text('')
+                            });
+                        }
+                    }
+                });
+    }
+
+    function EventEditPanel(curEvent) {
+        $('body').editPanel('destroy');
+        curEvent.start = moment(curEvent.start);
+        curEvent.end = moment(curEvent.end);
+        var eventStartTime = curEvent.start ? curEvent.start.clone() : moment();
+
+        $('body').editPanel({
+            id: curEvent.id,
+            title: curEvent.title,
+            position: curEvent.position,
+            people: curEvent.people,
+            start: eventStartTime,
+            level: curEvent.level,
+            memo: curEvent.memo,
+            end: curEvent.end ? curEvent.end.clone() : eventStartTime.clone().add('hours', 1),
+            showOnCenter: true,
+            titleColor: curEvent.isMine || curEvent.id === undefined ? '#27AE60' : '#34AADC',
+            positions: positionsJSON,
+            editable: curEvent.editable || curEvent.id === undefined ? true : false,
+            submit: function (e, data) {
+                var source = ConvertEventToMeetingData(data);
+
+                UpdateMeeting(source);
+            },
+            remove: function (e, data) {
+                $.post('/meeting/DeleteMeeting', { id: data.id }, function (result) {
+                    if (result.type == 0) {
+                        alert(result.msg);
+                    } else if (result.type == 1) {
+                        
+                    }
+                });
+            },
+            close: function (e, data) {
+            }
+        });
+    }
+
+    function ConvertEventToMeetingData(data) {
+        return {
+            id: data.id ? data.id : -1,
+            mi_title: data.title,
+            mi_position_id: data.position,
+            mi_start_time: data.start.format('YYYY-MM-DD HH:mm'),
+            mi_end_time: data.end.format('YYYY-MM-DD HH:mm'),
+            mi_level_id: data.level,
+            mi_people: data.people,
+            mi_memo: data.memo
+        };
+    }
+
+    function UpdateMeeting(source) {
+        $.post('/meeting/EditMeeting', { 'source': JSON.stringify(source) }, function (result) {
+            if (result.type == 0) {
+                $('#calendar').fullCalendar('unselect');
+                alert(result.msg);
+            } else if (result.type == 1) {
+                if (source.id == -1) {
+                    $('#calendar').fullCalendar('renderEvent', result.data, true);
+                } else {
+                    UpdateMeetingTd(result.data);
+                }
+
+            }
+        });
+    }
+
+    function UpdateMeetingTd(data) {
+        var $trTag = $('#ls-item-' + data.id);
+        $trTag.find('.td-mi-level').text(data.levelName);
+        $trTag.find('.td-mi-title').text(data.title);
+        $trTag.find('.td-mi-position > span').text(data.positionName);
+        $trTag.find('.td-mi-people > span').text(data.people);
+        $trTag.find('.td-mi-startdate').text(moment(data.start).format('YYYY-MM-DD HH:mm'));
+        $trTag.find('.td-mi-enddate').text(moment(data.end).format('YYYY-MM-DD HH:mm'));
+        $trTag.find('.td-mi-creatorname').text(data.creator);
+        $trTag.find('.td-mi-createtime').text(moment(data.createTime).format('YYYY-MM-DD HH:mm'));
+        $trTag.find('.td-mi-memo > span').text(data.memo);
+    }
+
+    function FilterSubmit(e) {
+        var startDate = $('#filterStartDate').val();
+        var endDate = $('#filterEndDate').val();
+        var creator = $('#filterCreator').val();
+        var dateReg = /\d{4}-\d{1,2}-\d{1,2}/;
+        var filterStr = '';
+
+        if (startDate != '') {
+            if (dateReg.test(startDate) == false) {
+                alert('起始日期格式不正确！');
+                return false;
+            }
+            else {
+                filterStr += 'startdate=' + startDate;
+            }
+        }
+
+        if (endDate != '') {
+            if (dateReg.test(endDate) == false) {
+                alert('截止日期格式不正确！');
+                return false;
+            } else {
+                if (filterStr.length != 0) {
+                    filterStr += '&';
+                }
+                filterStr += 'enddate=' + endDate;
+            }
+        }
+
+        if (creator) {
+            if (filterStr.length != 0) {
+                filterStr += '&';
+            }
+            filterStr += 'creator=' + creator;
+        }
+
+        window.location.href = window.location.pathname + '?' + filterStr;
+    }
+</script>

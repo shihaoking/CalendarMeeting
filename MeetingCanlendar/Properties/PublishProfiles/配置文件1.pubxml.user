@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+您 Web 项目的发布/打包进程将使用此文件。您可以通过编辑此 MSBuild 文件
+来自定义该进程的行为。若要了解与此相关的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile>2014-07-22T19:36:23.7159514+08:00</TimeStampOfAssociatedLegacyPublishXmlFile>
+    <_PublishTargetUrl>C:\Users\Simon\Desktop\CMWeb</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>06/06/2014 21:11:08</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>10/25/2014 15:47:53</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>10/25/2014 15:47:53</publishTime>
+    </File>
+    <File Include="bin/DBEntity.dll">
+      <publishTime>10/25/2014 10:59:44</publishTime>
+    </File>
+    <File Include="bin/DBEntity.pdb">
+      <publishTime>10/25/2014 10:59:06</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>06/06/2014 21:11:02</publishTime>
+    </File>
+    <File Include="bin/MeetingCanlendar.dll">
+      <publishTime>10/25/2014 15:15:42</publishTime>
+    </File>
+    <File Include="bin/MeetingCanlendar.pdb">
+      <publishTime>10/25/2014 12:02:31</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.SignalR.Core.dll">
+      <publishTime>10/22/2014 21:46:43</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.SignalR.SystemWeb.dll">
+      <publishTime>10/22/2014 21:46:43</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.dll">
+      <publishTime>10/22/2014 21:46:43</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
+      <publishTime>10/22/2014 21:46:43</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.dll">
+      <publishTime>10/22/2014 21:46:43</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>06/06/2014 21:11:06</publishTime>
+    </File>
+    <File Include="bin/MySql.Data.Entity.EF5.dll">
+      <publishTime>09/19/2014 01:41:58</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>10/22/2014 21:46:43</publishTime>
+    </File>
+    <File Include="bin/Owin.dll">
+      <publishTime>10/22/2014 21:46:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.dll">
+      <publishTime>06/06/2014 21:11:07</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>06/06/2014 21:11:06</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.WebRequest.dll">
+      <publishTime>06/06/2014 21:11:07</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>06/06/2014 21:11:07</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>06/06/2014 21:11:07</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>06/06/2014 21:11:06</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>06/06/2014 21:11:07</publishTime>
+    </File>
+    <File Include="bin/System.Web.Providers.dll">
+      <publishTime>06/06/2014 21:11:07</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>06/06/2014 21:11:06</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>06/06/2014 21:11:06</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>06/06/2014 21:11:06</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>06/06/2014 21:11:06</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>06/06/2014 21:11:08</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/EntityFramework.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Net.Http.Formatting.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Net.Http.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Net.Http.WebRequest.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Http.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Http.WebHost.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Mvc.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Optimization.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Providers.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Razor.resources.dll">
+      <publishTime>06/06/2014 21:11:08</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Deployment.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Razor.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.resources.dll">
+      <publishTime>06/06/2014 21:11:09</publishTime>
+    </File>
+    <File Include="Content/css/admin.css">
+      <publishTime>07/13/2014 20:31:59</publishTime>
+    </File>
+    <File Include="Content/css/chosen.css">
+      <publishTime>07/06/2014 12:14:44</publishTime>
+    </File>
+    <File Include="Content/css/common.css">
+      <publishTime>07/13/2014 19:01:21</publishTime>
+    </File>
+    <File Include="Content/css/datepicker.css">
+      <publishTime>06/06/2014 21:15:43</publishTime>
+    </File>
+    <File Include="Content/css/fullcalendar.css">
+      <publishTime>06/21/2014 17:44:52</publishTime>
+    </File>
+    <File Include="Content/css/fullcalendar.print.css">
+      <publishTime>06/06/2014 21:15:43</publishTime>
+    </File>
+    <File Include="Content/css/main.css">
+      <publishTime>08/14/2014 22:41:58</publishTime>
+    </File>
+    <File Include="Content/css/user_reg.css">
+      <publishTime>08/14/2014 22:42:05</publishTime>
+    </File>
+    <File Include="Content/fonts/HelveticaNeue-Light.svg">
+      <publishTime>06/06/2014 21:16:06</publishTime>
+    </File>
+    <File Include="Content/fonts/HelveticaNeue-Medium.svg">
+      <publishTime>06/06/2014 21:16:07</publishTime>
+    </File>
+    <File Include="Content/images/admin-icon-little.png">
+      <publishTime>06/23/2014 22:33:19</publishTime>
+    </File>
+    <File Include="Content/images/chosen-sprite.png">
+      <publishTime>06/06/2014 21:15:43</publishTime>
+    </File>
+    <File Include="Content/images/login_bg.png">
+      <publishTime>06/19/2014 21:57:52</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>06/06/2014 21:11:01</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>10/25/2014 10:59:21</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>10/25/2014 15:47:50</publishTime>
+    </File>
+    <File Include="Scripts/admin-common.js">
+      <publishTime>07/10/2014 22:16:27</publishTime>
+    </File>
+    <File Include="Scripts/chzn-chosen.js">
+      <publishTime>06/06/2014 21:19:55</publishTime>
+    </File>
+    <File Include="Scripts/datepicker.js">
+      <publishTime>06/08/2014 17:40:43</publishTime>
+    </File>
+    <File Include="Scripts/datepicker.zh-CN.js">
+      <publishTime>06/06/2014 21:19:55</publishTime>
+    </File>
+    <File Include="Scripts/editPanel.js">
+      <publishTime>10/25/2014 15:47:05</publishTime>
+    </File>
+    <File Include="Scripts/fullcalendar-zh-cn.js">
+      <publishTime>06/06/2014 21:19:55</publishTime>
+    </File>
+    <File Include="Scripts/fullcalendar.js">
+      <publishTime>06/16/2014 20:58:09</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.11.1.js">
+      <publishTime>07/02/2014 21:44:15</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.10.4.js">
+      <publishTime>06/06/2014 21:14:56</publishTime>
+    </File>
+    <File Include="Scripts/jquery.ba-throttle-debounce.min.js">
+      <publishTime>06/24/2014 23:06:21</publishTime>
+    </File>
+    <File Include="Scripts/jquery.signalR-2.1.2.js">
+      <publishTime>10/22/2014 21:46:50</publishTime>
+    </File>
+    <File Include="Scripts/jquery.signalR-2.1.2.min.js">
+      <publishTime>10/23/2014 21:41:52</publishTime>
+    </File>
+    <File Include="Scripts/jquery.stickyheader.js">
+      <publishTime>06/24/2014 23:02:08</publishTime>
+    </File>
+    <File Include="Scripts/moment.min.js">
+      <publishTime>06/06/2014 21:14:56</publishTime>
+    </File>
+    <File Include="Scripts/_references.js">
+      <publishTime>06/06/2014 21:11:01</publishTime>
+    </File>
+    <File Include="Views/Admin/Index.cshtml">
+      <publishTime>06/24/2014 21:36:57</publishTime>
+    </File>
+    <File Include="Views/Admin/MeetingList.cshtml">
+      <publishTime>07/13/2014 20:31:26</publishTime>
+    </File>
+    <File Include="Views/Admin/UserList.cshtml">
+      <publishTime>07/09/2014 21:16:21</publishTime>
+    </File>
+    <File Include="Views/Admin/_PartialMenu.cshtml">
+      <publishTime>07/13/2014 20:29:53</publishTime>
+    </File>
+    <File Include="Views/Meeting/Index.cshtml">
+      <publishTime>10/25/2014 15:36:34</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>06/06/2014 21:11:01</publishTime>
+    </File>
+    <File Include="Views/Shared/_AdminLayout.cshtml">
+      <publishTime>07/13/2014 20:26:33</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>10/23/2014 22:51:51</publishTime>
+    </File>
+    <File Include="Views/Shared/_LoginLayout.cshtml">
+      <publishTime>07/13/2014 19:01:16</publishTime>
+    </File>
+    <File Include="Views/Shared/_NoHeaderLayout.cshtml">
+      <publishTime>06/19/2014 21:35:00</publishTime>
+    </File>
+    <File Include="Views/Shared/_UserLayout.cshtml">
+      <publishTime>06/25/2014 21:07:11</publishTime>
+    </File>
+    <File Include="Views/User/ChangePassword.cshtml">
+      <publishTime>06/26/2014 20:46:17</publishTime>
+    </File>
+    <File Include="Views/User/Index.cshtml">
+      <publishTime>06/19/2014 21:22:23</publishTime>
+    </File>
+    <File Include="Views/User/Login.cshtml">
+      <publishTime>10/25/2014 15:14:13</publishTime>
+    </File>
+    <File Include="Views/User/Register.cshtml">
+      <publishTime>06/25/2014 22:20:03</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>10/25/2014 15:15:27</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>06/06/2014 21:11:01</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/25/2014 11:18:30</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
