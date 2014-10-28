@@ -63,9 +63,9 @@ namespace MeetingCanlendar.Models
 
         public bool CheckMeetingAvailable(int metId, DateTime startTime, DateTime endTime)
         {
-            return !(db.meeting_info.Any(r => r.id != metId &&
-                (r.mi_start_time < startTime && startTime < r.mi_end_time ||
-                r.mi_start_time < endTime && endTime < r.mi_end_time ||
+            return !(db.meeting_info.Any(r => r.id != metId && r.mi_status == true &&
+                (r.mi_start_time <= startTime && startTime < r.mi_end_time ||
+                r.mi_start_time < endTime && endTime <= r.mi_end_time ||
                 r.mi_start_time == startTime && r.mi_end_time == endTime)));
         }
 

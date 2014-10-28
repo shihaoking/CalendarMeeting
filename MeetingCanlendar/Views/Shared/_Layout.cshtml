@@ -24,27 +24,28 @@
         <div class="header">
             <div class="u_box">
                 <div class="i">
-                @if(Request.IsAuthenticated)
-                {
-                    @Html.ActionLink("退出", "LogOut", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "u_lgo" })
-                    <span class="sp">|</span>
-                    @Html.ActionLink(User.Identity.Name, "index", "user", null, new { @class = "u_name" })  
-                    if(userLevel == "9")
+                    @if (Request.IsAuthenticated)
                     {
+                        @Html.ActionLink("退出", "LogOut", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "u_lgo" })
                         <span class="sp">|</span>
-                        @Html.ActionLink("后台管理", "index", "admin", null, new { @target="_blank"})
+                        @Html.ActionLink(User.Identity.Name, "index", "user", null, new { @class = "u_name" })
+                        if (userLevel == "9")
+                        {
+                            <span class="sp">|</span>
+                            @Html.ActionLink("后台管理", "index", "admin", null, new { @target = "_blank" })
+                        }
                     }
-                }
-                else
-                {
-                    @Html.ActionLink("登陆", "Login", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "lgi_l" })
-                    <span>|</span>
-                    @Html.ActionLink("立即注册", "Register", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "rg_l" })
-                }
+                    else
+                    {
+                        @Html.ActionLink("登陆", "Login", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "lgi_l" })
+                        <span>|</span>
+                        @Html.ActionLink("立即注册", "Register", "User", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "rg_l" })
+                    }
                 </div>
             </div>
         </div>
     </header>
+
     @RenderBody()
     @RenderSection("scripts", required: false)
 </body>

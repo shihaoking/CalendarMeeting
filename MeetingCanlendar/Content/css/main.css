@@ -7,7 +7,7 @@ body {
 	font-size: 14px;
 	overflow:hidden;
 }
-input{
+input,button,a,span{
 	font-family: "Helvetica Neue", 'Microsoft Yahei', "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 }
 .clear{clear:both}
@@ -68,15 +68,14 @@ header{ position:absolute; left:20;}
 #calendarList{ float:left; width:45%; margin-left:20px; position:relative;min-width:450px}
 #calendarList .currentDayDetail{ position:absolute; bottom:5px}
 .smallCanlendar{ width:220px; margin-left:10px; float:right;}
-.smallCanlendar .fc-content{ padding-top:0;}
+.smallCanlendar .fc-view-container{ padding-top:0;border-top:none; margin-top:0}
 .smallCanlendar .fc-view{min-width:0;width: 100%;}
 .calendar-list-content #meeting-list{ float:none;width:100%; margin-left:0; margin-top:10px}
-.calendar-list-header{ border-bottom:3px solid #E5E5E5; padding-bottom:5px; position:relative}
+.calendar-list-header{ border-bottom:3px solid #E5E5E5; padding-bottom:5px; position:relative;}
 .calendar-list-header .cdt-day{ font-size:130px}
 .calendar-list-header .cdt-date{ font-size:19px}
-.smallCanlendar .fc-content{border-top:none; margin-top:0}
-.smallCanlendar .fc-border-separate tr th{font-size:11px;}
-.smallCanlendar .fc-border-separate tr td{ padding:3px; text-align:center; cursor:pointer; }
+.smallCanlendar .fc-widget-header th{font-size:11px;}
+.smallCanlendar .fc-content-skeleton .fc-day-number{ text-align:center!important; cursor:pointer; }
 .smallCanlendar .fc-grid .fc-day-number{padding:0; float:none;font-size:15px; font-weight:500;}
 .smallCanlendar .fc-border-separate tr td:hover{ background-color:#EBF8FB}
 .smallCanlendar .fc-state-highlight{border-top-color:#ddd;border-top-width:1px!important; color:#F72F37; background:none;}

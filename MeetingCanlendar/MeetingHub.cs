@@ -29,6 +29,7 @@ namespace MeetingCanlendar
             if (metData.id == -1)
             {
                 metInfo = new meeting_info();
+                metInfo.mi_status = true;
                 metInfo.mi_create_time = DateTime.Now;
                 metInfo.mi_creator = userInfo.id;
             }
