@@ -3032,7 +3032,13 @@
                 if (!this.el) {
                     this.render();
                 }
-                this.el.show();
+
+                var _this = this;
+                this.el.find('.fc-header').click(function () {
+                    _this.hide();
+                });
+
+                this.el.fadeIn(250);
                 this.position();
                 this.isHidden = false;
                 this.trigger('show');
@@ -3055,7 +3061,7 @@
             var _this = this;
             var options = this.options;
 
-            this.el = $('<div class="fc-popover"/>')
+            this.el = $('<div style="display:none" class="fc-popover"/>')
                 .addClass(options.className || '')
                 .css({
                     // position initially to the top left to avoid creating scrollbars

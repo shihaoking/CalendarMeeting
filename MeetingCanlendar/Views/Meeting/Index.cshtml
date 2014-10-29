@@ -249,7 +249,7 @@
                 dateTime = event.start.format('Ah:m') + ' 到 ' + event.end.format('Ah:m');
 
                 var eveLi = $('<li class="ml-li' + (event.isMine ? ' mine' : ' all') + (tick % 2 == 0 ? ' li-even' : '') + '" id="ml-li-' + event.id + '" />')
-                .append('<span class="ml-title">' + event.title + '</span><span class="ml-time">' + dateTime + '</span><div class="clear"/>');
+                .append('<div class="ml-li-box"><span class="ml-title">' + event.title + '</span><span class="ml-time">' + dateTime + '</span><div class="clear"/></div>');
 
                 eveLi.click(function () {
                     $('#editPanel').remove();

@@ -50,15 +50,15 @@ header{ position:absolute; left:20;}
 #meeting-list .menu-catg.menu-catg-selected{ background-color:#FF3B30; color:White}
 .ml-list ul{ margin:0; padding:0;font-size:0; }
 .ml-list ul li{ -moz-user-select: none; -webkit-user-select: none;  -ms-user-select: none;  -khtml-user-select: none;  user-select: none;}
-.ml-list ul.ml-ul{ background-color:White; padding-bottom:1px;}
-.ml-list li.ml-li.mine{ border-color:#27ae60}
-.ml-list .ml-ul-dt{ background-color:#F1F1F1; padding-bottom:1px;}
-.ml-list li.ml-li-sp,.ml-list li.ml-li{ list-style:none; padding:12px 5px; cursor:pointer;  background-color:White;}
-.ml-list li.ml-li{border-left:3px solid #3498db; margin-top:1px;}
-.ml-list li.ml-li:first-child{margin-top:0;}
-.ml-list li.ml-li-sp{ color:#9B9B9B; background-color:#F1F1F1; border-bottom:1px solid White;}
+.ml-list ul.ml-ul{ background-color:White;}
+.ml-list li.ml-li.mine .ml-li-box{ border-left-color:#27ae60}
+.ml-list li.ml-li-sp{ list-style:none; padding:8px 5px; cursor:pointer;  background-color:White;}
+.ml-list li.ml-li{ list-style:none; cursor:pointer;  background-color:White;}
+.ml-list li.ml-li{ border-bottom:1px solid #f2f2f2}
+.ml-list li.ml-li .ml-li-box {border-left:3px solid #3498db;padding:12px 5px; }
+.ml-list li.ml-li-sp{ color:#9B9B9B; background-color:white; border-bottom:1px solid #F2F2F2; border-left:3px solid #F2F2F2;}
 .ml-list li.ml-li-sp span{ font-size:13px;}
-.ml-list li.ml-li-sp.selected{ color:#9b59b6;border-bottom:1px solid #F1F1F1; color:Black}
+.ml-list li.ml-li-sp.selected{ color:#333333;background-color:#F2F2F2; }
 .ml-list li span.ml-title{ float:left; font-size:16px;}
 .ml-list li span.ml-time{ float:right; color:#949494; font-size:12px; display:block; height:18px; line-height:18px;}
 .ml-list li.ml-li.mine.selected{background-color:#27ae60;}
@@ -69,7 +69,7 @@ header{ position:absolute; left:20;}
 #calendarList .currentDayDetail{ position:absolute; bottom:5px}
 .smallCanlendar{ width:220px; margin-left:10px; float:right;}
 .smallCanlendar .fc-view-container{ padding-top:0;border-top:none; margin-top:0}
-.smallCanlendar .fc-view{min-width:0;width: 100%;}
+.smallCanlendar .fc-view{min-width:0;width: 100%; overflow:visible;}
 .calendar-list-content #meeting-list{ float:none;width:100%; margin-left:0; margin-top:10px}
 .calendar-list-header{ border-bottom:3px solid #E5E5E5; padding-bottom:5px; position:relative;}
 .calendar-list-header .cdt-day{ font-size:130px}
