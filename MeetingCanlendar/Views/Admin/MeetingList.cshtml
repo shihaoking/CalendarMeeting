@@ -53,13 +53,13 @@
         }
         @foreach(DBEntity.meeting_info_detail item in Model)
         { 
-            <tr itemid="@item.id" id="ls-item-@item.id" class="@((!item.mi_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " u-tb-tr-odd"))" onclick="listItemClick(this)">
+            <tr itemid="@item.id" id="ls-item-@item.id" class="@((!item.mi_status ? "color-shadow" : "") + (tick % 2 == 0 ? "" : " u-tb-tr-odd"))" onclick="listItemClick(this)" ondblclick="EditEvent(this)">
                 <td class="td-check"><input type="checkbox" itemid="@item.id" class="ls-item-check" /></td>
                 <td class="td-act"><span class="item-act-ava">@(!item.mi_status ? "启用" : "")</span></td>
                 <td class="td-mi-level" style="text-align:center;">@item.mi_level_name</td>
                 <td class="td-mi-title" style="text-align:left;">@item.mi_title</td>
                 <td class="td-mi-position" style="text-align:left;"><span title="@item.mi_position">@(item.mi_position.Length > 5 ? item.mi_position.Substring(0, 5) + "..." : item.mi_position)</span></td>
-                <td class="td-mi-people" style="text-align:left;"><span title=">@item.mi_people">@(item.mi_people.Length > 12 ? item.mi_people.Substring(0, 12) + "..." : item.mi_people)</span></td>
+                <td class="td-mi-people" style="text-align:left;"><span title=">@item.mi_people_name">@(string.IsNullOrEmpty(item.mi_people_name) || item.mi_people_name.Length < 13 ? item.mi_people_name : item.mi_people_name.Substring(0, 12) + "...")</span></td>
                 <td class="td-mi-startdate" style="text-align:center;">@item.mi_start_time.ToString("yyyy-MM-dd HH:mm")</td>
                 <td class="td-mi-enddate" style="text-align:center;">@item.mi_end_time.ToString("yyyy-MM-dd HH:mm")</td>
                 <td class="td-mi-creatorname" style="text-align:center;">@item.mi_creator_name</td>
@@ -138,6 +138,19 @@
         });
     });
 
+    function EditEvent(e) {
+        var eventId = [$(e).attr('itemid')];
+        $.post('/meeting/GetMeetingsByIds',
+        { 'ids': JSON.stringify(eventId) },
+        function (result) {
+            if (result.length > 0) {
+                EventEditPanel(result[0]);
+            } else {
+                alert('获取会议信息出错！');
+            }
+        });
+    }
+
     function ChangeMeetingsStatus(ids, status) {
         if (!(toString.apply(ids) === '[object Array]')) {
             ids = [ids];
@@ -173,7 +186,7 @@
             id: curEvent.id,
             title: curEvent.title,
             position: curEvent.position,
-            people: curEvent.people,
+            people: curEvent.people ? curEvent.people.split(',') : [],
             start: eventStartTime,
             level: curEvent.level,
             memo: curEvent.memo,
@@ -181,6 +194,7 @@
             showOnCenter: true,
             titleColor: curEvent.isMine || curEvent.id === undefined ? '#27AE60' : '#34AADC',
             positions: positionsJSON,
+            allPeople: allUsersJSON,
             editable: curEvent.editable || curEvent.id === undefined ? true : false,
             submit: function (e, data) {
                 var source = ConvertEventToMeetingData(data);
@@ -235,7 +249,7 @@
         $trTag.find('.td-mi-level').text(data.levelName);
         $trTag.find('.td-mi-title').text(data.title);
         $trTag.find('.td-mi-position > span').text(data.positionName);
-        $trTag.find('.td-mi-people > span').text(data.people);
+        $trTag.find('.td-mi-people > span').text(data.peopleName);
         $trTag.find('.td-mi-startdate').text(moment(data.start).format('YYYY-MM-DD HH:mm'));
         $trTag.find('.td-mi-enddate').text(moment(data.end).format('YYYY-MM-DD HH:mm'));
         $trTag.find('.td-mi-creatorname').text(data.creator);

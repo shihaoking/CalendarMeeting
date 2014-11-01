@@ -12,9 +12,9 @@ namespace MeetingCanlendar.Models
 
         public static mc_dbEntities staticDb = new mc_dbEntities();
 
-        public void SaveChange()
+        public int SaveChange()
         {
-            db.SaveChanges();
+            return db.SaveChanges();
         }
     }
 }

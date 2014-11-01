@@ -87,7 +87,16 @@ namespace MeetingCanlendar.Models
         public void AddMeeting(meeting_info mi)
         {
             db.meeting_info.AddObject(mi);
-            SaveChange();
+        }
+
+        public int DeleteMeetingPeopleByMeetingId(int meetingId)
+        {
+            return db.ExecuteStoreCommand("Delete From meeting_people Where mp_meeting_id = {0}", meetingId);
+        }
+
+        public void AddMeetingPeople(meeting_people mp)
+        {
+            db.meeting_people.AddObject(mp);
         }
     }
 

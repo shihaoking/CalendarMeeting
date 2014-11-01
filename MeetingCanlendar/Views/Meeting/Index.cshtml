@@ -14,6 +14,7 @@
         var currentDate = new Date();
         var initEvents = [];
         var positionsJSON = [];
+        var allUsersJSON = [];
         var prevClickEvent = null;
         var showAll = true;
         var loadedMonth = [];
@@ -22,12 +23,22 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: 'meeting/GetMeetingPositions',
+                url: '/meeting/GetMeetingPositions',
                 type: 'POST',
                 dateType: 'json',
                 async: false
             }).done(function (result) {
                 positionsJSON = result;
+            });
+
+            $.ajax({
+                url: '/user/GetAllUsersSimpleInfo',
+                data: { 'includeAll': false },
+                type: 'POST',
+                dateType: 'json',
+                async: false
+            }).done(function (result) {
+                allUsersJSON = result;
             });
 
 
@@ -75,7 +86,7 @@
                 eventClick: function (calEvent, jsEvent, view) {
                     $('.ml-list .ml-li').removeClass('selected');
                     $('.fc-event-container').find('.fc-event').removeClass('fc-event-selected');
-                    $('#fc-event-' + calEvent.id).addClass('fc-event-selected');
+                    $('.fc-event[name="fc-event-' + calEvent.id + '"]').addClass('fc-event-selected');
                     $('#ml-li-' + calEvent.id).addClass('selected');
                     EventEditPanel(calEvent, jsEvent);
                 },
@@ -257,7 +268,7 @@
                     $(this).addClass('selected');
 
                     $('#calendar').find('.fc-event').removeClass('fc-event-selected');
-                    $('#calendar').find('#fc-event-' + event.id).addClass('fc-event-selected');
+                    $('#calendar').find('.fc-event[name="fc-event-' + event.id + '"]').addClass('fc-event-selected');
                 }).dblclick(function (jsEvent) {
                     EventEditPanel(event, jsEvent);
                 });
@@ -340,7 +351,24 @@
         meetingHub.client.broadcastMeetingEdit = function (result) {
             if (result.type == 0) {
                 $('#calendar').fullCalendar('unselect');
-                alert(result.msg);
+                $('#ml-li-' + result.data.id).removeClass('selected');
+                $('.fc-event-container').find('.fc-event').removeClass('fc-event-selected');
+
+                var notification = new NotificationFx({
+                    wrapper: document.body,
+                    message: result.msg,
+                    layout: 'growl',
+                    effect: 'scale',
+                    type: 'error',
+                    ttl: 6000000,
+                    onClose: function () {
+                        RemoveShadow();
+                    }
+                });
+
+                CreateShadow();
+                notification.show();
+
                 if (dragingEventStart != null && dragingEventStart != undefined) {
                     UpdateCalendarEvent(dragingEventStart.id, dragingEventStart);
                 }
@@ -389,7 +417,7 @@
                 id: curEvent.id,
                 title: curEvent.title,
                 position: curEvent.position,
-                people: curEvent.people,
+                people: curEvent.people ? curEvent.people.split(',') : [],
                 start: eventStartTime,
                 level: curEvent.level,
                 memo: curEvent.memo,
@@ -397,6 +425,7 @@
                 jsEvent: jsEvent,
                 titleColor: curEvent.isMine || curEvent.id === undefined ? '#27AE60' : '#34AADC',
                 positions: positionsJSON,
+                allPeople: allUsersJSON,
                 editable: curEvent.editable || curEvent.id === undefined ? true : false,
                 submit: function (e, data) {
                     var source = ConvertEventToMeetingData(data);

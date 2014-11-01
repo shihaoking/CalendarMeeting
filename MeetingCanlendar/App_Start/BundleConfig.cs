@@ -20,7 +20,9 @@ namespace MeetingCanlendar
                 "~/Content/css/common.css",
                 "~/Content/css/datepicker.css",
                 "~/Content/css/chosen.css",
-                "~/Content/css/fullcalendar.css"));
+                "~/Content/css/fullcalendar.css",
+                "~/Content/css/ns-style-growl.css",
+                "~/Content/css/ns-default.css"));
 
             bundles.Add(new StyleBundle("~/Admin/Content/css").Include(
                 "~/Content/css/admin.css",

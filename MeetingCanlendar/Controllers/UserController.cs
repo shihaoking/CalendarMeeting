@@ -239,5 +239,18 @@ namespace MeetingCanlendar.Controllers
             Response.ContentType = "image/jpeg";
             return new FileStreamResult(ImageValidate.CreateImage(validateStr), Response.ContentType);
         }
+
+        public ActionResult GetAllUsersSimpleInfo(bool includeAll)
+        {
+            UserModel userModel = new UserModel();
+            if (includeAll)
+            {
+                return Json(userModel.GetUserInfos().Select(r => new { userId = r.id, userName = r.ui_name }), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(userModel.GetUserInfos(true).Select(r => new { userId = r.id, userName = r.ui_name }), JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

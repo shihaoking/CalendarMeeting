@@ -1,5 +1,6 @@
 ﻿var SelectedItemId = [];
 var positionsJSON = [];
+var allUsersJSON = [];
 
 $(document).ready(function () {
     $(".datepicker").datepicker();
@@ -12,6 +13,16 @@ $(document).ready(function () {
         async: false
     }).done(function (result) {
         positionsJSON = result;
+    });
+
+    $.ajax({
+        url: '/user/GetAllUsersSimpleInfo',
+        data: { 'includeAll': false },
+        type: 'POST',
+        dateType: 'json',
+        async: false
+    }).done(function (result) {
+        allUsersJSON = result;
     });
 
     $('.tb-info tr').hover(

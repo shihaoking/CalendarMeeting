@@ -168,6 +168,8 @@
   <ItemGroup>
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\common.css" />
+    <Content Include="Content\css\ns-default.css" />
+    <Content Include="Content\css\ns-style-growl.css" />
     <Content Include="Content\css\user_reg.css" />
     <Content Include="Content\images\admin-icon-little.png" />
     <Content Include="Content\images\chosen-sprite.png" />
@@ -182,6 +184,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\admin-common.js" />
     <Content Include="Scripts\chzn-chosen.js" />
+    <Content Include="Scripts\classie.js" />
     <Content Include="Scripts\datepicker.js" />
     <Content Include="Scripts\datepicker.zh-CN.js" />
     <Content Include="Scripts\editPanel.js" />
@@ -193,8 +196,10 @@
     <Content Include="Scripts\jquery.signalR-2.1.2.js" />
     <Content Include="Scripts\jquery.signalR-2.1.2.min.js" />
     <Content Include="Scripts\jquery.stickyheader.js" />
+    <Content Include="Scripts\modernizr.custom.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\fullcalendar-zh-cn.js" />
+    <Content Include="Scripts\notificationFx.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

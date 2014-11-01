@@ -19,7 +19,7 @@ namespace MeetingCanlendar
             
             if (metModel.CheckMeetingAvailable(metData.id, metData.mi_start_time, metData.mi_end_time) == false)
             {
-                result = new { type = 0, msg = "该时间段内已经有会议，请更改会议时间。" };
+                result = new { type = 0, msg = "该时间段内已经有会议，请更改会议时间。", data = new { id = metData.id } };
                 Clients.Caller.broadcastMeetingEdit(result);
                 return;
             }
@@ -40,8 +40,13 @@ namespace MeetingCanlendar
 
                 if (metInfo.mi_creator != userInfo.id && metInfo.meeting_level_catg.ml_level != 9)
                 {
-                    result = new { type = 0, msg = "该会议不是您创建的，无法修改。" };
-                    Clients.Caller.broadcastMeetingEdit(result);
+                    Clients.Caller.broadcastMeetingEdit(new { type = 0, msg = "该会议不是您创建的，无法修改。", data = new { id = metData.id } });
+                    return;
+                }
+
+                if (metModel.DeleteMeetingPeopleByMeetingId(metData.id) < 0)
+                {
+                    Clients.Caller.broadcastMeetingEdit(new { type = 0, msg = "修改会议失败，无法删除与会人员。", data = new { id = metData.id } });
                     return;
                 }
             }
@@ -53,21 +58,43 @@ namespace MeetingCanlendar
             metInfo.mi_position_id = metData.mi_position_id;
             metInfo.mi_title = metData.mi_title;
             metInfo.mi_memo = metData.mi_memo;
-            
+
+            string[] people = metData.mi_people.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            List<int> userIds = new List<int>();
+            foreach (string pep in people)
+            {
+                userIds.Add(int.Parse(pep));
+            }
+            var userInfos = userModel.GetUserInfos().Where(r => userIds.Contains(r.id)).Select(r => new { userId = r.id, userName = r.ui_name });
+            metInfo.mi_people_name = string.Join(", ", userInfos.Select(r => r.userName).ToArray());
+
             try
             {
+
                 if (metData.id == -1)
                 {
                     metModel.AddMeeting(metInfo);
-                }
-                else
-                {
                     metModel.SaveChange();
                 }
+
+                foreach (int pep in userIds)
+                {
+                    meeting_people mp = new meeting_people();
+                    mp.mp_meeting_id = metInfo.id;
+                    mp.mp_user_id = pep;
+                    metModel.AddMeetingPeople(mp);
+                }
+
+                if (metModel.SaveChange() < 0)
+                {
+                    Clients.Caller.broadcastMeetingEdit(new { type = 0, msg = "修改会议失败。", data = new { id = metData.id } });
+                    return;
+                }
+
             }
             catch (Exception ex)
             {
-                result = new { type = 0, msg = "添加失败，请联系管理员。\n错误信息：" + ex.Message };
+                result = new { type = 0, msg = "添加失败，请联系管理员。\n错误信息：" + ex.Message, data = new { id = metData.id } };
                 Clients.Caller.broadcastMeetingEdit(result);
                 return;
             }
@@ -84,6 +111,7 @@ namespace MeetingCanlendar
                     start = metInfo.mi_start_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                     end = metInfo.mi_end_time.ToString("yyyy-MM-ddTHH:mm:ss"),
                     people = metInfo.mi_people,
+                    peopleName = metInfo.mi_people_name,
                     memo = metInfo.mi_memo,
                     position = metInfo.mi_position_id,
                     positionName = metInfo.meeting_positionReference.Value.mp_name,

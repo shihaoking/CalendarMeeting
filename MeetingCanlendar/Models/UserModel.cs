@@ -78,6 +78,11 @@ namespace MeetingCanlendar.Models
             return db.user_info;
         }
 
+        public IQueryable<user_info> GetUserInfos(bool status)
+        {
+            return db.user_info.Where(r => r.ui_status == status);
+        }
+
         public IQueryable<user_info_detail> GetAvaliableUserInfos()
         {
             return db.user_info_detail.Where(r => r.ui_status);
@@ -161,7 +166,7 @@ namespace MeetingCanlendar.Models
 
         public int UpdateUserStatus(string ids, short status)
         {
-            return db.ExecuteStoreCommand("Update user_info Set ui_status=" + status + " Where id In(" + ids + ")");
+            return db.ExecuteStoreCommand("Update user_info Set ui_status = " + status + " Where id In(" + ids + ")");
         }
 
         public void Save()

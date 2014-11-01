@@ -1,12 +1,12 @@
-﻿<!DOCTYPE xhtml>
+﻿<!DOCTYPE XHTML>
 <html>
 <head>
     <meta content="" charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery") 
-    @Scripts.Render("~/bundles/jqueryui") 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
     <link href="@Url.Content("~/Content/css/fullcalendar.print.css")" media="print" rel='stylesheet' />
     <script type="text/javascript" src="@Url.Content("~/Scripts/moment.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/datepicker.js")"></script>
@@ -14,6 +14,9 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/fullcalendar.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/fullcalendar-zh-cn.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/chzn-chosen.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/modernizr.custom.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/classie.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/notificationFx.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/editPanel.js")"></script>
     @{
         string userLevel = MeetingCanlendar.Models.MCAuthorizeAttribute.GetRole(User.Identity.Name);
@@ -45,8 +48,22 @@
             </div>
         </div>
     </header>
-
     @RenderBody()
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function CreateShadow(zIndex) {
+            var shadow = $('<div class="shadow-layout"></div>');
+            shadow.css({ 'z-index': zIndex ? zIndex : 90, position: 'absolute', top: 0, left: 0, background: 'black', opacity: 0.3 });
+            var sHeight = window.innerHeight;
+            var sWidth = window.innerWidth;
+            shadow.height(sHeight);
+            shadow.width(sWidth);
+            shadow.appendTo(document.body);
+        }
+
+        function RemoveShadow() {
+            $('.shadow-layout').remove();
+        }
+    </script>
 </body>
 </html>

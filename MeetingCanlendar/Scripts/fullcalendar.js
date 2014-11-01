@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * FullCalendar v2.1.1
  * Docs & License: http://arshaw.com/fullcalendar/
  * (c) 2013 Adam Shaw
@@ -5187,7 +5187,7 @@
                     (htmlEscape(event.title || '') || '&nbsp;') + // we always want one line of height
                 '</span>';
 
-            return '<a id="fc-event-' + event.id + '" class="' + classes.join(' ') + '"' +
+            return '<a name="fc-event-' + event.id + '" class="' + classes.join(' ') + '"' +
                     (event.url ?
                         ' href="' + htmlEscape(event.url) + '"' :
                         ''
@@ -6336,7 +6336,7 @@
                 startTimeText = view.getEventTimeText(event.start, null);
             }
 
-            return '<a id="fc-event-' + event.id + '" class="' + classes.join(' ') + '"' +
+            return '<a name="fc-event-' + event.id + '" class="' + classes.join(' ') + '"' +
                 (event.url ?
                     ' href="' + htmlEscape(event.url) + '"' :
                     ''

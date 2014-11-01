@@ -32,7 +32,7 @@ body .fc { /* extra precedence to overcome jqui */
 .fc-unthemed tbody,
 .fc-unthemed .fc-row,
 .fc-unthemed .fc-popover {
-	border-color: #ddd;
+	border-color: #D8D9D9;
 }
 
 .fc-unthemed .fc-popover {
@@ -41,13 +41,47 @@ body .fc { /* extra precedence to overcome jqui */
 
 .fc-unthemed hr,
 .fc-unthemed .fc-popover .fc-header {
-	background: #eee;
+	background: #F2F2F2;
 }
 
 .fc-unthemed .fc-popover .fc-header .fc-close {
-	color: #666;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 4px;
+	top: 4px;
+	overflow: hidden;
+	text-indent: 100%;
+	cursor: pointer;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
 }
 
+.fc-unthemed .fc-popover .fc-header .fc-close::before,
+.fc-unthemed .fc-popover .fc-header .fc-close::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 60%;
+    top: 50%;
+    left: 50%;
+    background: #858585;
+}
+
+.fc-unthemed .fc-popover .fc-header .fc-close:hover::before,
+.fc-unthemed .fc-popover .fc-header .fc-close:hover::after {
+    background: #FF3B30;
+}
+
+.fc-unthemed .fc-popover .fc-header .fc-close::before{
+    -webkit-transform: translate(-50%,-50%) rotate(45deg);
+	transform: translate(-50%,-50%) rotate(45deg);
+}
+
+.fc-unthemed .fc-popover .fc-header .fc-close::after {
+ 	-webkit-transform: translate(-50%,-50%) rotate(-45deg);
+	transform: translate(-50%,-50%) rotate(-45deg);
+}
 .fc-unthemed .fc-today {
 	background: #fcf8e3;
     border-top-color: #F72F37;
@@ -69,6 +103,7 @@ body .fc { /* extra precedence to overcome jqui */
 	line-height: .5em;
 	height: .5em; /* will make the total height 1em */
 }
+
 
 
 /* Buttons (styled <button> tags, normalized to work cross-browser)
@@ -172,7 +207,7 @@ previous button's border...
 }
 
 .fc-popover .fc-header {
-	padding: 2px 4px;
+	padding: 6px 4px;
 }
 
 .fc-popover .fc-header .fc-title {
@@ -200,9 +235,12 @@ previous button's border...
 	border-style: solid;
 }
 
+.fc-more-popover .fc-day-grid-event{
+    margin-top:2px;
+}
+
 .fc-unthemed .fc-popover .fc-header .fc-close {
 	font-size: 25px;
-	margin-top: 4px;
 }
 
 /* jqui themed */
@@ -889,7 +927,6 @@ be a descendant of the grid when it is being dragged.
 	overflow: hidden;
 	line-height: 8px;
 	font-size: 11px;
-	font-family: monospace;
 	text-align: center;
 	cursor: s-resize;
 }
