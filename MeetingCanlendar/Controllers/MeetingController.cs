@@ -17,6 +17,11 @@ namespace MeetingCanlendar.Controllers
 
         public ActionResult Index()
         {
+            UserModel userModel = new UserModel();
+            user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
+            ViewBag.UserId = userInfo.id;
+            ViewBag.UserLevel = userInfo.user_grade_catg.gc_level;
+
             return View();
         }
 
@@ -95,7 +100,8 @@ namespace MeetingCanlendar.Controllers
                 people = r.mi_people,
                 memo = r.mi_memo,
                 position = r.mi_position_id,
-                creator = r.mi_creator_name,
+                creator = r.mi_creator,
+                creatorName = r.mi_creator_name,
                 level = r.mi_level_id,
                 createTime = r.mi_create_time,
                 className = r.mi_creator == userInfo.id ? "fc-event-mine" : "",

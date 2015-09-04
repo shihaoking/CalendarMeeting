@@ -5,11 +5,14 @@
 
 <div id='calendar'></div>
 <div class='calendarList'></div>
-<input id="userId" value="@User.Identity.Name" type="hidden" />
+<input id="userId" value="@ViewBag.UserId" type="hidden" />
+<input id="userLevel" value="@ViewBag.UserLevel" type="hidden" />
 <script src="@Url.Content("~/Scripts/jquery.signalR-2.1.2.min.js")"></script>
 <script src="@Url.Content("~/signalr/hubs")"></script>
 @section scripts{
     <script type="text/javascript">
+        var userId = $('#userId').val();
+        var userLevel = $('#userLevel').val();
         var currentLangCode = 'zh-cn';
         var currentDate = new Date();
         var initEvents = [];
@@ -19,6 +22,8 @@
         var showAll = true;
         var loadedMonth = [];
         var dragingEventStart;
+        var currentPositionFilter = '';
+        var renderedEvents = false;
 
         $(document).ready(function () {
 
@@ -36,7 +41,7 @@
                 data: { 'includeAll': false },
                 type: 'POST',
                 dateType: 'json',
-                async: false
+                async: true
             }).done(function (result) {
                 allUsersJSON = result;
             });
@@ -94,24 +99,37 @@
                     dragingEventStart = $.extend({}, event);
                 },
                 eventDrop: function (event, jsEvent, ui, view) {
-                    meetingHub.server.addMeeting($('#userId').val(), ConvertEventToMeetingData(event));
+                    meetingHub.server.addMeeting(userId, ConvertEventToMeetingData(event));
                 },
                 eventResize: function (event, jsEvent, ui, view) {
-                    meetingHub.server.addMeeting($('#userId').val(), ConvertEventToMeetingData(event));
+                    meetingHub.server.addMeeting(userId, ConvertEventToMeetingData(event));
                 },
                 eventRender: function (event, element, view) {
-                    if (!event.isMine && !showAll) {
+                    //如果选择了“我的”作为过滤条件，那么把不是我的会议过滤掉
+                    //过滤掉非当前选中的会议室的会议
+                    if (!event.isMine && !showAll
+                        || currentPositionFilter != '' && currentPositionFilter != event.position) {
                         return false;
                     }
                 },
                 eventAfterAllRender: function (view) {
+                    //console.log('renderedEvents: ' + renderedEvents);
+                    if (renderedEvents) {
+                        return false;
+                    }
+
+                    //console.log('eventAfterAllRender');
                     var events = $('#calendar').fullCalendar('clientEvents');
                     var eventsToShow = new Array();
                     var viewStartTime = view.start;
                     var viewEndTime = view.end;
 
                     $.each(events, function (i, event) {
-                        if (event.isMine || showAll) {
+                        //当选择“我的”时候，仅显示我创建的会议。此时showAll==false，(event.isMine || showAll)只有当event.isMine为true的时候才会通过
+                        //如果选择“全部”那么不会对会议创建人条件进行筛选，此时(event.isMine || showAll)始终为true，因为showAll==true
+                        //如果会议室选择不是全部，那么仅显示当前过滤的会议室的会议
+                        if ((event.isMine || showAll)
+                            && (currentPositionFilter == '' || currentPositionFilter == event.position)) {
                             if (event.start >= viewStartTime && event.start <= viewEndTime) {
                                 eventsToShow.push(event);
                             }
@@ -119,7 +137,6 @@
                     });
 
                     SortData(eventsToShow, "start");
-
                     var meetingList = CreateMeetingList(eventsToShow, view.name);
 
                     if (view.name == "month") {
@@ -129,9 +146,17 @@
                     } else {
                         meetingList.prependTo('.calendar-list-content');
                     }
+                    renderedEvents = true;
+                    $('.meeting-position-select').chosen()
+                        .change(function () {
+                            currentPositionFilter = $(this).val();
+                            renderedEvents = false;
+                            $('#calendar').fullCalendar('rerenderEvents');
+                        });
                 },
-                viewRender: function (view, element) {
+                viewRender: function (view, element) {    
                     var currentSelDate = view.intervalStart.clone();
+                    //console.log('viewRender');
                     LoadMeetings(currentSelDate);
 
                     if (view.name == "month") {
@@ -203,7 +228,11 @@
 
             if (needLoadDataMonth.length != 0) {
                 initEvents = GetMeetings(needLoadDataMonth);
-                $('#calendar').fullCalendar('addEventSource', initEvents);
+
+                renderedEvents = false;
+                $('#calendar').fullCalendar('addEventSource', initEvents);//这个方法回去重新加载日历内容，然后再调用eventAfterAllRender，
+            } else {
+                renderedEvents = false;//没有主动调用addEventSource事件加载日历内容
             }
         }
 
@@ -230,7 +259,6 @@
             var dateSpUl = eventListUl;
             var tick = 1;
             var lastDate = "";
-
             $.each(events, function (index, event) {
                 var dateTime;
                 var startTime = event.start.format('YYYY-M-D');
@@ -287,6 +315,7 @@
             eventListCnt.append(eventListUl);
 
             var menu = $('<div class="ml-menu" />');
+            var whoesMenu = $('<div class="ml-menu-whoes" />');
             var menuAll = $('<span class="menu-catg menu-catg-all">所有</span>');
             var menuMine = $('<span class="menu-catg menu-catg-mine">我的</span>');
 
@@ -299,17 +328,33 @@
             menuAll.click(function () {
                 $(this).addClass('menu-catg-selected').next().removeClass('menu-catg-selected');
                 showAll = true;
+                renderedEvents = false;
                 $('#calendar').fullCalendar('rerenderEvents');
             });
 
             menuMine.click(function () {
                 $(this).addClass('menu-catg-selected').prev().removeClass('menu-catg-selected');
                 showAll = false;
+                renderedEvents = false;
                 $('#calendar').fullCalendar('rerenderEvents');
             });
 
-            menu.append(menuAll).append(menuMine).appendTo(eventList);
+            //添加会议所属人过滤选项
+            whoesMenu.append(menuAll).append(menuMine);
 
+            var postionMenu = $('<div class="ml-menu-position" />');
+            var postionSelect = $('<select class="meeting-position-select" />');
+            postionSelect.append('<option value>所有</option>');
+
+            //添加所有会议地点选项
+            $(positionsJSON).each(function (index, val) {
+                var selected = (currentPositionFilter == val.value) ? ' selected="selected"' : '';
+                postionSelect.append('<option value="' + val.value + '"' + selected + '>' + val.text + '</option>');
+            });
+
+            postionMenu.append('<span>会议室：</span>').append(postionSelect);
+
+            menu.append(whoesMenu).append(postionMenu).appendTo(eventList);
             eventList.append(eventListCnt);
             return eventList;
         }
@@ -350,6 +395,7 @@
         
         meetingHub.client.broadcastMeetingEdit = function (result) {
             if (result.type == 0) {
+                renderedEvents = false;
                 $('#calendar').fullCalendar('unselect');
                 $('#ml-li-' + result.data.id).removeClass('selected');
                 $('.fc-event-container').find('.fc-event').removeClass('fc-event-selected');
@@ -374,11 +420,16 @@
                 }
             } else if (result.type == 1 || result.type == 2) {
                 if (result.type == 1) {//新建
+                    renderedEvents = false;
+                    if (userLevel == 9) {
+                        result.data.editable = 1;
+                    }
                     $('#calendar').fullCalendar('renderEvent', result.data, true);
                 } else {//编辑
                     UpdateCalendarEvent(result.data.id, result.data);
                 }
 
+                //renderedEvents = false;
                 $('#calendar').fullCalendar('unselect');
             }
 
@@ -389,6 +440,7 @@
             if (result.type == 0) {
                 alert(result.msg);
             } else if (result.type == 1) {
+                renderedEvents = false;
                 $('#calendar').fullCalendar('removeEvents', result.data.id);
             }
         }
@@ -405,6 +457,7 @@
                 event.level = newData.level;
                 event.people = newData.people;
 
+                renderedEvents = false;
                 $('#calendar').fullCalendar('updateEvent', event);
             });
         }
@@ -429,15 +482,16 @@
                 editable: curEvent.editable || curEvent.id === undefined ? true : false,
                 submit: function (e, data) {
                     var source = ConvertEventToMeetingData(data);
-                    meetingHub.server.addMeeting($('#userId').val(), source);
+                    meetingHub.server.addMeeting(userId, source);
                     //UpdateMeeting(curEvent, source);
                 },
                 remove: function (e, data) {
-                    meetingHub.server.deleteMeeting($('#userId').val(), data.id);
+                    meetingHub.server.deleteMeeting(userId, data.id);
                 },
                 close: function (e, data) {
                     $('#ml-li-' + data.id).removeClass('selected'); 
                     $('.fc-event-container').find('.fc-event').removeClass('fc-event-selected');
+                    //renderedEvents = false;
                     $('#calendar').fullCalendar('unselect');
                 }
             });
@@ -448,9 +502,9 @@
                 function (result) {
                     if (result.type == 0) {
                         $('#calendar').fullCalendar('unselect');
-                        alert(result.msg);
                     } else if (result.type == 1) {
                         if (source.id == -1) {
+                            renderedEvents = false;
                             $('#calendar').fullCalendar('renderEvent', result.data, true);
                         } else {
                             curEvent.title = result.data.title;
@@ -461,9 +515,11 @@
                             curEvent.level = result.data.level;
                             curEvent.people = result.data.people;
 
+                            renderedEvents = false;
                             $('#calendar').fullCalendar('updateEvent', curEvent);
                         }
 
+                        //renderedEvents = false;
                         $('#calendar').fullCalendar('unselect');
                     }
                 }

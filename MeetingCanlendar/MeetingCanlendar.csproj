@@ -168,6 +168,8 @@
     </Compile>
     <Compile Include="MeetingHub.cs" />
     <Compile Include="Models\MeetingModel.cs" />
+    <Compile Include="Models\MeetingResultDataModel.cs" />
+    <Compile Include="Models\MeetingResultModel.cs" />
     <Compile Include="Models\MySqlDBModel.cs" />
     <Compile Include="Models\UserAuthAttribute.cs" />
     <Compile Include="Models\UserModel.cs" />

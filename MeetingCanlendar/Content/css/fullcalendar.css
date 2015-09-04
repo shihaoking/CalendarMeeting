@@ -412,6 +412,9 @@ temporary rendered events).
 /* Global Event Styles
 --------------------------------------------------------------------------------------------------*/
 
+.fc-event{
+    cursor:pointer;
+}
 .fc-event,
 .fc-event:active
 {

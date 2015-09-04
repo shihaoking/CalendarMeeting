@@ -5,22 +5,21 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using DBEntity;
 using MeetingCanlendar.Models;
+using System.Threading.Tasks;
 
 namespace MeetingCanlendar
 {
     public class MeetingHub : Hub
     {
-        public void AddMeeting(string userName, meeting_info metData)
+        public void AddMeeting(int userId, meeting_info metData)
         {
             MeetingModel metModel = new MeetingModel();
             UserModel userModel = new UserModel();
-            user_info userInfo = userModel.GetUserInfo(userName);
-            object result;
-            
+            user_info userInfo = userModel.GetUserInfo(userId);
+
             if (metModel.CheckMeetingAvailable(metData.id, metData.mi_start_time, metData.mi_end_time) == false)
             {
-                result = new { type = 0, msg = "该时间段内已经有会议，请更改会议时间。", data = new { id = metData.id } };
-                Clients.Caller.broadcastMeetingEdit(result);
+                Clients.Caller.broadcastMeetingEdit(new { type = 0, msg = "该时间段内已经有会议，请更改会议时间。", data = new { id = metData.id } });
                 return;
             }
 
@@ -50,7 +49,7 @@ namespace MeetingCanlendar
                     return;
                 }
             }
-              
+
             metInfo.mi_start_time = metData.mi_start_time;
             metInfo.mi_end_time = metData.mi_end_time;
             metInfo.mi_level_id = metData.mi_level_id;
@@ -94,17 +93,16 @@ namespace MeetingCanlendar
             }
             catch (Exception ex)
             {
-                result = new { type = 0, msg = "添加失败，请联系管理员。\n错误信息：" + ex.Message, data = new { id = metData.id } };
-                Clients.Caller.broadcastMeetingEdit(result);
+                Clients.Caller.broadcastMeetingEdit(new { type = 0, msg = "添加失败，请联系管理员。\n错误信息：" + ex.Message, data = new { id = metData.id } });
                 return;
             }
 
-            
-            result = new
+
+            MeetingResultModel result = new MeetingResultModel()
             {
                 type = editType,
                 msg = "添加成功",
-                data = new
+                data = new MeetingResultDataModel()
                 {
                     id = metInfo.id,
                     title = metInfo.mi_title,
@@ -115,26 +113,33 @@ namespace MeetingCanlendar
                     memo = metInfo.mi_memo,
                     position = metInfo.mi_position_id,
                     positionName = metInfo.meeting_positionReference.Value.mp_name,
-                    creator = metInfo.user_infoReference.Value.ui_name,
+                    creator = metInfo.mi_creator,
+                    creatorName = metInfo.user_infoReference.Value.ui_name,
                     level = metInfo.mi_level_id,
                     levelName = metInfo.meeting_level_catgReference.Value.ml_name,
                     createTime = metInfo.mi_create_time.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    className = metInfo.mi_creator == userInfo.id ? "fc-event-mine" : "",
-                    editable = metInfo.mi_creator == userInfo.id || userInfo.user_grade_catg.gc_level == 9 ? 1 : 0,
-                    isMine = metInfo.mi_creator == userInfo.id ? 1 : 0
+                    className = "fc-event-mine",
+                    editable = 1,
+                    isMine = 1
                 }
             };
 
-            Clients.All.broadcastMeetingEdit(result);
+            Clients.Caller.broadcastMeetingEdit(result);
+
+            result.data.className = "";
+            result.data.isMine = 0;
+            result.data.editable = 0;
+
+            Clients.Others.broadcastMeetingEdit(result);
         }
 
-        public void DeleteMeeting(string userName, int id)
+        public void DeleteMeeting(int userId, int id)
         {
             MeetingModel metModel = new MeetingModel();
             meeting_info metInfo = metModel.GetMeeting(id);
 
             UserModel userModel = new UserModel();
-            user_info userInfo = userModel.GetUserInfo(userName);
+            user_info userInfo = userModel.GetUserInfo(userId);
 
             if (metInfo.mi_creator != userInfo.id && userInfo.user_grade_catg.gc_level != 9)
             {
