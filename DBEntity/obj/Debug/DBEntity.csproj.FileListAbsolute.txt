@@ -9,4 +9,5 @@ E:\Projects\MeetingCanlendar\DBEntity\bin\Debug\DBEntity.dll
 E:\Projects\MeetingCanlendar\DBEntity\bin\Debug\DBEntity.pdb
 E:\Projects\MeetingCanlendar\DBEntity\obj\Debug\DBEntity.dll
 E:\Projects\MeetingCanlendar\DBEntity\obj\Debug\DBEntity.pdb
+E:\Projects\MeetingCanlendar\DBEntity\bin\Debug\MySql.Data.Entity.EF6.dll
 E:\Projects\MeetingCanlendar\DBEntity\obj\Debug\DBEntity.csprojResolveAssemblyReference.cache

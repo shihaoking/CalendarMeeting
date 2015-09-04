@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="MCDBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+<Schema Namespace="MCDBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="meeting_info">
     <Key>
       <PropertyRef Name="id" />
@@ -7,13 +7,13 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="mi_title" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="mi_position_id" Type="smallint" Nullable="false" />
-    <Property Name="mi_start_time" Type="datetime" Precision="0" Nullable="false" />
-    <Property Name="mi_end_time" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="mi_people" Type="varchar" MaxLength="256" />
     <Property Name="mi_people_name" Type="varchar" MaxLength="1024" />
+    <Property Name="mi_start_time" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="mi_end_time" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="mi_level_id" Type="tinyint" Nullable="false" />
     <Property Name="mi_status" Type="bool" Nullable="false" />
-    <Property Name="mi_creator" Type="int" Nullable="false" />
+    <Property Name="mi_creator" Type="smallint" Nullable="false" />
     <Property Name="mi_create_time" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="mi_memo" Type="varchar" MaxLength="300" />
   </EntityType>
@@ -31,7 +31,7 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="mp_meeting_id" Type="int" Nullable="false" />
-    <Property Name="mp_user_id" Type="int" Nullable="false" />
+    <Property Name="mp_user_id" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="meeting_position">
     <Key>
@@ -53,7 +53,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ui_name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="ui_password" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="ui_email" Type="varchar" MaxLength="50" Nullable="false" />
@@ -87,17 +87,17 @@
     <Property Name="mi_position" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="mi_position_size" Type="tinyint" Nullable="false" />
     <Property Name="mi_people" Type="varchar" MaxLength="256" />
-    <Property Name="mi_people_name" Type="varchar" MaxLength="1024" />
     <Property Name="mi_start_time" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="mi_end_time" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="mi_level_id" Type="tinyint" Nullable="false" />
     <Property Name="mi_level" Type="tinyint" Nullable="false" />
     <Property Name="mi_level_name" Type="varchar" MaxLength="8" Nullable="false" />
-    <Property Name="mi_creator" Type="int" Nullable="false" />
+    <Property Name="mi_creator" Type="smallint" Nullable="false" />
     <Property Name="mi_creator_name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="mi_status" Type="bool" Nullable="false" />
     <Property Name="mi_create_time" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="mi_memo" Type="varchar" MaxLength="300" />
+    <Property Name="mi_people_name" Type="varchar" MaxLength="1024" />
   </EntityType>
   <!--生成过程中发现错误:
 警告 6002: 表/视图“def.mc_db.user_info_detail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -114,7 +114,7 @@
       <PropertyRef Name="ui_grade_level" />
       <PropertyRef Name="ui_grade_name" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id" Type="smallint" Nullable="false" />
     <Property Name="ui_name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="ui_password" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="ui_email" Type="varchar" MaxLength="50" Nullable="false" />
@@ -126,15 +126,27 @@
     <Property Name="ui_grade_name" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="ui_meeting_count" Type="bigint" />
   </EntityType>
-  <Association Name="meeting_info_ibfk">
+  <Association Name="fk_meeting_id">
+    <End Role="meeting_info" Type="Self.meeting_info" Multiplicity="1" />
+    <End Role="meeting_people" Type="Self.meeting_people" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="meeting_info">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="meeting_people">
+        <PropertyRef Name="mp_meeting_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_user_id">
     <End Role="user_info" Type="Self.user_info" Multiplicity="1" />
-    <End Role="meeting_info" Type="Self.meeting_info" Multiplicity="*" />
+    <End Role="meeting_people" Type="Self.meeting_people" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="user_info">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="meeting_info">
-        <PropertyRef Name="mi_creator" />
+      <Dependent Role="meeting_people">
+        <PropertyRef Name="mp_user_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -150,6 +162,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="meeting_info_ibfk_2">
+    <End Role="user_info" Type="Self.user_info" Multiplicity="1" />
+    <End Role="meeting_info" Type="Self.meeting_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_info">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="meeting_info">
+        <PropertyRef Name="mi_creator" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="meeting_info_ibfk_3">
     <End Role="meeting_level_catg" Type="Self.meeting_level_catg" Multiplicity="1" />
     <End Role="meeting_info" Type="Self.meeting_info" Multiplicity="*" />
@@ -162,20 +186,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="meeting_re">
-    <End Role="meeting_info" Type="Self.meeting_info" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="meeting_people" Type="Self.meeting_people" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="meeting_info">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="meeting_people">
-        <PropertyRef Name="mp_meeting_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="user_info_ibfk_1">
     <End Role="user_grade_catg" Type="Self.user_grade_catg" Multiplicity="1" />
     <End Role="user_info" Type="Self.user_info" Multiplicity="*" />
@@ -185,18 +195,6 @@
       </Principal>
       <Dependent Role="user_info">
         <PropertyRef Name="ui_grade_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="user_re">
-    <End Role="user_info" Type="Self.user_info" Multiplicity="1" />
-    <End Role="meeting_people" Type="Self.meeting_people" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user_info">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="meeting_people">
-        <PropertyRef Name="mp_user_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -215,7 +213,6 @@
 `meeting_info_detail`.`mi_position`, 
 `meeting_info_detail`.`mi_position_size`, 
 `meeting_info_detail`.`mi_people`, 
-`meeting_info_detail`.`mi_people_name`, 
 `meeting_info_detail`.`mi_start_time`, 
 `meeting_info_detail`.`mi_end_time`, 
 `meeting_info_detail`.`mi_level_id`, 
@@ -225,7 +222,8 @@
 `meeting_info_detail`.`mi_creator_name`, 
 `meeting_info_detail`.`mi_status`, 
 `meeting_info_detail`.`mi_create_time`, 
-`meeting_info_detail`.`mi_memo`
+`meeting_info_detail`.`mi_memo`, 
+`meeting_info_detail`.`mi_people_name`
 FROM `meeting_info_detail` AS `meeting_info_detail`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="user_info_detail" EntityType="Self.user_info_detail" store:Type="Views" store:Schema="mc_db">
@@ -243,29 +241,29 @@ FROM `meeting_info_detail` AS `meeting_info_detail`</DefiningQuery>
 `user_info_detail`.`ui_meeting_count`
 FROM `user_info_detail` AS `user_info_detail`</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="meeting_info_ibfk" Association="Self.meeting_info_ibfk">
-      <End Role="user_info" EntitySet="user_info" />
+    <AssociationSet Name="fk_meeting_id" Association="Self.fk_meeting_id">
       <End Role="meeting_info" EntitySet="meeting_info" />
+      <End Role="meeting_people" EntitySet="meeting_people" />
+    </AssociationSet>
+    <AssociationSet Name="fk_user_id" Association="Self.fk_user_id">
+      <End Role="user_info" EntitySet="user_info" />
+      <End Role="meeting_people" EntitySet="meeting_people" />
     </AssociationSet>
     <AssociationSet Name="meeting_info_ibfk_1" Association="Self.meeting_info_ibfk_1">
       <End Role="meeting_position" EntitySet="meeting_position" />
+      <End Role="meeting_info" EntitySet="meeting_info" />
+    </AssociationSet>
+    <AssociationSet Name="meeting_info_ibfk_2" Association="Self.meeting_info_ibfk_2">
+      <End Role="user_info" EntitySet="user_info" />
       <End Role="meeting_info" EntitySet="meeting_info" />
     </AssociationSet>
     <AssociationSet Name="meeting_info_ibfk_3" Association="Self.meeting_info_ibfk_3">
       <End Role="meeting_level_catg" EntitySet="meeting_level_catg" />
       <End Role="meeting_info" EntitySet="meeting_info" />
     </AssociationSet>
-    <AssociationSet Name="meeting_re" Association="Self.meeting_re">
-      <End Role="meeting_info" EntitySet="meeting_info" />
-      <End Role="meeting_people" EntitySet="meeting_people" />
-    </AssociationSet>
     <AssociationSet Name="user_info_ibfk_1" Association="Self.user_info_ibfk_1">
       <End Role="user_grade_catg" EntitySet="user_grade_catg" />
       <End Role="user_info" EntitySet="user_info" />
-    </AssociationSet>
-    <AssociationSet Name="user_re" Association="Self.user_re">
-      <End Role="user_info" EntitySet="user_info" />
-      <End Role="meeting_people" EntitySet="meeting_people" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

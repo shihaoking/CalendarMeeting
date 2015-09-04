@@ -77,7 +77,7 @@ namespace MeetingCanlendar
                     metModel.SaveChange();
                 }
 
-                foreach (int pep in userIds)
+                foreach (short pep in userIds)
                 {
                     meeting_people mp = new meeting_people();
                     mp.mp_meeting_id = metInfo.id;

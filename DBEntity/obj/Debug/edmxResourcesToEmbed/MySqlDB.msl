@@ -1,38 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MCDBModelStoreContainer" CdmEntityContainer="mc_dbEntities">
-    <EntitySetMapping Name="meeting_info">
-      <EntityTypeMapping TypeName="MCDBModel.meeting_info">
-        <MappingFragment StoreEntitySet="meeting_info">
-          <ScalarProperty Name="mi_memo" ColumnName="mi_memo" />
-          <ScalarProperty Name="mi_create_time" ColumnName="mi_create_time" />
-          <ScalarProperty Name="mi_creator" ColumnName="mi_creator" />
-          <ScalarProperty Name="mi_status" ColumnName="mi_status" />
-          <ScalarProperty Name="mi_level_id" ColumnName="mi_level_id" />
-          <ScalarProperty Name="mi_people_name" ColumnName="mi_people_name" />
-          <ScalarProperty Name="mi_people" ColumnName="mi_people" />
-          <ScalarProperty Name="mi_end_time" ColumnName="mi_end_time" />
-          <ScalarProperty Name="mi_start_time" ColumnName="mi_start_time" />
-          <ScalarProperty Name="mi_position_id" ColumnName="mi_position_id" />
-          <ScalarProperty Name="mi_title" ColumnName="mi_title" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="meeting_level_catg">
       <EntityTypeMapping TypeName="MCDBModel.meeting_level_catg">
         <MappingFragment StoreEntitySet="meeting_level_catg">
           <ScalarProperty Name="ml_name" ColumnName="ml_name" />
           <ScalarProperty Name="ml_level" ColumnName="ml_level" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="meeting_people">
-      <EntityTypeMapping TypeName="MCDBModel.meeting_people">
-        <MappingFragment StoreEntitySet="meeting_people">
-          <ScalarProperty Name="mp_user_id" ColumnName="mp_user_id" />
-          <ScalarProperty Name="mp_meeting_id" ColumnName="mp_meeting_id" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -69,6 +42,41 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="user_info_detail">
+      <EntityTypeMapping TypeName="MCDBModel.user_info_detail">
+        <MappingFragment StoreEntitySet="user_info_detail">
+          <ScalarProperty Name="ui_meeting_count" ColumnName="ui_meeting_count" />
+          <ScalarProperty Name="ui_grade_name" ColumnName="ui_grade_name" />
+          <ScalarProperty Name="ui_grade_level" ColumnName="ui_grade_level" />
+          <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />
+          <ScalarProperty Name="ui_status" ColumnName="ui_status" />
+          <ScalarProperty Name="ui_gender" ColumnName="ui_gender" />
+          <ScalarProperty Name="ui_grade_id" ColumnName="ui_grade_id" />
+          <ScalarProperty Name="ui_email" ColumnName="ui_email" />
+          <ScalarProperty Name="ui_password" ColumnName="ui_password" />
+          <ScalarProperty Name="ui_name" ColumnName="ui_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="meeting_info">
+      <EntityTypeMapping TypeName="MCDBModel.meeting_info">
+        <MappingFragment StoreEntitySet="meeting_info">
+          <ScalarProperty Name="mi_memo" ColumnName="mi_memo" />
+          <ScalarProperty Name="mi_create_time" ColumnName="mi_create_time" />
+          <ScalarProperty Name="mi_creator" ColumnName="mi_creator" />
+          <ScalarProperty Name="mi_status" ColumnName="mi_status" />
+          <ScalarProperty Name="mi_level_id" ColumnName="mi_level_id" />
+          <ScalarProperty Name="mi_end_time" ColumnName="mi_end_time" />
+          <ScalarProperty Name="mi_start_time" ColumnName="mi_start_time" />
+          <ScalarProperty Name="mi_people_name" ColumnName="mi_people_name" />
+          <ScalarProperty Name="mi_people" ColumnName="mi_people" />
+          <ScalarProperty Name="mi_position_id" ColumnName="mi_position_id" />
+          <ScalarProperty Name="mi_title" ColumnName="mi_title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="meeting_info_detail">
       <EntityTypeMapping TypeName="MCDBModel.meeting_info_detail">
         <MappingFragment StoreEntitySet="meeting_info_detail">
@@ -92,19 +100,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="user_info_detail">
-      <EntityTypeMapping TypeName="MCDBModel.user_info_detail">
-        <MappingFragment StoreEntitySet="user_info_detail">
-          <ScalarProperty Name="ui_meeting_count" ColumnName="ui_meeting_count" />
-          <ScalarProperty Name="ui_grade_name" ColumnName="ui_grade_name" />
-          <ScalarProperty Name="ui_grade_level" ColumnName="ui_grade_level" />
-          <ScalarProperty Name="ui_create_time" ColumnName="ui_create_time" />
-          <ScalarProperty Name="ui_status" ColumnName="ui_status" />
-          <ScalarProperty Name="ui_gender" ColumnName="ui_gender" />
-          <ScalarProperty Name="ui_grade_id" ColumnName="ui_grade_id" />
-          <ScalarProperty Name="ui_email" ColumnName="ui_email" />
-          <ScalarProperty Name="ui_password" ColumnName="ui_password" />
-          <ScalarProperty Name="ui_name" ColumnName="ui_name" />
+    <EntitySetMapping Name="meeting_people">
+      <EntityTypeMapping TypeName="MCDBModel.meeting_people">
+        <MappingFragment StoreEntitySet="meeting_people">
+          <ScalarProperty Name="mp_user_id" ColumnName="mp_user_id" />
+          <ScalarProperty Name="mp_meeting_id" ColumnName="mp_meeting_id" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

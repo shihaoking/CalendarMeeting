@@ -76,7 +76,15 @@ namespace MeetingCanlendar.Controllers
             UserModel userModel = new UserModel();
             user_info userInfo = userModel.GetUserInfo(User.Identity.Name);
 
-            List<meeting_info_detail> source = metModel.GetMeetings(dataMonths.ToArray()).ToList();
+            List<meeting_info_detail> source = new List<meeting_info_detail>();
+            try
+            {
+                source = metModel.GetMeetings(dataMonths.ToArray()).ToList();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             var result = source.OrderBy(r => r.mi_start_time).Select(r => new
             {
@@ -158,7 +166,7 @@ namespace MeetingCanlendar.Controllers
                     metModel.AddMeeting(metInfo);
 
                 }
-                foreach (int pep in userIds)
+                foreach (short pep in userIds)
                 {
                     meeting_people mp = new meeting_people();
                     mp.mp_meeting_id = metInfo.id;
@@ -185,7 +193,7 @@ namespace MeetingCanlendar.Controllers
                     memo = metInfo.mi_memo,
                     position = metInfo.mi_position_id,
                     positionName = metInfo.meeting_positionReference.Value.mp_name,
-                    creator = metInfo.user_infoReference.Value.ui_name,
+                    creator = metInfo.user_info.ui_name,
                     level = metInfo.mi_level_id,
                     levelName = metInfo.meeting_level_catgReference.Value.ml_name,
                     createTime = metInfo.mi_create_time.ToString("yyyy-MM-ddTHH:mm:ss"),

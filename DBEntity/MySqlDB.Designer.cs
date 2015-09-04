@@ -19,12 +19,12 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM 关系源元数据
 
-[assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk", "user_info", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.user_info), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
-[assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk_1", "meeting_position", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.meeting_position), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
-[assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk_3", "meeting_level_catg", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.meeting_level_catg), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
-[assembly: EdmRelationshipAttribute("MCDBModel", "meeting_re", "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.meeting_info), "meeting_people", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_people), true)]
-[assembly: EdmRelationshipAttribute("MCDBModel", "user_re", "user_info", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.user_info), "meeting_people", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_people), true)]
 [assembly: EdmRelationshipAttribute("MCDBModel", "user_info_ibfk_1", "user_grade_catg", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.user_grade_catg), "user_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.user_info), true)]
+[assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk_1", "meeting_position", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.meeting_position), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
+[assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk_2", "user_info", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.user_info), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
+[assembly: EdmRelationshipAttribute("MCDBModel", "meeting_info_ibfk_3", "meeting_level_catg", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.meeting_level_catg), "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_info), true)]
+[assembly: EdmRelationshipAttribute("MCDBModel", "fk_meeting_id", "meeting_info", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.meeting_info), "meeting_people", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_people), true)]
+[assembly: EdmRelationshipAttribute("MCDBModel", "fk_user_id", "user_info", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBEntity.user_info), "meeting_people", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBEntity.meeting_people), true)]
 
 #endregion
 
@@ -79,22 +79,6 @@ namespace DBEntity
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<meeting_info> meeting_info
-        {
-            get
-            {
-                if ((_meeting_info == null))
-                {
-                    _meeting_info = base.CreateObjectSet<meeting_info>("meeting_info");
-                }
-                return _meeting_info;
-            }
-        }
-        private ObjectSet<meeting_info> _meeting_info;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<meeting_level_catg> meeting_level_catg
         {
             get
@@ -107,22 +91,6 @@ namespace DBEntity
             }
         }
         private ObjectSet<meeting_level_catg> _meeting_level_catg;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        public ObjectSet<meeting_people> meeting_people
-        {
-            get
-            {
-                if ((_meeting_people == null))
-                {
-                    _meeting_people = base.CreateObjectSet<meeting_people>("meeting_people");
-                }
-                return _meeting_people;
-            }
-        }
-        private ObjectSet<meeting_people> _meeting_people;
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -175,6 +143,38 @@ namespace DBEntity
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
+        public ObjectSet<user_info_detail> user_info_detail
+        {
+            get
+            {
+                if ((_user_info_detail == null))
+                {
+                    _user_info_detail = base.CreateObjectSet<user_info_detail>("user_info_detail");
+                }
+                return _user_info_detail;
+            }
+        }
+        private ObjectSet<user_info_detail> _user_info_detail;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<meeting_info> meeting_info
+        {
+            get
+            {
+                if ((_meeting_info == null))
+                {
+                    _meeting_info = base.CreateObjectSet<meeting_info>("meeting_info");
+                }
+                return _meeting_info;
+            }
+        }
+        private ObjectSet<meeting_info> _meeting_info;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
         public ObjectSet<meeting_info_detail> meeting_info_detail
         {
             get
@@ -191,30 +191,22 @@ namespace DBEntity
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<user_info_detail> user_info_detail
+        public ObjectSet<meeting_people> meeting_people
         {
             get
             {
-                if ((_user_info_detail == null))
+                if ((_meeting_people == null))
                 {
-                    _user_info_detail = base.CreateObjectSet<user_info_detail>("user_info_detail");
+                    _meeting_people = base.CreateObjectSet<meeting_people>("meeting_people");
                 }
-                return _user_info_detail;
+                return _meeting_people;
             }
         }
-        private ObjectSet<user_info_detail> _user_info_detail;
+        private ObjectSet<meeting_people> _meeting_people;
 
         #endregion
 
         #region AddTo 方法
-    
-        /// <summary>
-        /// 用于向 meeting_info EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTomeeting_info(meeting_info meeting_info)
-        {
-            base.AddObject("meeting_info", meeting_info);
-        }
     
         /// <summary>
         /// 用于向 meeting_level_catg EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
@@ -222,14 +214,6 @@ namespace DBEntity
         public void AddTomeeting_level_catg(meeting_level_catg meeting_level_catg)
         {
             base.AddObject("meeting_level_catg", meeting_level_catg);
-        }
-    
-        /// <summary>
-        /// 用于向 meeting_people EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTomeeting_people(meeting_people meeting_people)
-        {
-            base.AddObject("meeting_people", meeting_people);
         }
     
         /// <summary>
@@ -257,6 +241,22 @@ namespace DBEntity
         }
     
         /// <summary>
+        /// 用于向 user_info_detail EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTouser_info_detail(user_info_detail user_info_detail)
+        {
+            base.AddObject("user_info_detail", user_info_detail);
+        }
+    
+        /// <summary>
+        /// 用于向 meeting_info EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTomeeting_info(meeting_info meeting_info)
+        {
+            base.AddObject("meeting_info", meeting_info);
+        }
+    
+        /// <summary>
         /// 用于向 meeting_info_detail EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddTomeeting_info_detail(meeting_info_detail meeting_info_detail)
@@ -265,11 +265,11 @@ namespace DBEntity
         }
     
         /// <summary>
-        /// 用于向 user_info_detail EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// 用于向 meeting_people EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
-        public void AddTouser_info_detail(user_info_detail user_info_detail)
+        public void AddTomeeting_people(meeting_people meeting_people)
         {
-            base.AddObject("user_info_detail", user_info_detail);
+            base.AddObject("meeting_people", meeting_people);
         }
 
         #endregion
@@ -302,7 +302,7 @@ namespace DBEntity
         /// <param name="mi_status">mi_status 属性的初始值。</param>
         /// <param name="mi_creator">mi_creator 属性的初始值。</param>
         /// <param name="mi_create_time">mi_create_time 属性的初始值。</param>
-        public static meeting_info Createmeeting_info(global::System.Int32 id, global::System.String mi_title, global::System.Int16 mi_position_id, global::System.DateTime mi_start_time, global::System.DateTime mi_end_time, global::System.SByte mi_level_id, global::System.Boolean mi_status, global::System.Int32 mi_creator, global::System.DateTime mi_create_time)
+        public static meeting_info Createmeeting_info(global::System.Int32 id, global::System.String mi_title, global::System.Int16 mi_position_id, global::System.DateTime mi_start_time, global::System.DateTime mi_end_time, global::System.SByte mi_level_id, global::System.Boolean mi_status, global::System.Int16 mi_creator, global::System.DateTime mi_create_time)
         {
             meeting_info meeting_info = new meeting_info();
             meeting_info.id = id;
@@ -319,7 +319,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -338,7 +338,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -363,7 +363,7 @@ namespace DBEntity
             {
                 Onmi_titleChanging(value);
                 ReportPropertyChanging("mi_title");
-                _mi_title = StructuralObject.SetValidValue(value, false);
+                _mi_title = StructuralObject.SetValidValue(value, false, "mi_title");
                 ReportPropertyChanged("mi_title");
                 Onmi_titleChanged();
             }
@@ -387,7 +387,7 @@ namespace DBEntity
             {
                 Onmi_position_idChanging(value);
                 ReportPropertyChanging("mi_position_id");
-                _mi_position_id = StructuralObject.SetValidValue(value);
+                _mi_position_id = StructuralObject.SetValidValue(value, "mi_position_id");
                 ReportPropertyChanged("mi_position_id");
                 Onmi_position_idChanged();
             }
@@ -395,54 +395,6 @@ namespace DBEntity
         private global::System.Int16 _mi_position_id;
         partial void Onmi_position_idChanging(global::System.Int16 value);
         partial void Onmi_position_idChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime mi_start_time
-        {
-            get
-            {
-                return _mi_start_time;
-            }
-            set
-            {
-                Onmi_start_timeChanging(value);
-                ReportPropertyChanging("mi_start_time");
-                _mi_start_time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("mi_start_time");
-                Onmi_start_timeChanged();
-            }
-        }
-        private global::System.DateTime _mi_start_time;
-        partial void Onmi_start_timeChanging(global::System.DateTime value);
-        partial void Onmi_start_timeChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime mi_end_time
-        {
-            get
-            {
-                return _mi_end_time;
-            }
-            set
-            {
-                Onmi_end_timeChanging(value);
-                ReportPropertyChanging("mi_end_time");
-                _mi_end_time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("mi_end_time");
-                Onmi_end_timeChanged();
-            }
-        }
-        private global::System.DateTime _mi_end_time;
-        partial void Onmi_end_timeChanging(global::System.DateTime value);
-        partial void Onmi_end_timeChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -459,7 +411,7 @@ namespace DBEntity
             {
                 Onmi_peopleChanging(value);
                 ReportPropertyChanging("mi_people");
-                _mi_people = StructuralObject.SetValidValue(value, true);
+                _mi_people = StructuralObject.SetValidValue(value, true, "mi_people");
                 ReportPropertyChanged("mi_people");
                 Onmi_peopleChanged();
             }
@@ -483,7 +435,7 @@ namespace DBEntity
             {
                 Onmi_people_nameChanging(value);
                 ReportPropertyChanging("mi_people_name");
-                _mi_people_name = StructuralObject.SetValidValue(value, true);
+                _mi_people_name = StructuralObject.SetValidValue(value, true, "mi_people_name");
                 ReportPropertyChanged("mi_people_name");
                 Onmi_people_nameChanged();
             }
@@ -491,6 +443,54 @@ namespace DBEntity
         private global::System.String _mi_people_name;
         partial void Onmi_people_nameChanging(global::System.String value);
         partial void Onmi_people_nameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime mi_start_time
+        {
+            get
+            {
+                return _mi_start_time;
+            }
+            set
+            {
+                Onmi_start_timeChanging(value);
+                ReportPropertyChanging("mi_start_time");
+                _mi_start_time = StructuralObject.SetValidValue(value, "mi_start_time");
+                ReportPropertyChanged("mi_start_time");
+                Onmi_start_timeChanged();
+            }
+        }
+        private global::System.DateTime _mi_start_time;
+        partial void Onmi_start_timeChanging(global::System.DateTime value);
+        partial void Onmi_start_timeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime mi_end_time
+        {
+            get
+            {
+                return _mi_end_time;
+            }
+            set
+            {
+                Onmi_end_timeChanging(value);
+                ReportPropertyChanging("mi_end_time");
+                _mi_end_time = StructuralObject.SetValidValue(value, "mi_end_time");
+                ReportPropertyChanged("mi_end_time");
+                Onmi_end_timeChanged();
+            }
+        }
+        private global::System.DateTime _mi_end_time;
+        partial void Onmi_end_timeChanging(global::System.DateTime value);
+        partial void Onmi_end_timeChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -507,7 +507,7 @@ namespace DBEntity
             {
                 Onmi_level_idChanging(value);
                 ReportPropertyChanging("mi_level_id");
-                _mi_level_id = StructuralObject.SetValidValue(value);
+                _mi_level_id = StructuralObject.SetValidValue(value, "mi_level_id");
                 ReportPropertyChanged("mi_level_id");
                 Onmi_level_idChanged();
             }
@@ -531,7 +531,7 @@ namespace DBEntity
             {
                 Onmi_statusChanging(value);
                 ReportPropertyChanging("mi_status");
-                _mi_status = StructuralObject.SetValidValue(value);
+                _mi_status = StructuralObject.SetValidValue(value, "mi_status");
                 ReportPropertyChanged("mi_status");
                 Onmi_statusChanged();
             }
@@ -545,7 +545,7 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 mi_creator
+        public global::System.Int16 mi_creator
         {
             get
             {
@@ -555,13 +555,13 @@ namespace DBEntity
             {
                 Onmi_creatorChanging(value);
                 ReportPropertyChanging("mi_creator");
-                _mi_creator = StructuralObject.SetValidValue(value);
+                _mi_creator = StructuralObject.SetValidValue(value, "mi_creator");
                 ReportPropertyChanged("mi_creator");
                 Onmi_creatorChanged();
             }
         }
-        private global::System.Int32 _mi_creator;
-        partial void Onmi_creatorChanging(global::System.Int32 value);
+        private global::System.Int16 _mi_creator;
+        partial void Onmi_creatorChanging(global::System.Int16 value);
         partial void Onmi_creatorChanged();
     
         /// <summary>
@@ -579,7 +579,7 @@ namespace DBEntity
             {
                 Onmi_create_timeChanging(value);
                 ReportPropertyChanging("mi_create_time");
-                _mi_create_time = StructuralObject.SetValidValue(value);
+                _mi_create_time = StructuralObject.SetValidValue(value, "mi_create_time");
                 ReportPropertyChanged("mi_create_time");
                 Onmi_create_timeChanged();
             }
@@ -603,7 +603,7 @@ namespace DBEntity
             {
                 Onmi_memoChanging(value);
                 ReportPropertyChanging("mi_memo");
-                _mi_memo = StructuralObject.SetValidValue(value, true);
+                _mi_memo = StructuralObject.SetValidValue(value, true, "mi_memo");
                 ReportPropertyChanged("mi_memo");
                 Onmi_memoChanged();
             }
@@ -614,46 +614,7 @@ namespace DBEntity
 
         #endregion
 
-    
         #region 导航属性
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "meeting_info_ibfk", "user_info")]
-        public user_info user_info
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.meeting_info_ibfk", "user_info").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.meeting_info_ibfk", "user_info").Value = value;
-            }
-        }
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<user_info> user_infoReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.meeting_info_ibfk", "user_info");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user_info>("MCDBModel.meeting_info_ibfk", "user_info", value);
-                }
-            }
-        }
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -689,6 +650,44 @@ namespace DBEntity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<meeting_position>("MCDBModel.meeting_info_ibfk_1", "meeting_position", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "meeting_info_ibfk_2", "user_info")]
+        public user_info user_info
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.meeting_info_ibfk_2", "user_info").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.meeting_info_ibfk_2", "user_info").Value = value;
+            }
+        }
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<user_info> user_infoReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.meeting_info_ibfk_2", "user_info");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user_info>("MCDBModel.meeting_info_ibfk_2", "user_info", value);
                 }
             }
         }
@@ -737,18 +736,18 @@ namespace DBEntity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "meeting_re", "meeting_people")]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "fk_meeting_id", "meeting_people")]
         public EntityCollection<meeting_people> meeting_people
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<meeting_people>("MCDBModel.meeting_re", "meeting_people");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<meeting_people>("MCDBModel.fk_meeting_id", "meeting_people");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<meeting_people>("MCDBModel.meeting_re", "meeting_people", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<meeting_people>("MCDBModel.fk_meeting_id", "meeting_people", value);
                 }
             }
         }
@@ -784,7 +783,7 @@ namespace DBEntity
         /// <param name="mi_creator_name">mi_creator_name 属性的初始值。</param>
         /// <param name="mi_status">mi_status 属性的初始值。</param>
         /// <param name="mi_create_time">mi_create_time 属性的初始值。</param>
-        public static meeting_info_detail Createmeeting_info_detail(global::System.Int32 id, global::System.String mi_title, global::System.Int16 mi_position_id, global::System.String mi_position, global::System.SByte mi_position_size, global::System.DateTime mi_start_time, global::System.DateTime mi_end_time, global::System.SByte mi_level_id, global::System.SByte mi_level, global::System.String mi_level_name, global::System.Int32 mi_creator, global::System.String mi_creator_name, global::System.Boolean mi_status, global::System.DateTime mi_create_time)
+        public static meeting_info_detail Createmeeting_info_detail(global::System.Int32 id, global::System.String mi_title, global::System.Int16 mi_position_id, global::System.String mi_position, global::System.SByte mi_position_size, global::System.DateTime mi_start_time, global::System.DateTime mi_end_time, global::System.SByte mi_level_id, global::System.SByte mi_level, global::System.String mi_level_name, global::System.Int16 mi_creator, global::System.String mi_creator_name, global::System.Boolean mi_status, global::System.DateTime mi_create_time)
         {
             meeting_info_detail meeting_info_detail = new meeting_info_detail();
             meeting_info_detail.id = id;
@@ -806,7 +805,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -825,7 +824,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -852,7 +851,7 @@ namespace DBEntity
                 {
                     Onmi_titleChanging(value);
                     ReportPropertyChanging("mi_title");
-                    _mi_title = StructuralObject.SetValidValue(value, false);
+                    _mi_title = StructuralObject.SetValidValue(value, false, "mi_title");
                     ReportPropertyChanged("mi_title");
                     Onmi_titleChanged();
                 }
@@ -879,7 +878,7 @@ namespace DBEntity
                 {
                     Onmi_position_idChanging(value);
                     ReportPropertyChanging("mi_position_id");
-                    _mi_position_id = StructuralObject.SetValidValue(value);
+                    _mi_position_id = StructuralObject.SetValidValue(value, "mi_position_id");
                     ReportPropertyChanged("mi_position_id");
                     Onmi_position_idChanged();
                 }
@@ -906,7 +905,7 @@ namespace DBEntity
                 {
                     Onmi_positionChanging(value);
                     ReportPropertyChanging("mi_position");
-                    _mi_position = StructuralObject.SetValidValue(value, false);
+                    _mi_position = StructuralObject.SetValidValue(value, false, "mi_position");
                     ReportPropertyChanged("mi_position");
                     Onmi_positionChanged();
                 }
@@ -933,7 +932,7 @@ namespace DBEntity
                 {
                     Onmi_position_sizeChanging(value);
                     ReportPropertyChanging("mi_position_size");
-                    _mi_position_size = StructuralObject.SetValidValue(value);
+                    _mi_position_size = StructuralObject.SetValidValue(value, "mi_position_size");
                     ReportPropertyChanged("mi_position_size");
                     Onmi_position_sizeChanged();
                 }
@@ -958,7 +957,7 @@ namespace DBEntity
             {
                 Onmi_peopleChanging(value);
                 ReportPropertyChanging("mi_people");
-                _mi_people = StructuralObject.SetValidValue(value, true);
+                _mi_people = StructuralObject.SetValidValue(value, true, "mi_people");
                 ReportPropertyChanged("mi_people");
                 Onmi_peopleChanged();
             }
@@ -984,7 +983,7 @@ namespace DBEntity
                 {
                     Onmi_start_timeChanging(value);
                     ReportPropertyChanging("mi_start_time");
-                    _mi_start_time = StructuralObject.SetValidValue(value);
+                    _mi_start_time = StructuralObject.SetValidValue(value, "mi_start_time");
                     ReportPropertyChanged("mi_start_time");
                     Onmi_start_timeChanged();
                 }
@@ -1011,7 +1010,7 @@ namespace DBEntity
                 {
                     Onmi_end_timeChanging(value);
                     ReportPropertyChanging("mi_end_time");
-                    _mi_end_time = StructuralObject.SetValidValue(value);
+                    _mi_end_time = StructuralObject.SetValidValue(value, "mi_end_time");
                     ReportPropertyChanged("mi_end_time");
                     Onmi_end_timeChanged();
                 }
@@ -1038,7 +1037,7 @@ namespace DBEntity
                 {
                     Onmi_level_idChanging(value);
                     ReportPropertyChanging("mi_level_id");
-                    _mi_level_id = StructuralObject.SetValidValue(value);
+                    _mi_level_id = StructuralObject.SetValidValue(value, "mi_level_id");
                     ReportPropertyChanged("mi_level_id");
                     Onmi_level_idChanged();
                 }
@@ -1065,7 +1064,7 @@ namespace DBEntity
                 {
                     Onmi_levelChanging(value);
                     ReportPropertyChanging("mi_level");
-                    _mi_level = StructuralObject.SetValidValue(value);
+                    _mi_level = StructuralObject.SetValidValue(value, "mi_level");
                     ReportPropertyChanged("mi_level");
                     Onmi_levelChanged();
                 }
@@ -1092,7 +1091,7 @@ namespace DBEntity
                 {
                     Onmi_level_nameChanging(value);
                     ReportPropertyChanging("mi_level_name");
-                    _mi_level_name = StructuralObject.SetValidValue(value, false);
+                    _mi_level_name = StructuralObject.SetValidValue(value, false, "mi_level_name");
                     ReportPropertyChanged("mi_level_name");
                     Onmi_level_nameChanged();
                 }
@@ -1107,7 +1106,7 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 mi_creator
+        public global::System.Int16 mi_creator
         {
             get
             {
@@ -1119,14 +1118,14 @@ namespace DBEntity
                 {
                     Onmi_creatorChanging(value);
                     ReportPropertyChanging("mi_creator");
-                    _mi_creator = StructuralObject.SetValidValue(value);
+                    _mi_creator = StructuralObject.SetValidValue(value, "mi_creator");
                     ReportPropertyChanged("mi_creator");
                     Onmi_creatorChanged();
                 }
             }
         }
-        private global::System.Int32 _mi_creator;
-        partial void Onmi_creatorChanging(global::System.Int32 value);
+        private global::System.Int16 _mi_creator;
+        partial void Onmi_creatorChanging(global::System.Int16 value);
         partial void Onmi_creatorChanged();
     
         /// <summary>
@@ -1146,7 +1145,7 @@ namespace DBEntity
                 {
                     Onmi_creator_nameChanging(value);
                     ReportPropertyChanging("mi_creator_name");
-                    _mi_creator_name = StructuralObject.SetValidValue(value, false);
+                    _mi_creator_name = StructuralObject.SetValidValue(value, false, "mi_creator_name");
                     ReportPropertyChanged("mi_creator_name");
                     Onmi_creator_nameChanged();
                 }
@@ -1173,7 +1172,7 @@ namespace DBEntity
                 {
                     Onmi_statusChanging(value);
                     ReportPropertyChanging("mi_status");
-                    _mi_status = StructuralObject.SetValidValue(value);
+                    _mi_status = StructuralObject.SetValidValue(value, "mi_status");
                     ReportPropertyChanged("mi_status");
                     Onmi_statusChanged();
                 }
@@ -1200,7 +1199,7 @@ namespace DBEntity
                 {
                     Onmi_create_timeChanging(value);
                     ReportPropertyChanging("mi_create_time");
-                    _mi_create_time = StructuralObject.SetValidValue(value);
+                    _mi_create_time = StructuralObject.SetValidValue(value, "mi_create_time");
                     ReportPropertyChanged("mi_create_time");
                     Onmi_create_timeChanged();
                 }
@@ -1225,7 +1224,7 @@ namespace DBEntity
             {
                 Onmi_memoChanging(value);
                 ReportPropertyChanging("mi_memo");
-                _mi_memo = StructuralObject.SetValidValue(value, true);
+                _mi_memo = StructuralObject.SetValidValue(value, true, "mi_memo");
                 ReportPropertyChanged("mi_memo");
                 Onmi_memoChanged();
             }
@@ -1249,7 +1248,7 @@ namespace DBEntity
             {
                 Onmi_people_nameChanging(value);
                 ReportPropertyChanging("mi_people_name");
-                _mi_people_name = StructuralObject.SetValidValue(value, true);
+                _mi_people_name = StructuralObject.SetValidValue(value, true, "mi_people_name");
                 ReportPropertyChanged("mi_people_name");
                 Onmi_people_nameChanged();
             }
@@ -1260,7 +1259,6 @@ namespace DBEntity
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -1290,7 +1288,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1309,7 +1307,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1334,7 +1332,7 @@ namespace DBEntity
             {
                 Onml_levelChanging(value);
                 ReportPropertyChanging("ml_level");
-                _ml_level = StructuralObject.SetValidValue(value);
+                _ml_level = StructuralObject.SetValidValue(value, "ml_level");
                 ReportPropertyChanged("ml_level");
                 Onml_levelChanged();
             }
@@ -1358,7 +1356,7 @@ namespace DBEntity
             {
                 Onml_nameChanging(value);
                 ReportPropertyChanging("ml_name");
-                _ml_name = StructuralObject.SetValidValue(value, false);
+                _ml_name = StructuralObject.SetValidValue(value, false, "ml_name");
                 ReportPropertyChanged("ml_name");
                 Onml_nameChanged();
             }
@@ -1369,7 +1367,6 @@ namespace DBEntity
 
         #endregion
 
-    
         #region 导航属性
     
         /// <summary>
@@ -1414,7 +1411,7 @@ namespace DBEntity
         /// <param name="id">id 属性的初始值。</param>
         /// <param name="mp_meeting_id">mp_meeting_id 属性的初始值。</param>
         /// <param name="mp_user_id">mp_user_id 属性的初始值。</param>
-        public static meeting_people Createmeeting_people(global::System.Int32 id, global::System.Int32 mp_meeting_id, global::System.Int32 mp_user_id)
+        public static meeting_people Createmeeting_people(global::System.Int32 id, global::System.Int32 mp_meeting_id, global::System.Int16 mp_user_id)
         {
             meeting_people meeting_people = new meeting_people();
             meeting_people.id = id;
@@ -1425,7 +1422,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1444,7 +1441,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1469,7 +1466,7 @@ namespace DBEntity
             {
                 Onmp_meeting_idChanging(value);
                 ReportPropertyChanging("mp_meeting_id");
-                _mp_meeting_id = StructuralObject.SetValidValue(value);
+                _mp_meeting_id = StructuralObject.SetValidValue(value, "mp_meeting_id");
                 ReportPropertyChanged("mp_meeting_id");
                 Onmp_meeting_idChanged();
             }
@@ -1483,7 +1480,7 @@ namespace DBEntity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 mp_user_id
+        public global::System.Int16 mp_user_id
         {
             get
             {
@@ -1493,18 +1490,17 @@ namespace DBEntity
             {
                 Onmp_user_idChanging(value);
                 ReportPropertyChanging("mp_user_id");
-                _mp_user_id = StructuralObject.SetValidValue(value);
+                _mp_user_id = StructuralObject.SetValidValue(value, "mp_user_id");
                 ReportPropertyChanged("mp_user_id");
                 Onmp_user_idChanged();
             }
         }
-        private global::System.Int32 _mp_user_id;
-        partial void Onmp_user_idChanging(global::System.Int32 value);
+        private global::System.Int16 _mp_user_id;
+        partial void Onmp_user_idChanging(global::System.Int16 value);
         partial void Onmp_user_idChanged();
 
         #endregion
 
-    
         #region 导航属性
     
         /// <summary>
@@ -1513,16 +1509,16 @@ namespace DBEntity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "meeting_re", "meeting_info")]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "fk_meeting_id", "meeting_info")]
         public meeting_info meeting_info
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<meeting_info>("MCDBModel.meeting_re", "meeting_info").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<meeting_info>("MCDBModel.fk_meeting_id", "meeting_info").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<meeting_info>("MCDBModel.meeting_re", "meeting_info").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<meeting_info>("MCDBModel.fk_meeting_id", "meeting_info").Value = value;
             }
         }
         /// <summary>
@@ -1534,13 +1530,13 @@ namespace DBEntity
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<meeting_info>("MCDBModel.meeting_re", "meeting_info");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<meeting_info>("MCDBModel.fk_meeting_id", "meeting_info");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<meeting_info>("MCDBModel.meeting_re", "meeting_info", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<meeting_info>("MCDBModel.fk_meeting_id", "meeting_info", value);
                 }
             }
         }
@@ -1551,16 +1547,16 @@ namespace DBEntity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "user_re", "user_info")]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "fk_user_id", "user_info")]
         public user_info user_info
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.user_re", "user_info").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.fk_user_id", "user_info").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.user_re", "user_info").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.fk_user_id", "user_info").Value = value;
             }
         }
         /// <summary>
@@ -1572,13 +1568,13 @@ namespace DBEntity
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.user_re", "user_info");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user_info>("MCDBModel.fk_user_id", "user_info");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user_info>("MCDBModel.user_re", "user_info", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user_info>("MCDBModel.fk_user_id", "user_info", value);
                 }
             }
         }
@@ -1614,7 +1610,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1633,7 +1629,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1658,7 +1654,7 @@ namespace DBEntity
             {
                 Onmp_nameChanging(value);
                 ReportPropertyChanging("mp_name");
-                _mp_name = StructuralObject.SetValidValue(value, false);
+                _mp_name = StructuralObject.SetValidValue(value, false, "mp_name");
                 ReportPropertyChanged("mp_name");
                 Onmp_nameChanged();
             }
@@ -1682,7 +1678,7 @@ namespace DBEntity
             {
                 Onmp_sizeChanging(value);
                 ReportPropertyChanging("mp_size");
-                _mp_size = StructuralObject.SetValidValue(value);
+                _mp_size = StructuralObject.SetValidValue(value, "mp_size");
                 ReportPropertyChanged("mp_size");
                 Onmp_sizeChanged();
             }
@@ -1693,7 +1689,6 @@ namespace DBEntity
 
         #endregion
 
-    
         #region 导航属性
     
         /// <summary>
@@ -1749,7 +1744,7 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -1768,7 +1763,7 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
@@ -1793,7 +1788,7 @@ namespace DBEntity
             {
                 Ongc_levelChanging(value);
                 ReportPropertyChanging("gc_level");
-                _gc_level = StructuralObject.SetValidValue(value);
+                _gc_level = StructuralObject.SetValidValue(value, "gc_level");
                 ReportPropertyChanged("gc_level");
                 Ongc_levelChanged();
             }
@@ -1817,7 +1812,7 @@ namespace DBEntity
             {
                 Ongc_nameChanging(value);
                 ReportPropertyChanging("gc_name");
-                _gc_name = StructuralObject.SetValidValue(value, false);
+                _gc_name = StructuralObject.SetValidValue(value, false, "gc_name");
                 ReportPropertyChanged("gc_name");
                 Ongc_nameChanged();
             }
@@ -1828,7 +1823,6 @@ namespace DBEntity
 
         #endregion
 
-    
         #region 导航属性
     
         /// <summary>
@@ -1878,7 +1872,7 @@ namespace DBEntity
         /// <param name="ui_gender">ui_gender 属性的初始值。</param>
         /// <param name="ui_status">ui_status 属性的初始值。</param>
         /// <param name="ui_create_time">ui_create_time 属性的初始值。</param>
-        public static user_info Createuser_info(global::System.Int32 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.Boolean ui_status, global::System.DateTime ui_create_time)
+        public static user_info Createuser_info(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.Boolean ui_status, global::System.DateTime ui_create_time)
         {
             user_info user_info = new user_info();
             user_info.id = id;
@@ -1894,14 +1888,14 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 id
+        public global::System.Int16 id
         {
             get
             {
@@ -1913,14 +1907,14 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
             }
         }
-        private global::System.Int32 _id;
-        partial void OnidChanging(global::System.Int32 value);
+        private global::System.Int16 _id;
+        partial void OnidChanging(global::System.Int16 value);
         partial void OnidChanged();
     
         /// <summary>
@@ -1938,7 +1932,7 @@ namespace DBEntity
             {
                 Onui_nameChanging(value);
                 ReportPropertyChanging("ui_name");
-                _ui_name = StructuralObject.SetValidValue(value, false);
+                _ui_name = StructuralObject.SetValidValue(value, false, "ui_name");
                 ReportPropertyChanged("ui_name");
                 Onui_nameChanged();
             }
@@ -1962,7 +1956,7 @@ namespace DBEntity
             {
                 Onui_passwordChanging(value);
                 ReportPropertyChanging("ui_password");
-                _ui_password = StructuralObject.SetValidValue(value, false);
+                _ui_password = StructuralObject.SetValidValue(value, false, "ui_password");
                 ReportPropertyChanged("ui_password");
                 Onui_passwordChanged();
             }
@@ -1986,7 +1980,7 @@ namespace DBEntity
             {
                 Onui_emailChanging(value);
                 ReportPropertyChanging("ui_email");
-                _ui_email = StructuralObject.SetValidValue(value, false);
+                _ui_email = StructuralObject.SetValidValue(value, false, "ui_email");
                 ReportPropertyChanged("ui_email");
                 Onui_emailChanged();
             }
@@ -2010,7 +2004,7 @@ namespace DBEntity
             {
                 Onui_grade_idChanging(value);
                 ReportPropertyChanging("ui_grade_id");
-                _ui_grade_id = StructuralObject.SetValidValue(value);
+                _ui_grade_id = StructuralObject.SetValidValue(value, "ui_grade_id");
                 ReportPropertyChanged("ui_grade_id");
                 Onui_grade_idChanged();
             }
@@ -2034,7 +2028,7 @@ namespace DBEntity
             {
                 Onui_genderChanging(value);
                 ReportPropertyChanging("ui_gender");
-                _ui_gender = StructuralObject.SetValidValue(value);
+                _ui_gender = StructuralObject.SetValidValue(value, "ui_gender");
                 ReportPropertyChanged("ui_gender");
                 Onui_genderChanged();
             }
@@ -2058,7 +2052,7 @@ namespace DBEntity
             {
                 Onui_statusChanging(value);
                 ReportPropertyChanging("ui_status");
-                _ui_status = StructuralObject.SetValidValue(value);
+                _ui_status = StructuralObject.SetValidValue(value, "ui_status");
                 ReportPropertyChanged("ui_status");
                 Onui_statusChanged();
             }
@@ -2082,7 +2076,7 @@ namespace DBEntity
             {
                 Onui_create_timeChanging(value);
                 ReportPropertyChanging("ui_create_time");
-                _ui_create_time = StructuralObject.SetValidValue(value);
+                _ui_create_time = StructuralObject.SetValidValue(value, "ui_create_time");
                 ReportPropertyChanged("ui_create_time");
                 Onui_create_timeChanged();
             }
@@ -2093,52 +2087,7 @@ namespace DBEntity
 
         #endregion
 
-    
         #region 导航属性
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "meeting_info_ibfk", "meeting_info")]
-        public EntityCollection<meeting_info> meeting_info
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<meeting_info>("MCDBModel.meeting_info_ibfk", "meeting_info");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<meeting_info>("MCDBModel.meeting_info_ibfk", "meeting_info", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "user_re", "meeting_people")]
-        public EntityCollection<meeting_people> meeting_people
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<meeting_people>("MCDBModel.user_re", "meeting_people");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<meeting_people>("MCDBModel.user_re", "meeting_people", value);
-                }
-            }
-        }
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -2177,6 +2126,50 @@ namespace DBEntity
                 }
             }
         }
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "meeting_info_ibfk_2", "meeting_info")]
+        public EntityCollection<meeting_info> meeting_info
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<meeting_info>("MCDBModel.meeting_info_ibfk_2", "meeting_info");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<meeting_info>("MCDBModel.meeting_info_ibfk_2", "meeting_info", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCDBModel", "fk_user_id", "meeting_people")]
+        public EntityCollection<meeting_people> meeting_people
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<meeting_people>("MCDBModel.fk_user_id", "meeting_people");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<meeting_people>("MCDBModel.fk_user_id", "meeting_people", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -2205,7 +2198,7 @@ namespace DBEntity
         /// <param name="ui_create_time">ui_create_time 属性的初始值。</param>
         /// <param name="ui_grade_level">ui_grade_level 属性的初始值。</param>
         /// <param name="ui_grade_name">ui_grade_name 属性的初始值。</param>
-        public static user_info_detail Createuser_info_detail(global::System.Int32 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.Boolean ui_status, global::System.DateTime ui_create_time, global::System.SByte ui_grade_level, global::System.String ui_grade_name)
+        public static user_info_detail Createuser_info_detail(global::System.Int16 id, global::System.String ui_name, global::System.String ui_password, global::System.String ui_email, global::System.SByte ui_grade_id, global::System.Boolean ui_gender, global::System.Boolean ui_status, global::System.DateTime ui_create_time, global::System.SByte ui_grade_level, global::System.String ui_grade_name)
         {
             user_info_detail user_info_detail = new user_info_detail();
             user_info_detail.id = id;
@@ -2223,14 +2216,14 @@ namespace DBEntity
 
         #endregion
 
-        #region 基元属性
+        #region 简单属性
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 id
+        public global::System.Int16 id
         {
             get
             {
@@ -2242,14 +2235,14 @@ namespace DBEntity
                 {
                     OnidChanging(value);
                     ReportPropertyChanging("id");
-                    _id = StructuralObject.SetValidValue(value);
+                    _id = StructuralObject.SetValidValue(value, "id");
                     ReportPropertyChanged("id");
                     OnidChanged();
                 }
             }
         }
-        private global::System.Int32 _id;
-        partial void OnidChanging(global::System.Int32 value);
+        private global::System.Int16 _id;
+        partial void OnidChanging(global::System.Int16 value);
         partial void OnidChanged();
     
         /// <summary>
@@ -2269,7 +2262,7 @@ namespace DBEntity
                 {
                     Onui_nameChanging(value);
                     ReportPropertyChanging("ui_name");
-                    _ui_name = StructuralObject.SetValidValue(value, false);
+                    _ui_name = StructuralObject.SetValidValue(value, false, "ui_name");
                     ReportPropertyChanged("ui_name");
                     Onui_nameChanged();
                 }
@@ -2296,7 +2289,7 @@ namespace DBEntity
                 {
                     Onui_passwordChanging(value);
                     ReportPropertyChanging("ui_password");
-                    _ui_password = StructuralObject.SetValidValue(value, false);
+                    _ui_password = StructuralObject.SetValidValue(value, false, "ui_password");
                     ReportPropertyChanged("ui_password");
                     Onui_passwordChanged();
                 }
@@ -2323,7 +2316,7 @@ namespace DBEntity
                 {
                     Onui_emailChanging(value);
                     ReportPropertyChanging("ui_email");
-                    _ui_email = StructuralObject.SetValidValue(value, false);
+                    _ui_email = StructuralObject.SetValidValue(value, false, "ui_email");
                     ReportPropertyChanged("ui_email");
                     Onui_emailChanged();
                 }
@@ -2350,7 +2343,7 @@ namespace DBEntity
                 {
                     Onui_grade_idChanging(value);
                     ReportPropertyChanging("ui_grade_id");
-                    _ui_grade_id = StructuralObject.SetValidValue(value);
+                    _ui_grade_id = StructuralObject.SetValidValue(value, "ui_grade_id");
                     ReportPropertyChanged("ui_grade_id");
                     Onui_grade_idChanged();
                 }
@@ -2377,7 +2370,7 @@ namespace DBEntity
                 {
                     Onui_genderChanging(value);
                     ReportPropertyChanging("ui_gender");
-                    _ui_gender = StructuralObject.SetValidValue(value);
+                    _ui_gender = StructuralObject.SetValidValue(value, "ui_gender");
                     ReportPropertyChanged("ui_gender");
                     Onui_genderChanged();
                 }
@@ -2404,7 +2397,7 @@ namespace DBEntity
                 {
                     Onui_statusChanging(value);
                     ReportPropertyChanging("ui_status");
-                    _ui_status = StructuralObject.SetValidValue(value);
+                    _ui_status = StructuralObject.SetValidValue(value, "ui_status");
                     ReportPropertyChanged("ui_status");
                     Onui_statusChanged();
                 }
@@ -2431,7 +2424,7 @@ namespace DBEntity
                 {
                     Onui_create_timeChanging(value);
                     ReportPropertyChanging("ui_create_time");
-                    _ui_create_time = StructuralObject.SetValidValue(value);
+                    _ui_create_time = StructuralObject.SetValidValue(value, "ui_create_time");
                     ReportPropertyChanged("ui_create_time");
                     Onui_create_timeChanged();
                 }
@@ -2458,7 +2451,7 @@ namespace DBEntity
                 {
                     Onui_grade_levelChanging(value);
                     ReportPropertyChanging("ui_grade_level");
-                    _ui_grade_level = StructuralObject.SetValidValue(value);
+                    _ui_grade_level = StructuralObject.SetValidValue(value, "ui_grade_level");
                     ReportPropertyChanged("ui_grade_level");
                     Onui_grade_levelChanged();
                 }
@@ -2485,7 +2478,7 @@ namespace DBEntity
                 {
                     Onui_grade_nameChanging(value);
                     ReportPropertyChanging("ui_grade_name");
-                    _ui_grade_name = StructuralObject.SetValidValue(value, false);
+                    _ui_grade_name = StructuralObject.SetValidValue(value, false, "ui_grade_name");
                     ReportPropertyChanged("ui_grade_name");
                     Onui_grade_nameChanged();
                 }
@@ -2510,7 +2503,7 @@ namespace DBEntity
             {
                 Onui_meeting_countChanging(value);
                 ReportPropertyChanging("ui_meeting_count");
-                _ui_meeting_count = StructuralObject.SetValidValue(value);
+                _ui_meeting_count = StructuralObject.SetValidValue(value, "ui_meeting_count");
                 ReportPropertyChanged("ui_meeting_count");
                 Onui_meeting_countChanged();
             }
@@ -2521,10 +2514,8 @@ namespace DBEntity
 
         #endregion
 
-    
     }
 
     #endregion
 
-    
 }

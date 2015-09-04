@@ -101,7 +101,6 @@ E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.AspNet.SignalR.Syste
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.Owin.dll
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.Owin.Host.SystemWeb.dll
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.Owin.Security.dll
-E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\MySql.Data.Entity.EF5.dll
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Owin.dll
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.AspNet.SignalR.Core.xml
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
@@ -109,3 +108,4 @@ E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.Owin.xml
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.Owin.Host.SystemWeb.xml
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Microsoft.Owin.Security.xml
 E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\Newtonsoft.Json.xml
+E:\Projects\MeetingCanlendar\MeetingCanlendar\bin\MySql.Data.Entity.EF6.dll
